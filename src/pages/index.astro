@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const basePath = '/marketing';
+---
+
+<BaseLayout
+  title="Professional Websites for Small Businesses"
+  description="Fast, affordable websites for small businesses. UK and US based team. Choose your region to get started."
+>
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-white">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        Welcome to Hydron Marketing
+      </h1>
+      <p class="text-xl text-gray-600 mb-12">
+        Professional websites for small businesses. Select your region to continue:
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <a
+          href={`${basePath}/uk`}
+          class="block p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow border-2 border-transparent hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+          data-region="uk"
+        >
+          <div class="text-5xl mb-4">🇬🇧</div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">United Kingdom</h2>
+          <p class="text-gray-600">Prices in GBP (£)</p>
+          <p class="text-sm text-gray-500 mt-2">Aylesbury, Buckinghamshire</p>
+        </a>
+        
+        <a
+          href={`${basePath}/us`}
+          class="block p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow border-2 border-transparent hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+          data-region="us"
+        >
+          <div class="text-5xl mb-4">🇺🇸</div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">United States</h2>
+          <p class="text-gray-600">Prices in USD ($)</p>
+          <p class="text-sm text-gray-500 mt-2">Florida</p>
+        </a>
+      </div>
+      
+      <p class="text-sm text-gray-500">
+        Your selection will be remembered for future visits
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Save region preference when clicking
+  document.querySelectorAll('[data-region]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const region = (e.currentTarget as HTMLElement).getAttribute('data-region');
+      if (region) {
+        localStorage.setItem('region', region);
+      }
+    });
+  });
+</script>

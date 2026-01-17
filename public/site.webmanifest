@@ -1,0 +1,21 @@
+{
+  "name": "Hydron Marketing",
+  "short_name": "Hydron",
+  "description": "Professional websites for small businesses",
+  "start_url": "/marketing/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "/marketing/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/marketing/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

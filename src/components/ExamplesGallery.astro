@@ -1,0 +1,41 @@
+---
+import { EXAMPLE_PROJECTS } from '../config/site';
+
+const basePath = '/marketing';
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Example projects
+      </h2>
+      <p class="text-xl text-gray-600 mb-2">
+        See what we can build for your business
+      </p>
+      <p class="text-sm text-gray-500">
+        All examples shown are demos for demonstration purposes
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {EXAMPLE_PROJECTS.map((project) => (
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+          <div class="aspect-video bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+            <div class="text-center p-6">
+              <div class="text-4xl mb-2">🏢</div>
+              <p class="text-sm text-primary-700 font-medium">Demo example</p>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xl font-bold text-gray-900">{project.title}</h3>
+              <span class="text-sm text-primary-600 font-medium">{project.industry}</span>
+            </div>
+            <p class="text-gray-600 text-sm">{project.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

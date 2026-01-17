@@ -1,0 +1,53 @@
+---
+import type { Region } from '../config/site';
+
+interface Props {
+  currentRegion: Region;
+}
+
+const { currentRegion } = Astro.props;
+const basePath = '/marketing';
+const currentPath = Astro.url.pathname.replace(basePath, '').replace(/^\/uk|^\/us/, '');
+---
+
+<div class="flex items-center space-x-2">
+  <span class="text-sm text-gray-600">Region:</span>
+  <div class="inline-flex rounded-md shadow-sm" role="group">
+    <a
+      href={`${basePath}/uk${currentPath || ''}`}
+      class:list={[
+        'px-4 py-2 text-sm font-medium rounded-l-lg border transition-colors',
+        currentRegion === 'uk'
+          ? 'bg-primary-600 text-white border-primary-600'
+          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+      ]}
+      data-region="uk"
+    >
+      UK
+    </a>
+    <a
+      href={`${basePath}/us${currentPath || ''}`}
+      class:list={[
+        'px-4 py-2 text-sm font-medium rounded-r-lg border-t border-r border-b transition-colors',
+        currentRegion === 'us'
+          ? 'bg-primary-600 text-white border-primary-600'
+          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+      ]}
+      data-region="us"
+    >
+      US
+    </a>
+  </div>
+</div>
+
+<script>
+  // Store region preference when switching
+  document.querySelectorAll('[data-region]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const region = (e.currentTarget as HTMLElement).getAttribute('data-region');
+      if (region) {
+        localStorage.setItem('region', region);
+      }
+    });
+  });
+</script>

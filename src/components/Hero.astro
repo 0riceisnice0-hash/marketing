@@ -1,0 +1,37 @@
+---
+import type { Region } from '../config/site';
+
+interface Props {
+  region: Region;
+}
+
+const { region } = Astro.props;
+const basePath = '/marketing';
+---
+
+<section class="relative bg-gradient-to-br from-primary-50 to-white py-20 md:py-32">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+        A professional 5‑page website, built fast, at a fair price.
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
+        We build clean, mobile‑friendly websites for small businesses. We show you first, then you decide.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={`${basePath}/${region}/pricing`}
+          class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+        >
+          See pricing
+        </a>
+        <a
+          href={`${basePath}/${region}/examples`}
+          class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+        >
+          View examples
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

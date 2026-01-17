@@ -1,0 +1,26 @@
+---
+import RegionLayout from '../../layouts/RegionLayout.astro';
+import Hero from '../../components/Hero.astro';
+import TrustRow from '../../components/TrustRow.astro';
+import OfferCards from '../../components/OfferCards.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+import ExamplesGallery from '../../components/ExamplesGallery.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import FAQAccordion from '../../components/FAQAccordion.astro';
+
+const region = 'us';
+---
+
+<RegionLayout
+  title="Professional Websites for Small Businesses"
+  description="Fast, affordable websites for US small businesses. Clean, mobile-friendly designs built by our US-based team. Get a professional 5-page website from $249."
+  region={region}
+>
+  <Hero region={region} />
+  <TrustRow />
+  <OfferCards region={region} />
+  <HowItWorks />
+  <ExamplesGallery />
+  <Testimonials region={region} />
+  <FAQAccordion />
+</RegionLayout>

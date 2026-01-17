@@ -1,0 +1,103 @@
+---
+import RegionLayout from '../../layouts/RegionLayout.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+
+const region = 'us';
+const basePath = '/marketing';
+---
+
+<RegionLayout
+  title="How It Works"
+  description="Our simple website design process for US small businesses. We show you a draft first, you review, then we launch."
+  region={region}
+>
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        How it works
+      </h1>
+      <p class="text-xl text-gray-600 mb-12">
+        A straightforward, no-pressure process designed for busy business owners.
+      </p>
+    </div>
+  </section>
+  
+  <HowItWorks />
+  
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-12">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Step 1: Initial consultation</h2>
+          <p class="text-gray-600 mb-4">
+            Get in touch and tell us about your business. We'll ask about your services, target customers, and any specific features you need. This can be a quick call, email exchange, or WhatsApp chat - whatever works for you.
+          </p>
+          <p class="text-gray-600">
+            <strong>Timeframe:</strong> Usually within 24 hours of your inquiry
+          </p>
+        </div>
+        
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Step 2: We create a draft</h2>
+          <p class="text-gray-600 mb-4">
+            Based on what you've told us, we'll create a draft version of your site. This shows the layout, design style, and basic structure. It won't have all your final content yet, but you'll get a clear picture of what the finished site will look like.
+          </p>
+          <p class="text-gray-600">
+            <strong>Timeframe:</strong> 3-5 working days for template sites, 5-7 days for custom designs
+          </p>
+        </div>
+        
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Step 3: You review (no obligation)</h2>
+          <p class="text-gray-600 mb-4">
+            Take your time to review the draft. Share it with your team. Get feedback. If you're not happy, no problem - there's no obligation to proceed. If you like the direction but want changes, we'll discuss what's possible.
+          </p>
+          <p class="text-gray-600">
+            <strong>Timeframe:</strong> As long as you need - no pressure
+          </p>
+        </div>
+        
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Step 4: Refinement</h2>
+          <p class="text-gray-600 mb-4">
+            Once you've decided to proceed, we'll refine the design based on your feedback. We'll add all your final content, images, and make any adjustments. You'll have the opportunity to review again before launch.
+          </p>
+          <p class="text-gray-600">
+            <strong>Timeframe:</strong> 3-5 working days depending on feedback
+          </p>
+        </div>
+        
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Step 5: Launch and handover</h2>
+          <p class="text-gray-600 mb-4">
+            We'll get your site online, connect your domain, and show you how to make basic updates if you want to manage it yourself. We'll provide documentation and are available for any questions as you settle in.
+          </p>
+          <p class="text-gray-600">
+            <strong>Timeframe:</strong> 1-2 working days
+          </p>
+        </div>
+        
+        <div class="p-6 bg-primary-50 rounded-lg">
+          <h3 class="font-semibold text-gray-900 mb-2">Total typical timeframe</h3>
+          <ul class="text-gray-700 space-y-2">
+            <li>• <strong>Template websites:</strong> 2 weeks from initial consultation to launch</li>
+            <li>• <strong>Custom websites:</strong> 3 weeks from initial consultation to launch</li>
+            <li>• <strong>Ecommerce sites:</strong> 4 weeks from initial consultation to launch</li>
+          </ul>
+          <p class="text-sm text-gray-600 mt-4">
+            These are typical timeframes. Rush jobs may be possible - just ask. Complex projects may take longer.
+          </p>
+        </div>
+      </div>
+      
+      <div class="mt-12 text-center">
+        <a
+          href={`${basePath}/${region}/contact`}
+          class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+        >
+          Get started
+        </a>
+      </div>
+    </div>
+  </section>
+</RegionLayout>
