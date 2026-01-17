@@ -1,0 +1,108 @@
+---
+import type { Region } from '../config/site';
+import RegionSwitcher from './RegionSwitcher.astro';
+
+interface Props {
+  region: Region;
+}
+
+const { region } = Astro.props;
+const basePath = '/marketing';
+
+const navLinks = [
+  { href: `${basePath}/${region}`, label: 'Home' },
+  { href: `${basePath}/${region}/websites`, label: 'Websites' },
+  { href: `${basePath}/${region}/pricing`, label: 'Pricing' },
+  { href: `${basePath}/${region}/how-it-works`, label: 'How It Works' },
+  { href: `${basePath}/${region}/examples`, label: 'Examples' },
+  { href: `${basePath}/${region}/contact`, label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <a href={`${basePath}/${region}`} class="text-xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+          Hydron Marketing
+        </a>
+      </div>
+      
+      <div class="hidden md:flex items-center space-x-1">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'px-3 py-2 rounded-md text-sm font-medium transition-colors',
+              currentPath === link.href || currentPath === `${link.href}/`
+                ? 'bg-primary-100 text-primary-700'
+                : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <RegionSwitcher currentRegion={region} />
+        <button
+          id="mobile-menu-button"
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'block px-3 py-2 rounded-md text-base font-medium transition-colors',
+            currentPath === link.href || currentPath === `${link.href}/`
+              ? 'bg-primary-100 text-primary-700'
+              : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+      mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

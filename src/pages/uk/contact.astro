@@ -1,0 +1,14 @@
+---
+import RegionLayout from '../../layouts/RegionLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+
+const region = 'uk';
+---
+
+<RegionLayout
+  title="Contact Us"
+  description="Get in touch with Hydron Marketing UK. Based in Aylesbury, Buckinghamshire. Call, email, or send us a message."
+  region={region}
+>
+  <ContactForm region={region} />
+</RegionLayout>

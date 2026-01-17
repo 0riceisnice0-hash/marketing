@@ -1,0 +1,89 @@
+---
+import { SITE_NAME } from '../config/site';
+
+export interface Props {
+  title: string;
+  description: string;
+  region?: 'uk' | 'us';
+  canonical?: string;
+  ogImage?: string;
+}
+
+const { title, description, region, canonical, ogImage } = Astro.props;
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site);
+const imageURL = ogImage || new URL('/marketing/og-image.jpg', Astro.site);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | {SITE_NAME}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | ${SITE_NAME}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageURL} />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={`${title} | ${SITE_NAME}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/marketing/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/marketing/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/marketing/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/marketing/apple-touch-icon.png" />
+    <link rel="manifest" href="/marketing/site.webmanifest" />
+    
+    <!-- Preload critical fonts (system fonts, no external loading) -->
+    
+    <meta name="generator" content={Astro.generator} />
+    
+    {region && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: SITE_NAME,
+        url: Astro.site,
+        logo: new URL('/marketing/logo.png', Astro.site),
+      })} />
+    )}
+  </head>
+  <body class="min-h-screen bg-white text-gray-900 antialiased">
+    <slot />
+    
+    <script>
+      // Region switcher persistence
+      if (typeof window !== 'undefined') {
+        const savedRegion = localStorage.getItem('region');
+        if (savedRegion && (savedRegion === 'uk' || savedRegion === 'us')) {
+          const currentPath = window.location.pathname;
+          const basePath = '/marketing';
+          const pathWithoutBase = currentPath.replace(basePath, '');
+          
+          // If we're on homepage and have a saved region, redirect to that region
+          if (pathWithoutBase === '/' || pathWithoutBase === '') {
+            window.location.href = `${basePath}/${savedRegion}`;
+          }
+        }
+      }
+    </script>
+    
+    <script>
+      // Reduced motion support
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mediaQuery.matches) {
+        document.documentElement.style.setProperty('scroll-behavior', 'auto');
+      }
+    </script>
+  </body>
+</html>

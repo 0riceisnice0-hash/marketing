@@ -1,0 +1,85 @@
+---
+import RegionLayout from '../../layouts/RegionLayout.astro';
+
+const region = 'uk';
+const basePath = '/marketing';
+---
+
+<RegionLayout
+  title="Website Design Services"
+  description="Professional website design services for UK small businesses. Template, custom, and ecommerce options available."
+  region={region}
+>
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        Website design services
+      </h1>
+      <p class="text-xl text-gray-600 mb-12">
+        We specialise in building clean, professional websites for UK small businesses. Every site is mobile-friendly, fast-loading, and includes SEO basics.
+      </p>
+      
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">What we build</h2>
+        
+        <h3 class="text-xl font-bold text-gray-900 mb-3 mt-8">Template Websites</h3>
+        <p class="text-gray-600 mb-4">
+          Start with a proven design and we'll customise it for your business. Perfect for straightforward service businesses that need a professional online presence quickly.
+        </p>
+        <ul class="list-disc pl-6 text-gray-600 space-y-2 mb-6">
+          <li>Up to 5 pages</li>
+          <li>Mobile responsive design</li>
+          <li>Contact form integration</li>
+          <li>SEO basics included</li>
+          <li>2-week turnaround</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-gray-900 mb-3 mt-8">Custom Websites</h3>
+        <p class="text-gray-600 mb-4">
+          Fully bespoke design tailored to your brand. We'll work with you to create something unique that stands out from your competition.
+        </p>
+        <ul class="list-disc pl-6 text-gray-600 space-y-2 mb-6">
+          <li>Up to 5 pages</li>
+          <li>Custom design from scratch</li>
+          <li>Mobile responsive design</li>
+          <li>Contact form integration</li>
+          <li>SEO basics included</li>
+          <li>3-week turnaround</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-gray-900 mb-3 mt-8">Small Ecommerce Starter</h3>
+        <p class="text-gray-600 mb-4">
+          Start selling online with a simple, effective ecommerce site. Perfect for businesses with a small product catalogue.
+        </p>
+        <ul class="list-disc pl-6 text-gray-600 space-y-2 mb-6">
+          <li>Up to 5 pages plus shop</li>
+          <li>Up to 20 products</li>
+          <li>Payment integration (Stripe/PayPal)</li>
+          <li>Mobile responsive design</li>
+          <li>SEO basics included</li>
+          <li>4-week turnaround</li>
+        </ul>
+        
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 mt-12">Our process</h2>
+        <p class="text-gray-600 mb-4">
+          We always show you a draft first. This means you can see exactly what you're getting before committing. We'll refine it based on your feedback and only move forward when you're happy.
+        </p>
+        
+        <div class="mt-12">
+          <a
+            href={`${basePath}/${region}/pricing`}
+            class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+          >
+            View pricing
+          </a>
+          <a
+            href={`${basePath}/${region}/contact`}
+            class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors ml-4"
+          >
+            Get in touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</RegionLayout>
