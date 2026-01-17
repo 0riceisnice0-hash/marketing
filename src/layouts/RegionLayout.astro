@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import StructuredData from '../components/StructuredData.astro';
 import type { Region } from '../config/site';
 
 export interface Props {
@@ -14,6 +15,7 @@ const { title, description, region } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} region={region}>
+  <StructuredData region={region} />
   <Navigation region={region} />
   <main>
     <slot />

@@ -188,7 +188,7 @@ const branchInfo = REGIONS[region];
       if (timeElapsed < 2000) {
         e.preventDefault();
         alert('Please take a moment to review your message before submitting.');
-        return false;
+        return;
       }
       
       (timeField as HTMLInputElement).value = String(timeElapsed);

@@ -1,0 +1,99 @@
+---
+import type { Region } from '../config/site';
+import { SITE_NAME, REGIONS } from '../config/site';
+
+interface Props {
+  region: Region;
+}
+
+const { region } = Astro.props;
+const branchInfo = REGIONS[region];
+const siteUrl = Astro.site?.toString() || '';
+
+// Organization schema
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE_NAME,
+  url: siteUrl,
+  logo: `${siteUrl}logo.png`,
+  sameAs: [
+    'https://twitter.com/hydronmarketing',
+    'https://linkedin.com/company/hydronmarketing',
+    'https://facebook.com/hydronmarketing',
+  ],
+};
+
+// LocalBusiness schema
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${siteUrl}${region}/#business`,
+  name: branchInfo.name,
+  description: 'Professional websites for small businesses at fair prices.',
+  url: `${siteUrl}${region}`,
+  telephone: branchInfo.phone,
+  email: branchInfo.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: branchInfo.location,
+    addressCountry: region === 'uk' ? 'GB' : 'US',
+  },
+  priceRange: region === 'uk' ? '£199-£699' : '$249-$799',
+};
+
+// Service schema
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${siteUrl}${region}/#service`,
+  serviceType: 'Website Design',
+  provider: {
+    '@type': 'LocalBusiness',
+    name: branchInfo.name,
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: region === 'uk' ? 'United Kingdom' : 'United States',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Website Design Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Template Website',
+          description: 'Start with a proven design, customized for your business.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Custom Website',
+          description: 'Fully bespoke design tailored to your brand.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Small Ecommerce Starter',
+          description: 'Perfect for selling products online.',
+        },
+      },
+    ],
+  },
+};
+---
+
+<!-- Organization Schema -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+
+<!-- LocalBusiness Schema -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+<!-- Service Schema -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
