@@ -346,7 +346,7 @@ const currentPath = Astro.url.pathname;
     updateMenuItemsTabIndex();
   }
   
-  // Account dropdown toggle
+  // Account dropdown toggle with real Supabase authentication
   const accountButton = document.getElementById('account-button');
   const accountDropdown = document.getElementById('account-dropdown');
   const googleSigninButton = document.getElementById('google-signin-button');
@@ -356,9 +356,16 @@ const currentPath = Astro.url.pathname;
   
   if (accountButton && accountDropdown && accountLogin && accountMenu) {
     let accountHoverTimeout: ReturnType<typeof setTimeout> | null = null;
+    let isLoggedIn = false;
     
-    // Check if user is logged in (demo purposes - production would use proper auth)
-    let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    // Import Supabase client
+    const { supabase } = await import('../lib/supabase');
+    
+    // Helper function to build redirect URL for OAuth
+    function buildRedirectTo() {
+      const basePath = import.meta.env.VITE_BASE_PATH || '';
+      return window.location.origin + basePath + '/auth/callback';
+    }
     
     // Helper function to update UI based on login state
     const updateAccountUI = () => {
@@ -467,31 +474,65 @@ const currentPath = Astro.url.pathname;
       }
     });
     
-    // Google Sign-In handler (simulated for demo - production would use OAuth)
+    // Google Sign-In handler with real Supabase OAuth
     if (googleSigninButton) {
-      googleSigninButton.addEventListener('click', () => {
-        // Production: Redirect to Google OAuth, handle authentication, store secure session
-        // Demo: Alert to explain flow, then simulate login
-        alert('Google Sign-In flow would be initiated here.\n\nIn production, this would:\n1. Redirect to Google OAuth\n2. Handle authentication\n3. Store user session\n\nSimulating login for demo...');
-        isLoggedIn = true;
-        localStorage.setItem('isLoggedIn', 'true');
-        updateAccountUI();
-        closeAccountDropdown();
+      googleSigninButton.addEventListener('click', async () => {
+        try {
+          const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+              redirectTo: buildRedirectTo()
+            }
+          });
+          
+          if (error) {
+            console.error('Error signing in with Google:', error);
+            alert('Failed to sign in with Google. Please try again.');
+          }
+        } catch (err) {
+          console.error('Failed to initiate Google sign-in:', err);
+          alert('Failed to sign in with Google. Please try again.');
+        }
       });
     }
     
-    // Logout handler
+    // Logout handler with real Supabase sign out
     if (logoutButton) {
-      logoutButton.addEventListener('click', () => {
-        isLoggedIn = false;
-        localStorage.removeItem('isLoggedIn');
-        updateAccountUI();
-        closeAccountDropdown();
+      logoutButton.addEventListener('click', async () => {
+        try {
+          const { error } = await supabase.auth.signOut();
+          if (error) {
+            console.error('Error signing out:', error);
+          }
+          isLoggedIn = false;
+          updateAccountUI();
+          closeAccountDropdown();
+          // Redirect to home page after logout
+          const currentRegion = (window as any).__REGION__ || 'uk';
+          const basePath = (window as any).__BASE_PATH__ || '';
+          window.location.href = `${basePath}/${currentRegion}`;
+        } catch (err) {
+          console.error('Failed to sign out:', err);
+        }
       });
     }
     
-    // Initialize UI and tabindex
-    updateAccountUI();
+    // Load initial auth state from Supabase
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      isLoggedIn = !!session;
+      updateAccountUI();
+    } catch (err) {
+      console.error('Failed to get session:', err);
+    }
+    
+    // Subscribe to auth state changes
+    supabase.auth.onAuthStateChange((_event, session) => {
+      isLoggedIn = !!session;
+      updateAccountUI();
+    });
+    
+    // Initialize tabindex
     updateAccountMenuItemsTabIndex();
   }
   
