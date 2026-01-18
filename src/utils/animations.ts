@@ -1,7 +1,7 @@
 // Intersection Observer utility for scroll-triggered animations
 // Uses Motion One for lightweight, performant animations
 
-import { animate, inView } from 'motion';
+import { inView } from 'motion';
 
 export function initSectionAnimations() {
   // Animate sections on scroll

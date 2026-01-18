@@ -16,7 +16,7 @@ const basePath = '/marketing';
 const popularIndex = 1;
 ---
 
-<section class="py-20 bg-bg-base relative">
+<section class="py-20 bg-bg-base relative section-fade-in">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-4">
@@ -27,10 +27,10 @@ const popularIndex = 1;
       </p>
     </div>
     
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto icon-list">
       {pricing.map((tier, index) => (
         <div class:list={[
-          'glass rounded-2xl p-8 transition-all hover:border-accent-primary/50 relative group pricing-card card-lift',
+          'glass rounded-2xl p-8 transition-all hover:border-accent-primary/50 relative group pricing-card card-lift icon-list-item',
           index === popularIndex && 'border-accent-primary shadow-glow-primary scale-105'
         ]}>
           {index === popularIndex && (
