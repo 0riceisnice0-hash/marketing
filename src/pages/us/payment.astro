@@ -98,10 +98,8 @@ const region = 'us';
       return;
     }
     
-    // Check cart for both items
-    const hasWebsite = cart.some((item: any) => item.type === 'website');
+    // Check cart for hosting
     const hasHosting = cart.some((item: any) => item.type === 'hosting');
-    const hostingItem = cart.find((item: any) => item.type === 'hosting');
     
     // Hide empty state, show total and checkout
     emptyState.classList.add('hidden');
@@ -142,27 +140,8 @@ const region = 'us';
     // Update total
     totalElement.textContent = `${currencySymbol}${total.toFixed(2)}`;
     
-    // Set up payment button click handler
+    // Show/hide error based on hosting presence
     if (paymentButton && hostingError) {
-      paymentButton.addEventListener('click', () => {
-        if (hasWebsite && hasHosting && hostingItem?.term) {
-          // Get the appropriate Stripe link based on hosting term
-          const stripeLink = HOSTING_STRIPE_LINKS[hostingItem.term as keyof typeof HOSTING_STRIPE_LINKS];
-          if (stripeLink) {
-            // Redirect to Stripe checkout
-            window.location.href = stripeLink;
-          } else {
-            // Fallback to monthly if term not found
-            window.location.href = HOSTING_STRIPE_LINKS['monthly'];
-          }
-        } else {
-          // Show error message if hosting is missing
-          hostingError.classList.remove('hidden');
-          paymentButton.classList.add('opacity-50', 'cursor-not-allowed');
-        }
-      });
-      
-      // Show/hide error based on hosting presence
       if (!hasHosting) {
         hostingError.classList.remove('hidden');
         paymentButton.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
@@ -171,6 +150,34 @@ const region = 'us';
         paymentButton.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
       }
     }
+  }
+  
+  // Set up payment button click handler (only once)
+  const paymentButton = document.getElementById('stripe-payment-button');
+  if (paymentButton) {
+    paymentButton.addEventListener('click', () => {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const hasWebsite = cart.some((item: any) => item.type === 'website');
+      const hasHosting = cart.some((item: any) => item.type === 'hosting');
+      const hostingItem = cart.find((item: any) => item.type === 'hosting');
+      const hostingError = document.getElementById('hosting-missing-error');
+      
+      if (hasWebsite && hasHosting && hostingItem?.term) {
+        // Get the appropriate Stripe link based on hosting term
+        const stripeLink = HOSTING_STRIPE_LINKS[hostingItem.term as keyof typeof HOSTING_STRIPE_LINKS];
+        if (stripeLink) {
+          // Redirect to Stripe checkout
+          window.location.href = stripeLink;
+        } else {
+          // Fallback to monthly if term not found
+          window.location.href = HOSTING_STRIPE_LINKS['monthly'];
+        }
+      } else if (hostingError) {
+        // Show error message if hosting is missing
+        hostingError.classList.remove('hidden');
+        paymentButton.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+    });
   }
   
   // Load cart on page load
