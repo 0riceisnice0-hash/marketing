@@ -97,11 +97,6 @@ const currentPath = Astro.url.pathname;
                 <span id="cart-total" class="text-xl font-bold text-text-primary"></span>
               </div>
               
-              <!-- Hosting required message (shown when hosting is missing) -->
-              <div id="hosting-required-message" class="hidden text-xs text-red-500 mb-2 text-center">
-                Hosting is required to continue to payment.
-              </div>
-              
               <a 
                 id="cart-payment-button"
                 href={`${basePath}/${region}/payment`}
@@ -608,8 +603,6 @@ const currentPath = Astro.url.pathname;
     const cartFooter = document.getElementById('cart-footer');
     const cartTotal = document.getElementById('cart-total');
     const cartRecommendations = document.getElementById('cart-recommendations');
-    const paymentButton = document.getElementById('cart-payment-button');
-    const hostingRequiredMessage = document.getElementById('hosting-required-message');
     
     if (!cartItemsList || !cartEmpty || !cartFooter || !cartTotal || !cartRecommendations) return;
     
@@ -629,7 +622,6 @@ const currentPath = Astro.url.pathname;
     
     // Check what's in cart
     const hasWebsite = cart.some((item: any) => item.type === 'website');
-    const hasHosting = cart.some((item: any) => item.type === 'hosting');
     
     // Render cart items
     let total = 0;
@@ -666,46 +658,19 @@ const currentPath = Astro.url.pathname;
     const currencySymbol = window.location.pathname.includes('/us') ? '$' : '£';
     cartTotal.textContent = `${currencySymbol}${total.toFixed(2)}`;
     
-    // Update Payment button state based on hosting requirement
-    if (paymentButton && hostingRequiredMessage) {
-      if (!hasHosting) {
-        // Disable button
-        paymentButton.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
-        paymentButton.classList.remove('hover:bg-accent-primary-hover');
-        hostingRequiredMessage.classList.remove('hidden');
-      } else {
-        // Enable button
-        paymentButton.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
-        paymentButton.classList.add('hover:bg-accent-primary-hover');
-        hostingRequiredMessage.classList.add('hidden');
-      }
-    }
-    
     // Show recommendations
-    if (!hasWebsite || !hasHosting) {
+    if (!hasWebsite) {
       cartRecommendations.classList.remove('hidden');
       const recommendDiv = document.createElement('div');
       recommendDiv.className = 'p-4';
       
-      if (!hasHosting) {
-        const currentRegion = (window as any).__REGION__ || (window.location.pathname.includes('/us') ? 'us' : 'uk');
-        const basePath = (window as any).__BASE_PATH__ || '';
-        recommendDiv.innerHTML = `
-          <div class="text-sm font-semibold text-text-primary mb-2">Add hosting (required)</div>
-          <div class="text-xs text-text-secondary mb-3">Keep your website online 24/7</div>
-          <a href="${basePath}/${currentRegion}/pricing#hosting-packages" class="text-xs text-accent-primary hover:text-accent-primary-hover font-semibold">
-            View hosting options →
-          </a>
-        `;
-      } else if (!hasWebsite) {
-        recommendDiv.innerHTML = `
-          <div class="text-sm font-semibold text-text-primary mb-2">Add a website package</div>
-          <div class="text-xs text-text-secondary mb-3">Complete your online presence</div>
-          <a href="${window.location.pathname}#packages" class="text-xs text-accent-primary hover:text-accent-primary-hover font-semibold">
-            View website packages →
-          </a>
-        `;
-      }
+      recommendDiv.innerHTML = `
+        <div class="text-sm font-semibold text-text-primary mb-2">Add a website package</div>
+        <div class="text-xs text-text-secondary mb-3">Complete your online presence</div>
+        <a href="${window.location.pathname}#packages" class="text-xs text-accent-primary hover:text-accent-primary-hover font-semibold">
+          View website packages →
+        </a>
+      `;
       
       cartRecommendations.appendChild(recommendDiv);
     }
