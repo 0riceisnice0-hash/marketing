@@ -3,6 +3,8 @@ import type { Region } from '../config/site';
 import { PRICING, REGIONS } from '../config/site';
 import Button from './Button.astro';
 
+import { getBasePath } from '../utils/basePath';
+
 interface Props {
   region: Region;
 }
@@ -10,7 +12,7 @@ interface Props {
 const { region } = Astro.props;
 const pricing = PRICING[region];
 const { currencySymbol } = REGIONS[region];
-const basePath = '/marketing';
+const basePath = getBasePath();
 
 // Mark the middle tier (Custom Website) as most popular
 const popularIndex = 1;

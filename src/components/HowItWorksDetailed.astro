@@ -2,12 +2,14 @@
 import type { Region } from '../config/site';
 import Button from './Button.astro';
 
+import { getBasePath } from '../utils/basePath';
+
 interface Props {
   region: Region;
 }
 
 const { region } = Astro.props;
-const basePath = '/marketing';
+const basePath = getBasePath();
 ---
 
 <!-- Hero Section -->

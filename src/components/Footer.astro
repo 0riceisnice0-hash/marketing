@@ -2,12 +2,14 @@
 import type { Region } from '../config/site';
 import { REGIONS, SOCIAL_LINKS } from '../config/site';
 
+import { getBasePath } from '../utils/basePath';
+
 interface Props {
   region: Region;
 }
 
 const { region } = Astro.props;
-const basePath = '/marketing';
+const basePath = getBasePath();
 const branchInfo = REGIONS[region];
 const otherRegion = region === 'uk' ? 'us' : 'uk';
 const otherBranchInfo = REGIONS[otherRegion];

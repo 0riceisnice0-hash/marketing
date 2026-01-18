@@ -1,13 +1,21 @@
 ---
 import type { Region } from '../config/site';
 
+import { getBasePath } from '../utils/basePath';
+
 interface Props {
   currentRegion: Region;
 }
 
 const { currentRegion } = Astro.props;
-const basePath = '/marketing';
-const currentPath = Astro.url.pathname.replace(basePath, '').replace(/^\/uk|^\/us/, '');
+const basePath = getBasePath();
+
+const pathnameWithoutBase =
+  basePath && Astro.url.pathname.startsWith(basePath)
+    ? Astro.url.pathname.slice(basePath.length)
+    : Astro.url.pathname;
+
+const currentPath = pathnameWithoutBase.replace(/^\/(uk|us)/, '');
 ---
 
 <div class="flex items-center space-x-2">

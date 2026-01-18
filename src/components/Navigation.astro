@@ -2,12 +2,14 @@
 import type { Region } from '../config/site';
 import RegionSwitcher from './RegionSwitcher.astro';
 
+import { getBasePath } from '../utils/basePath';
+
 interface Props {
   region: Region;
 }
 
 const { region } = Astro.props;
-const basePath = '/marketing';
+const basePath = getBasePath();
 
 const navLinks = [
   { href: `${basePath}/${region}`, label: 'Home' },

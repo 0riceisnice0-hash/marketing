@@ -3,8 +3,10 @@ import RegionLayout from '../../layouts/RegionLayout.astro';
 import ExamplesGallery from '../../components/ExamplesGallery.astro';
 import Button from '../../components/Button.astro';
 
+import { getBasePath } from '../../utils/basePath';
+
 const region = 'us';
-const basePath = '/marketing';
+const basePath = getBasePath();
 ---
 
 <RegionLayout

@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const basePath = '/marketing';
+import { getBasePath } from '../utils/basePath';
+
+const basePath = getBasePath();
 ---
 
 <BaseLayout

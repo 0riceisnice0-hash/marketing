@@ -1,7 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const basePath = '/marketing';
+import { getBasePath } from '../utils/basePath';
+
+const basePath = getBasePath();
+const homeHref = basePath || '/';
 ---
 
 <BaseLayout
@@ -17,7 +20,7 @@ const basePath = '/marketing';
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a
-          href={basePath}
+          href={homeHref}
           class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
         >
           Go to homepage

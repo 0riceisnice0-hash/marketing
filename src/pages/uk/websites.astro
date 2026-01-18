@@ -2,8 +2,10 @@
 import RegionLayout from '../../layouts/RegionLayout.astro';
 import Button from '../../components/Button.astro';
 
+import { getBasePath } from '../../utils/basePath';
+
 const region = 'uk';
-const basePath = '/marketing';
+const basePath = getBasePath();
 
 // Placeholder screenshot URLs - will be replaced with local images
 const screenshots = [

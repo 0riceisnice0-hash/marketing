@@ -67,7 +67,7 @@ Premium dark-themed static marketing site built with Astro, TypeScript, and Tail
 
 4. **Open in browser**
    ```
-   http://localhost:4321/marketing/
+   http://localhost:4321/
    ```
 
 ### Build for Production
@@ -209,7 +209,7 @@ Alternative: Use Netlify Forms if deploying to Netlify instead of GitHub Pages.
 
 4. **Access your site** at:
    ```
-   https://0riceisnice0-hash.github.io/marketing/
+   https://hydronmarketing.com/
    ```
 
 ### Manual Deployment
