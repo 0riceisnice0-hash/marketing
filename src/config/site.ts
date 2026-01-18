@@ -4,6 +4,7 @@ export interface BranchInfo {
   name: string;
   location: string;
   phone: string;
+  phoneUK?: string;
   email: string;
   whatsapp: string;
   currency: string;
@@ -18,6 +19,7 @@ export interface BranchInfo {
 export interface PricingTier {
   name: string;
   price: number;
+  turnaround: string;
   description: string;
   features: string[];
 }
@@ -28,6 +30,7 @@ export interface ExampleProject {
   industry: string;
   image: string;
   description: string;
+  demoUrl?: string;
 }
 
 export interface Testimonial {
@@ -58,9 +61,10 @@ export const REGIONS: Record<Region, BranchInfo> = {
   us: {
     name: 'Hydron Marketing USA',
     location: 'Florida',
-    phone: '+1 (555) 123-4567',
-    email: 'hello@hydronmarketing.com',
-    whatsapp: '+1 555 123 4567',
+    phone: '1-248-705-1000',
+    phoneUK: '+44 792 6037 173',
+    email: 'marketinghydron@gmail.com',
+    whatsapp: '',
     currency: 'USD',
     currencySymbol: '$',
     spelling: {
@@ -74,81 +78,159 @@ export const REGIONS: Record<Region, BranchInfo> = {
 export const PRICING: Record<Region, PricingTier[]> = {
   uk: [
     {
-      name: 'Template Website',
-      price: 199,
-      description: 'Start with a proven design, customised for your business.',
+      name: 'Starter Websites',
+      price: 149,
+      turnaround: '3 days',
+      description: 'Quick and professional starter website for small businesses.',
       features: [
-        'Up to 5 pages',
+        'Up to 3 pages',
         'Mobile responsive',
         'Contact form',
-        'SEO basics included',
-        '2-week turnaround',
+        'Basic SEO setup',
+        '3-day turnaround',
       ],
     },
     {
       name: 'Custom Website',
-      price: 349,
-      description: 'Fully bespoke design tailored to your brand.',
+      price: 299,
+      turnaround: '1 week',
+      description: 'Fully custom design tailored to your brand and business goals.',
       features: [
         'Up to 5 pages',
         'Custom design',
         'Mobile responsive',
         'Contact form',
-        'SEO basics included',
-        '3-week turnaround',
+        'Basic SEO setup',
+        'SEO optimisation',
+        'Google Analytics setup',
+        'Social media integration',
+        '1-week turnaround',
       ],
     },
     {
-      name: 'Small Ecommerce Starter',
-      price: 699,
-      description: 'Perfect for selling products online.',
+      name: 'Business Website Plus',
+      price: 599,
+      turnaround: '10-14 days',
+      description: 'Enhanced website with advanced features for growing businesses.',
       features: [
-        'Up to 5 pages + shop',
-        'Up to 20 products',
-        'Payment integration',
+        'Up to 8 pages',
+        'Premium custom design',
         'Mobile responsive',
-        'SEO basics included',
-        '4-week turnaround',
+        'Contact form',
+        'Basic SEO setup',
+        'Full SEO optimisation',
+        'Google Analytics setup',
+        'Social media integration',
+        'Advanced contact forms',
+        'Performance optimisation',
+        'Google Analytics & Search Console',
+        'Blog/news section ready',
+        '10-14 day turnaround',
+      ],
+    },
+    {
+      name: 'Premium Website',
+      price: 799,
+      turnaround: '3 weeks',
+      description: 'Top-tier website with AI-powered features for maximum impact.',
+      features: [
+        'Up to 12 pages',
+        'Premium custom design',
+        'Mobile responsive',
+        'Contact form',
+        'Basic SEO setup',
+        'Full SEO optimisation',
+        'Google Analytics setup',
+        'Social media integration',
+        'Advanced forms & lead capture',
+        'Performance optimisation',
+        'Google Analytics & Search Console',
+        'Blog/news section ready',
+        'AI chat assistant (optional add-on)',
+        'AI FAQ/support widget',
+        'AI lead capture automation',
+        'Smart contact routing & automated replies',
+        'Priority support',
+        '3-week turnaround',
       ],
     },
   ],
   us: [
     {
-      name: 'Template Website',
-      price: 249,
-      description: 'Start with a proven design, customized for your business.',
+      name: 'Starter Websites',
+      price: 199,
+      turnaround: '3 days',
+      description: 'Quick and professional starter website for small businesses.',
       features: [
-        'Up to 5 pages',
+        'Up to 3 pages',
         'Mobile responsive',
         'Contact form',
-        'SEO basics included',
-        '2-week turnaround',
+        'Basic SEO setup',
+        '3-day turnaround',
       ],
     },
     {
       name: 'Custom Website',
       price: 399,
-      description: 'Fully bespoke design tailored to your brand.',
+      turnaround: '1 week',
+      description: 'Fully custom design tailored to your brand and business goals.',
       features: [
         'Up to 5 pages',
         'Custom design',
         'Mobile responsive',
         'Contact form',
-        'SEO basics included',
-        '3-week turnaround',
+        'Basic SEO setup',
+        'SEO optimization',
+        'Google Analytics setup',
+        'Social media integration',
+        '1-week turnaround',
       ],
     },
     {
-      name: 'Small Ecommerce Starter',
+      name: 'Business Website Plus',
       price: 799,
-      description: 'Perfect for selling products online.',
+      turnaround: '10-14 days',
+      description: 'Enhanced website with advanced features for growing businesses.',
       features: [
-        'Up to 5 pages + shop',
-        'Up to 20 products',
-        'Payment integration',
+        'Up to 8 pages',
+        'Premium custom design',
         'Mobile responsive',
-        'SEO basics included',
-        '4-week turnaround',
+        'Contact form',
+        'Basic SEO setup',
+        'Full SEO optimization',
+        'Google Analytics setup',
+        'Social media integration',
+        'Advanced contact forms',
+        'Performance optimization',
+        'Google Analytics & Search Console',
+        'Blog/news section ready',
+        '10-14 day turnaround',
+      ],
+    },
+    {
+      name: 'Premium Website',
+      price: 999,
+      turnaround: '3 weeks',
+      description: 'Top-tier website with AI-powered features for maximum impact.',
+      features: [
+        'Up to 12 pages',
+        'Premium custom design',
+        'Mobile responsive',
+        'Contact form',
+        'Basic SEO setup',
+        'Full SEO optimization',
+        'Google Analytics setup',
+        'Social media integration',
+        'Advanced forms & lead capture',
+        'Performance optimization',
+        'Google Analytics & Search Console',
+        'Blog/news section ready',
+        'AI chat assistant (optional add-on)',
+        'AI FAQ/support widget',
+        'AI lead capture automation',
+        'Smart contact routing & automated replies',
+        'Priority support',
+        '3-week turnaround',
       ],
     },
   ],
@@ -156,46 +238,28 @@ export const PRICING: Record<Region, PricingTier[]> = {
 
 export const EXAMPLE_PROJECTS: ExampleProject[] = [
   {
-    id: 'plumber',
-    title: 'ABC Plumbing',
-    industry: 'Plumbing',
-    image: '/images/plumber.jpg',
-    description: 'Local plumbing service with emergency callout information',
+    id: 'mobile-hairstyling',
+    title: 'Mobile Hairstyling',
+    industry: 'Beauty & Personal Care',
+    image: '/images/example-hairstyling.jpg',
+    description: 'Professional mobile hairstyling service showcasing portfolio and booking options.',
+    demoUrl: 'https://www.mobile-hairstyling.co.uk/'
   },
   {
-    id: 'electrician',
-    title: 'Spark Electric',
-    industry: 'Electrical',
-    image: '/images/electrician.jpg',
-    description: 'Residential and commercial electrical services',
+    id: 'ecowise-italy',
+    title: 'EcoWise Italy',
+    industry: 'Eco-Tourism',
+    image: '/images/example-ecowise.jpg',
+    description: 'Sustainable tourism and eco-friendly travel experiences in Italy.',
+    demoUrl: 'https://ecowiseitaly.com/'
   },
   {
-    id: 'barber',
-    title: 'Classic Cuts',
-    industry: 'Barbershop',
-    image: '/images/barber.jpg',
-    description: 'Traditional barbershop with online booking',
-  },
-  {
-    id: 'cleaner',
-    title: 'Shine Clean',
-    industry: 'Cleaning',
-    image: '/images/cleaner.jpg',
-    description: 'Domestic and office cleaning services',
-  },
-  {
-    id: 'gym',
-    title: 'FitCore Gym',
-    industry: 'Fitness',
-    image: '/images/gym.jpg',
-    description: 'Local gym with class schedules and membership info',
-  },
-  {
-    id: 'landscaper',
-    title: 'Green Spaces',
-    industry: 'Landscaping',
-    image: '/images/landscaper.jpg',
-    description: 'Garden design and maintenance services',
+    id: 'fenster-glazing',
+    title: 'Fenster Glazing',
+    industry: 'Construction & Glazing',
+    image: '/images/example-fenster.jpg',
+    description: 'Professional glazing and window installation services with project showcase.',
+    demoUrl: 'https://fensterglazing.com/'
   },
 ];
 
