@@ -20,6 +20,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   // Handle OAuth callback
   async function handleCallback() {
     try {
+      // Check for error in URL params (OAuth error)
+      const urlParams = new URLSearchParams(window.location.search);
+      const errorParam = urlParams.get('error');
+      const errorDescription = urlParams.get('error_description');
+      
+      if (errorParam) {
+        console.error('OAuth error:', errorParam, errorDescription);
+        window.location.href = '/signin?error=oauth_failed';
+        return;
+      }
+      
+      // Exchange the code for a session (Supabase automatically handles the hash/code)
       const { data, error } = await supabase.auth.getSession();
       
       if (error) {
@@ -32,8 +44,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         // Successfully authenticated
         window.location.href = '/account';
       } else {
-        // No session found
-        window.location.href = '/signin';
+        // No session found, try to get user which might trigger the exchange
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+        
+        if (userError || !userData.user) {
+          console.error('No session or user found');
+          window.location.href = '/signin';
+        } else {
+          // User found, redirect to account
+          window.location.href = '/account';
+        }
       }
     } catch (err) {
       console.error('Callback error:', err);

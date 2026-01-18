@@ -4,5 +4,10 @@ export function buildRedirectTo(): string {
   }
   
   const basePath = import.meta.env.VITE_BASE_PATH || '';
-  return window.location.origin + basePath + '/auth/callback';
+  // Normalize basePath: remove trailing slash, ensure leading slash if non-empty
+  const normalizedBasePath = basePath 
+    ? (basePath.startsWith('/') ? basePath : '/' + basePath).replace(/\/$/, '')
+    : '';
+  
+  return window.location.origin + normalizedBasePath + '/auth/callback';
 }
