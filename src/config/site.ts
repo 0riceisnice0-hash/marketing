@@ -18,6 +18,7 @@ export interface BranchInfo {
 export interface PricingTier {
   name: string;
   price: number;
+  turnaround: string;
   description: string;
   features: string[];
 }
@@ -28,6 +29,7 @@ export interface ExampleProject {
   industry: string;
   image: string;
   description: string;
+  demoUrl?: string;
 }
 
 export interface Testimonial {
@@ -58,9 +60,9 @@ export const REGIONS: Record<Region, BranchInfo> = {
   us: {
     name: 'Hydron Marketing USA',
     location: 'Florida',
-    phone: '+1 (555) 123-4567',
-    email: 'hello@hydronmarketing.com',
-    whatsapp: '+1 555 123 4567',
+    phone: '1-248-705-1000',
+    email: 'marketinghydron@gmail.com',
+    whatsapp: '',
     currency: 'USD',
     currencySymbol: '$',
     spelling: {
@@ -74,81 +76,135 @@ export const REGIONS: Record<Region, BranchInfo> = {
 export const PRICING: Record<Region, PricingTier[]> = {
   uk: [
     {
-      name: 'Template Website',
-      price: 199,
-      description: 'Start with a proven design, customised for your business.',
+      name: 'Starter Websites',
+      price: 149,
+      turnaround: '3 days',
+      description: 'Quick and professional starter website for small businesses.',
       features: [
-        'Up to 5 pages',
+        'Up to 3 pages',
         'Mobile responsive',
         'Contact form',
-        'SEO basics included',
-        '2-week turnaround',
+        'Basic SEO setup',
+        '3-day turnaround',
       ],
     },
     {
       name: 'Custom Website',
-      price: 349,
-      description: 'Fully bespoke design tailored to your brand.',
+      price: 299,
+      turnaround: '1 week',
+      description: 'Fully custom design tailored to your brand and business goals.',
       features: [
         'Up to 5 pages',
         'Custom design',
         'Mobile responsive',
         'Contact form',
-        'SEO basics included',
-        '3-week turnaround',
+        'SEO optimisation',
+        'Google Analytics setup',
+        'Social media integration',
+        '1-week turnaround',
       ],
     },
     {
-      name: 'Small Ecommerce Starter',
-      price: 699,
-      description: 'Perfect for selling products online.',
+      name: 'Business Website Plus',
+      price: 599,
+      turnaround: '10-14 days',
+      description: 'Enhanced website with advanced features for growing businesses.',
       features: [
-        'Up to 5 pages + shop',
-        'Up to 20 products',
-        'Payment integration',
+        'Up to 8 pages',
+        'Premium custom design',
         'Mobile responsive',
-        'SEO basics included',
-        '4-week turnaround',
+        'Advanced contact forms',
+        'Full SEO optimisation',
+        'Performance optimisation',
+        'Google Analytics & Search Console',
+        'Blog/news section ready',
+        '10-14 day turnaround',
+      ],
+    },
+    {
+      name: 'Premium Website + AI',
+      price: 799,
+      turnaround: '3 weeks',
+      description: 'Top-tier website with AI-powered features for maximum impact.',
+      features: [
+        'Up to 12 pages',
+        'Premium custom design',
+        'Mobile responsive',
+        'Advanced forms & lead capture',
+        'Full SEO optimisation',
+        'Performance optimisation',
+        'AI chat assistant (optional add-on)',
+        'AI FAQ/support widget',
+        'Smart contact routing',
+        'Priority support',
+        '3-week turnaround',
       ],
     },
   ],
   us: [
     {
-      name: 'Template Website',
-      price: 249,
-      description: 'Start with a proven design, customized for your business.',
+      name: 'Starter Websites',
+      price: 199,
+      turnaround: '3 days',
+      description: 'Quick and professional starter website for small businesses.',
       features: [
-        'Up to 5 pages',
+        'Up to 3 pages',
         'Mobile responsive',
         'Contact form',
-        'SEO basics included',
-        '2-week turnaround',
+        'Basic SEO setup',
+        '3-day turnaround',
       ],
     },
     {
       name: 'Custom Website',
       price: 399,
-      description: 'Fully bespoke design tailored to your brand.',
+      turnaround: '1 week',
+      description: 'Fully custom design tailored to your brand and business goals.',
       features: [
         'Up to 5 pages',
         'Custom design',
         'Mobile responsive',
         'Contact form',
-        'SEO basics included',
-        '3-week turnaround',
+        'SEO optimization',
+        'Google Analytics setup',
+        'Social media integration',
+        '1-week turnaround',
       ],
     },
     {
-      name: 'Small Ecommerce Starter',
+      name: 'Business Website Plus',
       price: 799,
-      description: 'Perfect for selling products online.',
+      turnaround: '10-14 days',
+      description: 'Enhanced website with advanced features for growing businesses.',
       features: [
-        'Up to 5 pages + shop',
-        'Up to 20 products',
-        'Payment integration',
+        'Up to 8 pages',
+        'Premium custom design',
         'Mobile responsive',
-        'SEO basics included',
-        '4-week turnaround',
+        'Advanced contact forms',
+        'Full SEO optimization',
+        'Performance optimization',
+        'Google Analytics & Search Console',
+        'Blog/news section ready',
+        '10-14 day turnaround',
+      ],
+    },
+    {
+      name: 'Premium Website + AI',
+      price: 999,
+      turnaround: '3 weeks',
+      description: 'Top-tier website with AI-powered features for maximum impact.',
+      features: [
+        'Up to 12 pages',
+        'Premium custom design',
+        'Mobile responsive',
+        'Advanced forms & lead capture',
+        'Full SEO optimization',
+        'Performance optimization',
+        'AI chat assistant (optional add-on)',
+        'AI FAQ/support widget',
+        'Smart contact routing',
+        'Priority support',
+        '3-week turnaround',
       ],
     },
   ],
@@ -156,46 +212,36 @@ export const PRICING: Record<Region, PricingTier[]> = {
 
 export const EXAMPLE_PROJECTS: ExampleProject[] = [
   {
-    id: 'plumber',
-    title: 'ABC Plumbing',
-    industry: 'Plumbing',
-    image: '/images/plumber.jpg',
-    description: 'Local plumbing service with emergency callout information',
+    id: 'apple-style',
+    title: 'Product Landing Demo',
+    industry: 'Apple-style',
+    image: '/images/demo-apple.jpg',
+    description: 'Clean, minimalist product showcase inspired by Apple design principles.',
+    demoUrl: 'https://demo.hydronmarketing.com/apple-style'
   },
   {
-    id: 'electrician',
-    title: 'Spark Electric',
-    industry: 'Electrical',
-    image: '/images/electrician.jpg',
-    description: 'Residential and commercial electrical services',
+    id: 'tesla-style',
+    title: 'Automotive Landing Demo',
+    industry: 'Tesla-style',
+    image: '/images/demo-tesla.jpg',
+    description: 'Bold, immersive product page with full-screen visuals and smooth scrolling.',
+    demoUrl: 'https://demo.hydronmarketing.com/tesla-style'
   },
   {
-    id: 'barber',
-    title: 'Classic Cuts',
-    industry: 'Barbershop',
-    image: '/images/barber.jpg',
-    description: 'Traditional barbershop with online booking',
+    id: 'stripe-style',
+    title: 'SaaS Landing Demo',
+    industry: 'Stripe-style',
+    image: '/images/demo-stripe.jpg',
+    description: 'Modern SaaS landing page with gradient backgrounds and developer-friendly aesthetics.',
+    demoUrl: 'https://demo.hydronmarketing.com/stripe-style'
   },
   {
-    id: 'cleaner',
-    title: 'Shine Clean',
-    industry: 'Cleaning',
-    image: '/images/cleaner.jpg',
-    description: 'Domestic and office cleaning services',
-  },
-  {
-    id: 'gym',
-    title: 'FitCore Gym',
-    industry: 'Fitness',
-    image: '/images/gym.jpg',
-    description: 'Local gym with class schedules and membership info',
-  },
-  {
-    id: 'landscaper',
-    title: 'Green Spaces',
-    industry: 'Landscaping',
-    image: '/images/landscaper.jpg',
-    description: 'Garden design and maintenance services',
+    id: 'airbnb-style',
+    title: 'Marketplace Demo',
+    industry: 'Airbnb-style',
+    image: '/images/demo-airbnb.jpg',
+    description: 'Inviting marketplace layout with search-focused design and trust elements.',
+    demoUrl: 'https://demo.hydronmarketing.com/airbnb-style'
   },
 ];
 

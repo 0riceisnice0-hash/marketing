@@ -60,6 +60,16 @@ const imageURL = ogImage || new URL('/og-image.jpg', Astro.site);
         logo: new URL('/logo.png', Astro.site),
       })} />
     )}
+    
+    <style is:global>
+      html {
+        scroll-snap-type: y proximity;
+      }
+      
+      section {
+        scroll-snap-align: start;
+      }
+    </style>
   </head>
   <body class="min-h-screen bg-bg-base text-text-primary antialiased">
     <slot />

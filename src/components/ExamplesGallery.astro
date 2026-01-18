@@ -31,7 +31,20 @@ import { EXAMPLE_PROJECTS } from '../config/site';
               <h3 class="text-xl font-bold font-heading text-text-primary">{project.title}</h3>
               <span class="px-3 py-1 text-xs font-medium rounded-full bg-accent-primary/10 text-accent-primary">{project.industry}</span>
             </div>
-            <p class="text-text-secondary text-sm leading-relaxed">{project.description}</p>
+            <p class="text-text-secondary text-sm leading-relaxed mb-4">{project.description}</p>
+            {project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center text-sm font-medium text-accent-primary hover:text-accent-primary-hover transition-colors"
+              >
+                View demo
+                <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            )}
           </div>
         </div>
       ))}
