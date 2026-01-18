@@ -2,26 +2,26 @@
 import { FAQ_ITEMS } from '../config/site';
 ---
 
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-bg-base">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-4">
         Frequently asked questions
       </h2>
     </div>
     
     <div class="space-y-4">
       {FAQ_ITEMS.map((item, index) => (
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+        <div class="glass rounded-xl overflow-hidden hover:border-accent-primary/30 transition-all">
           <button
             type="button"
-            class="faq-button w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-colors"
+            class="faq-button w-full px-6 py-4 text-left flex justify-between items-center hover:bg-bg-elevated focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary transition-colors"
             aria-expanded="false"
             data-index={index}
           >
-            <span class="font-semibold text-gray-900">{item.question}</span>
+            <span class="font-semibold font-heading text-text-primary">{item.question}</span>
             <svg
-              class="faq-icon w-5 h-5 text-gray-500 transition-transform"
+              class="faq-icon w-5 h-5 text-text-tertiary transition-transform flex-shrink-0 ml-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -30,7 +30,7 @@ import { FAQ_ITEMS } from '../config/site';
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-4">
-            <p class="text-gray-600">{item.answer}</p>
+            <p class="text-text-secondary leading-relaxed">{item.answer}</p>
           </div>
         </div>
       ))}
@@ -75,6 +75,10 @@ import { FAQ_ITEMS } from '../config/site';
   @media (prefers-reduced-motion: reduce) {
     .faq-icon {
       transition: none;
+    }
+    
+    .faq-content {
+      transition: none !important;
     }
   }
 </style>

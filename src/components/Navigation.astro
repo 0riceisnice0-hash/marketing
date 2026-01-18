@@ -21,11 +21,11 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+<nav class="sticky top-0 z-50 glass border-b border-border-subtle">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <div class="flex items-center">
-        <a href={`${basePath}/${region}`} class="text-xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+        <a href={`${basePath}/${region}`} class="text-xl font-bold font-heading gradient-text hover:opacity-80 transition-opacity">
           Hydron Marketing
         </a>
       </div>
@@ -35,10 +35,10 @@ const currentPath = Astro.url.pathname;
           <a
             href={link.href}
             class:list={[
-              'px-3 py-2 rounded-md text-sm font-medium transition-colors',
+              'px-3 py-2 rounded-lg text-sm font-medium transition-all font-body',
               currentPath === link.href || currentPath === `${link.href}/`
-                ? 'bg-primary-100 text-primary-700'
-                : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                ? 'bg-accent-primary text-white shadow-glow-soft'
+                : 'text-text-secondary hover:bg-bg-elevated hover:text-text-primary'
             ]}
           >
             {link.label}
@@ -51,7 +51,7 @@ const currentPath = Astro.url.pathname;
         <button
           id="mobile-menu-button"
           type="button"
-          class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-bg-elevated focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary transition-colors"
           aria-expanded="false"
           aria-label="Toggle navigation menu"
         >
@@ -64,16 +64,16 @@ const currentPath = Astro.url.pathname;
   </div>
   
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle bg-bg-elevated">
     <div class="px-2 pt-2 pb-3 space-y-1">
       {navLinks.map((link) => (
         <a
           href={link.href}
           class:list={[
-            'block px-3 py-2 rounded-md text-base font-medium transition-colors',
+            'block px-3 py-2 rounded-md text-base font-medium transition-all font-body',
             currentPath === link.href || currentPath === `${link.href}/`
-              ? 'bg-primary-100 text-primary-700'
-              : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+              ? 'bg-accent-primary text-white shadow-glow-soft'
+              : 'text-text-secondary hover:bg-bg-surface hover:text-text-primary'
           ]}
         >
           {link.label}

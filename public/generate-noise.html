@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Noise Generator</title></head>
+<body>
+<canvas id="canvas" width="200" height="200"></canvas>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const imageData = ctx.createImageData(200, 200);
+
+for (let i = 0; i < imageData.data.length; i += 4) {
+  const value = Math.random() * 255;
+  imageData.data[i] = value;
+  imageData.data[i + 1] = value;
+  imageData.data[i + 2] = value;
+  imageData.data[i + 3] = 255;
+}
+
+ctx.putImageData(imageData, 0, 0);
+const link = document.createElement('a');
+link.download = 'noise-texture.png';
+link.href = canvas.toDataURL();
+document.body.appendChild(link);
+console.log('Canvas ready, use browser dev tools to save');
+</script>
+</body>
+</html>

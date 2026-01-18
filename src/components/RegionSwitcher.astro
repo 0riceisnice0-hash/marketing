@@ -11,31 +11,33 @@ const currentPath = Astro.url.pathname.replace(basePath, '').replace(/^\/uk|^\/u
 ---
 
 <div class="flex items-center space-x-2">
-  <span class="text-sm text-gray-600">Region:</span>
-  <div class="inline-flex rounded-md shadow-sm" role="group">
+  <span class="text-xs text-text-tertiary uppercase tracking-wider font-medium hidden sm:inline">Region</span>
+  <div class="relative inline-flex items-center rounded-full bg-bg-elevated border border-border-subtle p-1" role="group">
     <a
       href={`${basePath}/uk${currentPath || ''}`}
       class:list={[
-        'px-4 py-2 text-sm font-medium rounded-l-lg border transition-colors',
+        'relative px-4 py-1.5 text-sm font-medium rounded-full transition-all flex items-center space-x-1.5',
         currentRegion === 'uk'
-          ? 'bg-primary-600 text-white border-primary-600'
-          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+          ? 'bg-accent-primary text-white shadow-glow-primary z-10'
+          : 'text-text-secondary hover:text-text-primary'
       ]}
       data-region="uk"
     >
-      UK
+      <span class="text-base">🇬🇧</span>
+      <span>UK</span>
     </a>
     <a
       href={`${basePath}/us${currentPath || ''}`}
       class:list={[
-        'px-4 py-2 text-sm font-medium rounded-r-lg border-t border-r border-b transition-colors',
+        'relative px-4 py-1.5 text-sm font-medium rounded-full transition-all flex items-center space-x-1.5',
         currentRegion === 'us'
-          ? 'bg-primary-600 text-white border-primary-600'
-          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+          ? 'bg-accent-primary text-white shadow-glow-primary z-10'
+          : 'text-text-secondary hover:text-text-primary'
       ]}
       data-region="us"
     >
-      US
+      <span class="text-base">🇺🇸</span>
+      <span>US</span>
     </a>
   </div>
 </div>
@@ -51,3 +53,12 @@ const currentPath = Astro.url.pathname.replace(basePath, '').replace(/^\/uk|^\/u
     });
   });
 </script>
+
+<style>
+  /* Smooth slide animation for active state */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-region] {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+</style>
