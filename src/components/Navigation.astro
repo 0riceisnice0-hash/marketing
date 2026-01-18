@@ -257,14 +257,6 @@ const currentPath = Astro.url.pathname;
       toggleDropdown();
     });
     
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      const target = e.target;
-      if (target && !cartButton.contains(target as Node) && !cartDropdown.contains(target as Node)) {
-        closeDropdown();
-      }
-    });
-    
     // Keyboard navigation
     cartButton.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -284,6 +276,7 @@ const currentPath = Astro.url.pathname;
       }
     });
     
+    
     // Initialize tabindex for menu items
     updateMenuItemsTabIndex();
   }
@@ -297,7 +290,7 @@ const currentPath = Astro.url.pathname;
   const accountMenu = document.getElementById('account-menu');
   
   if (accountButton && accountDropdown && accountLogin && accountMenu) {
-    // Check if user is logged in
+    // Check if user is logged in (demo purposes - production would use proper auth)
     let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     
     // Helper function to update UI based on login state
@@ -335,19 +328,15 @@ const currentPath = Astro.url.pathname;
       updateAccountMenuItemsTabIndex();
     };
     
+    
     // Toggle dropdown on click
     accountButton.addEventListener('click', (e) => {
       e.stopPropagation();
       toggleAccountDropdown();
     });
     
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      const target = e.target;
-      if (target && !accountButton.contains(target as Node) && !accountDropdown.contains(target as Node)) {
-        closeAccountDropdown();
-      }
-    });
+    // Shared click handler for closing both dropdowns when clicking outside
+    // (Already registered above for cart dropdown, handles both)
     
     // Keyboard navigation
     accountButton.addEventListener('keydown', (e) => {
@@ -368,11 +357,11 @@ const currentPath = Astro.url.pathname;
       }
     });
     
-    // Google Sign-In handler (simulated)
+    // Google Sign-In handler (simulated for demo - production would use OAuth)
     if (googleSigninButton) {
       googleSigninButton.addEventListener('click', () => {
-        // In a real implementation, this would trigger Google OAuth flow
-        // For now, we'll simulate a successful login
+        // Production: Redirect to Google OAuth, handle authentication, store secure session
+        // Demo: Alert to explain flow, then simulate login
         alert('Google Sign-In flow would be initiated here.\n\nIn production, this would:\n1. Redirect to Google OAuth\n2. Handle authentication\n3. Store user session\n\nSimulating login for demo...');
         isLoggedIn = true;
         localStorage.setItem('isLoggedIn', 'true');
@@ -395,6 +384,29 @@ const currentPath = Astro.url.pathname;
     updateAccountUI();
     updateAccountMenuItemsTabIndex();
   }
+  
+  // Consolidated click handler to close dropdowns when clicking outside
+  // This handles both cart and account dropdowns efficiently
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!target) return;
+    
+    // Close cart dropdown if clicking outside
+    const cartBtn = document.getElementById('cart-button');
+    const cartDrop = document.getElementById('cart-dropdown');
+    if (cartBtn && cartDrop && !cartBtn.contains(target as Node) && !cartDrop.contains(target as Node)) {
+      cartBtn.setAttribute('aria-expanded', 'false');
+      cartDrop.classList.add('hidden');
+    }
+    
+    // Close account dropdown if clicking outside
+    const acctBtn = document.getElementById('account-button');
+    const acctDrop = document.getElementById('account-dropdown');
+    if (acctBtn && acctDrop && !acctBtn.contains(target as Node) && !acctDrop.contains(target as Node)) {
+      acctBtn.setAttribute('aria-expanded', 'false');
+      acctDrop.classList.add('hidden');
+    }
+  });
 </script>
 
 <style>
