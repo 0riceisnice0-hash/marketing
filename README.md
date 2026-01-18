@@ -1,17 +1,44 @@
 # Hydron Marketing
 
-Production-quality static marketing site built with Astro, TypeScript, and Tailwind CSS. Features UK and US regional content with localStorage persistence, deployed on GitHub Pages.
+Premium dark-themed static marketing site built with Astro, TypeScript, and Tailwind CSS. Features a cinematic £15,000 studio aesthetic with UK and US regional content, deployed on GitHub Pages.
 
 ## Features
 
-- 🌍 **Multi-region support** - UK and US branches with region-specific content, pricing, and spelling
-- 🎨 **Modern design** - Clean, professional aesthetic with Tailwind CSS
-- ♿ **Accessible** - Keyboard navigable, semantic HTML, ARIA labels, reduced motion support
-- 📱 **Mobile-first** - Responsive design that works on all devices
-- ⚡ **Fast** - Optimized static site with good Lighthouse scores
-- 🔍 **SEO optimized** - Meta tags, Open Graph, Twitter cards, JSON-LD schemas, sitemap
-- 📝 **Contact forms** - Spam prevention with honeypot and time-based checks
-- 🎯 **No fluff** - Ethical testimonials (clearly labelled as examples), no false claims
+### Design & Aesthetics
+- 🎨 **Premium Dark Theme** - Sophisticated off-black background with vibrant indigo/purple accents
+- ✨ **Glassy Components** - Frosted glass effect cards with blur backdrop
+- 🌟 **Gradient Accents** - Smooth color transitions and glow effects
+- 🎭 **Cinematic Feel** - Layered surfaces with depth, shadows, and subtle animations
+- 🔤 **Premium Typography** - Space Grotesk headings + Inter body text
+- 🎬 **Noise Texture** - Subtle grain overlay for added premium feel
+- 🎯 **CSS Design Tokens** - Centralized theme system with custom properties
+
+### Regional Features
+- 🌍 **Smart Region Detection** - Auto-detects user location via timezone and language
+- 🇬🇧🇺🇸 **UK/US Localization** - Region-specific pricing, spelling, and contact info
+- 💾 **localStorage Persistence** - Remembers user's region preference
+- 🔄 **Premium Region Toggle** - Pill-style switcher with country flags
+
+### User Experience
+- 🎬 **Smooth Animations** - Fade-ins, crossfades, and hover micro-interactions
+- ♿ **Accessibility First** - Full `prefers-reduced-motion` support
+- 📱 **Mobile Optimized** - Responsive design that looks stunning on all devices
+- ⚡ **Performance** - Fast static site with optimized assets
+- 🎯 **Intuitive Navigation** - Sticky blur navigation bar
+
+### Technical Features
+- 🚀 **Modern Stack** - Astro 5 + TypeScript + Tailwind CSS 3
+- 🎨 **Motion Library** - Lightweight animations with Motion One
+- 🔍 **SEO Optimized** - Meta tags, Open Graph, schemas, sitemap
+- 📝 **Smart Components** - Reusable premium button and card components
+- 🎯 **Type Safe** - Full TypeScript implementation
+
+### Content Features
+- 💎 **Premium Pricing Cards** - Glassy cards with "Most Popular" badge
+- 🖼️ **Device Mockups** - Showcase with screenshot carousel
+- ⭐ **Testimonials** - Example reviews with gradient avatar badges
+- 📊 **FAQ Accordion** - Smooth expand/collapse interactions
+- 🎯 **Example Projects** - Case-study style cards with tags
 
 ## Quick Start
 
@@ -81,12 +108,16 @@ npm run preview
 │   │   ├── Testimonials.astro
 │   │   ├── FAQAccordion.astro
 │   │   ├── ContactForm.astro
-│   │   └── RegionSwitcher.astro
+│   │   ├── RegionSwitcher.astro
+│   │   └── Button.astro       # Premium button component
 │   ├── config/
 │   │   └── site.ts            # Site configuration (pricing, regions, content)
 │   ├── layouts/
 │   │   ├── BaseLayout.astro   # Base HTML layout with SEO
 │   │   └── RegionLayout.astro # Layout with navigation and footer
+│   ├── styles/
+│   │   ├── global.css         # Global styles
+│   │   └── theme.css          # Premium theme tokens and utilities
 │   └── pages/
 │       ├── index.astro        # Homepage with region selector
 │       ├── 404.astro          # Custom 404 page
@@ -107,10 +138,35 @@ npm run preview
 ├── astro.config.mjs           # Astro configuration
 ├── tailwind.config.mjs        # Tailwind CSS configuration
 ├── tsconfig.json              # TypeScript configuration
+├── IMAGE-SOURCES.md           # Image requirements documentation
 └── package.json
 ```
 
 ## Configuration
+
+### Premium Theme Customization
+
+The site uses a centralized theme system with CSS custom properties in `src/styles/theme.css`:
+
+```css
+:root {
+  /* Color Palette */
+  --color-bg-base: #0a0a0a;
+  --color-accent-primary: #6366f1;
+  --color-accent-secondary: #8b5cf6;
+  
+  /* Typography */
+  --font-heading: 'Space Grotesk', ...;
+  --font-body: 'Inter', ...;
+  
+  /* Spacing, shadows, and more */
+}
+```
+
+**To customize the theme:**
+1. Edit color values in `src/styles/theme.css`
+2. Update Tailwind config in `tailwind.config.mjs` for utility classes
+3. Adjust font families by updating Google Fonts link in `BaseLayout.astro`
 
 ### Site Configuration
 
