@@ -11,7 +11,8 @@ export interface Props {
 
 const { title, description, region, canonical, ogImage } = Astro.props;
 const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site);
-const imageURL = ogImage || new URL('/marketing/og-image.jpg', Astro.site);
+const base = import.meta.env.BASE_URL;
+const imageURL = ogImage || new URL(`${base}og-image.jpg`, Astro.site);
 ---
 
 <!doctype html>
@@ -33,16 +34,16 @@ const imageURL = ogImage || new URL('/marketing/og-image.jpg', Astro.site);
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalURL} />
-    <meta name="twitter:title" content={`${title} | ${SITE_NAME}`} />
+    <meta name="twitter:title" content={`${title} | {SITE_NAME}`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageURL} />
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/marketing/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/marketing/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/marketing/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/marketing/apple-touch-icon.png" />
-    <link rel="manifest" href="/marketing/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" type="image/png" sizes="32x32" href={`${base}favicon-32x32.png`} />
+    <link rel="icon" type="image/png" sizes="16x16" href={`${base}favicon-16x16.png`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png`} />
+    <link rel="manifest" href={`${base}site.webmanifest`} />
     
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -57,7 +58,7 @@ const imageURL = ogImage || new URL('/marketing/og-image.jpg', Astro.site);
         '@type': 'Organization',
         name: SITE_NAME,
         url: Astro.site,
-        logo: new URL('/marketing/logo.png', Astro.site),
+        logo: new URL(`${base}logo.png`, Astro.site),
       })} />
     )}
   </head>
