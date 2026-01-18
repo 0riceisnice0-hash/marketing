@@ -22,7 +22,7 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="sticky top-0 z-50 glass border-b border-border-subtle">
+<nav id="main-nav" class="sticky top-0 z-50 glass border-b border-border-subtle transition-transform duration-300 ease-in-out">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <div class="flex items-center">
@@ -68,7 +68,7 @@ const currentPath = Astro.url.pathname;
           <!-- Dropdown Menu -->
           <div
             id="cart-dropdown"
-            class="hidden absolute right-0 mt-2 w-72 glass rounded-xl shadow-xl border border-border-subtle overflow-hidden z-50"
+            class="hidden absolute right-0 mt-2 w-72 bg-bg-elevated rounded-xl shadow-xl border border-border-subtle overflow-hidden z-50"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="cart-button"
@@ -123,7 +123,7 @@ const currentPath = Astro.url.pathname;
           <!-- Account Dropdown Menu -->
           <div
             id="account-dropdown"
-            class="hidden absolute right-0 mt-2 w-64 glass rounded-xl shadow-xl border border-border-subtle overflow-hidden z-50"
+            class="hidden absolute right-0 mt-2 w-64 bg-bg-elevated rounded-xl shadow-xl border border-border-subtle overflow-hidden z-50"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="account-button"
@@ -513,6 +513,42 @@ const currentPath = Astro.url.pathname;
       });
     }
   });
+  
+  // Auto-hide/show header on scroll
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    const updateNavVisibility = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Don't hide if we're at the very top
+      if (currentScrollY <= 0) {
+        nav.style.transform = 'translateY(0)';
+      }
+      // Hide when scrolling down
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        nav.style.transform = 'translateY(-100%)';
+      }
+      // Show when scrolling up
+      else if (currentScrollY < lastScrollY) {
+        nav.style.transform = 'translateY(0)';
+      }
+      
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+    
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavVisibility);
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
 </script>
 
 <style>
