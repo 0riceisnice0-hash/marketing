@@ -10,26 +10,29 @@ const { region } = Astro.props;
 const testimonials = TESTIMONIALS[region];
 ---
 
-<section class="py-20 bg-white">
+<section class="py-20 bg-bg-elevated relative">
+  <!-- Gradient divider at top -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-secondary/50 to-transparent"></div>
+  
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-4">
         Example testimonials
       </h2>
-      <p class="text-sm text-gray-500 mb-12">
+      <p class="text-sm text-text-tertiary mb-12">
         Testimonials shown are examples for demonstration.
       </p>
     </div>
     
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {testimonials.map((testimonial) => (
-        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+        <div class="glass rounded-xl p-6 hover:border-accent-primary/30 transition-all group">
           <div class="flex items-center mb-3">
             {[...Array(5)].map((_, i) => (
               <svg
                 class:list={[
                   'w-5 h-5',
-                  i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'
+                  i < testimonial.rating ? 'text-yellow-400' : 'text-border-emphasis'
                 ]}
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -38,21 +41,21 @@ const testimonials = TESTIMONIALS[region];
               </svg>
             ))}
           </div>
-          <p class="text-gray-700 mb-4 italic">"{testimonial.content}"</p>
+          <p class="text-text-secondary mb-4 italic leading-relaxed">"{testimonial.content}"</p>
           <div class="flex items-center">
-            <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold mr-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold font-heading mr-3 shadow-glow-soft">
               {testimonial.name.charAt(0)}
             </div>
             <div>
-              <p class="font-semibold text-gray-900">{testimonial.name}</p>
-              <p class="text-sm text-gray-600">{testimonial.business}</p>
+              <p class="font-semibold text-text-primary">{testimonial.name}</p>
+              <p class="text-sm text-text-tertiary">{testimonial.business}</p>
             </div>
           </div>
         </div>
       ))}
     </div>
     
-    <p class="text-center text-sm text-gray-500 mt-8">
+    <p class="text-center text-sm text-text-tertiary mt-8">
       Client feedback shown for demonstration
     </p>
   </div>
