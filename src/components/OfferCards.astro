@@ -89,13 +89,29 @@ const popularIndex = 1;
             </div>
           )}
           
-          <Button 
-            href={`${basePath}/${region}/contact`}
-            variant={index === popularIndex ? 'primary' : 'secondary'}
-            class="w-full"
-          >
-            Get started
-          </Button>
+          <div class="space-y-2">
+            <button
+              type="button"
+              class:list={[
+                'website-add-to-cart w-full py-3 px-6 rounded-lg font-semibold transition-all',
+                index === popularIndex 
+                  ? 'bg-accent-primary text-white hover:bg-accent-primary-hover shadow-glow-soft' 
+                  : 'bg-bg-surface text-text-primary hover:bg-accent-primary hover:text-white border border-border-subtle'
+              ]}
+              data-package-name={tier.name}
+              data-package-price={tier.price}
+              data-currency-symbol={currencySymbol}
+            >
+              Add to cart
+            </button>
+            <Button 
+              href={`${basePath}/${region}/contact`}
+              variant="secondary"
+              class="w-full"
+            >
+              Get started
+            </Button>
+          </div>
         </div>
       ))}
     </div>
@@ -128,6 +144,47 @@ const popularIndex = 1;
         if (icon) icon.style.transform = 'rotate(180deg)';
         if (text) text.textContent = 'Show less';
       }
+    });
+  });
+  
+  // Website package add to cart functionality
+  document.querySelectorAll('.website-add-to-cart').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const btn = button as HTMLElement;
+      const packageName = btn.dataset.packageName;
+      const packagePrice = parseFloat(btn.dataset.packagePrice || '0');
+      const currencySymbol = btn.dataset.currencySymbol;
+      
+      // Get existing cart data
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      // Remove any existing website package
+      cart = cart.filter((item: any) => item.type !== 'website');
+      
+      // Add new website package
+      cart.push({
+        type: 'website',
+        name: packageName,
+        price: packagePrice,
+        currencySymbol: currencySymbol
+      });
+      
+      // Save cart
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Update button text temporarily
+      const originalText = button.textContent;
+      button.textContent = 'Added!';
+      button.classList.add('bg-green-600');
+      
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('bg-green-600');
+      }, 2000);
+      
+      // Trigger cart update event
+      window.dispatchEvent(new Event('cartUpdated'));
     });
   });
 </script>
