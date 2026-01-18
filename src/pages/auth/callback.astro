@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Completing Sign In"
+  description="Processing authentication"
+>
+  <div class="min-h-screen flex items-center justify-center bg-bg-base">
+    <div class="text-center">
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent-primary mb-4"></div>
+      <p class="text-text-secondary">Completing sign in...</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { supabase } from '../../lib/supabase';
+  
+  // Handle OAuth callback
+  async function handleCallback() {
+    try {
+      // Check for error in URL params (OAuth error)
+      const urlParams = new URLSearchParams(window.location.search);
+      const errorParam = urlParams.get('error');
+      const errorDescription = urlParams.get('error_description');
+      
+      if (errorParam) {
+        console.error('OAuth error:', errorParam, errorDescription);
+        window.location.href = '/signin?error=oauth_failed';
+        return;
+      }
+      
+      // Exchange the code for a session (Supabase automatically handles the hash/code)
+      const { data, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        console.error('Error getting session:', error);
+        window.location.href = '/signin?error=auth_failed';
+        return;
+      }
+      
+      if (data.session) {
+        // Successfully authenticated
+        window.location.href = '/account';
+      } else {
+        // No session found, try to get user which might trigger the exchange
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+        
+        if (userError || !userData.user) {
+          console.error('No session or user found');
+          window.location.href = '/signin';
+        } else {
+          // User found, redirect to account
+          window.location.href = '/account';
+        }
+      }
+    } catch (err) {
+      console.error('Callback error:', err);
+      window.location.href = '/signin?error=callback_failed';
+    }
+  }
+  
+  // Run on page load
+  handleCallback();
+</script>
