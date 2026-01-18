@@ -34,16 +34,16 @@ const popularIndex = 1;
           index === popularIndex && 'border-accent-primary shadow-glow-primary scale-105'
         ]}>
           {index === popularIndex && (
-            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-semibold badge-pulse-once">
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-primary text-white px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-semibold badge-pulse-once whitespace-nowrap">
               Most Popular
             </div>
           )}
           
-          <h3 class="text-2xl font-bold font-heading text-text-primary mb-2">{tier.name}</h3>
+          <h3 class="text-xl sm:text-2xl font-bold font-heading text-text-primary mb-2 break-words">{tier.name}</h3>
           <div class="mb-4">
-            <span class="text-5xl font-bold font-heading gradient-text">{currencySymbol}{tier.price}</span>
+            <span class="text-4xl sm:text-5xl font-bold font-heading gradient-text">{currencySymbol}{tier.price}</span>
           </div>
-          <p class="text-text-secondary mb-6 leading-relaxed">{tier.description}</p>
+          <p class="text-text-secondary mb-6 leading-relaxed break-words">{tier.description}</p>
           
           <ul class="space-y-3 mb-8">
             {tier.features.map((feature) => (
