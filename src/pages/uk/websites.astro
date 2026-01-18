@@ -1,8 +1,16 @@
 ---
 import RegionLayout from '../../layouts/RegionLayout.astro';
+import Button from '../../components/Button.astro';
 
 const region = 'uk';
 const basePath = '/marketing';
+
+// Placeholder screenshot URLs - will be replaced with local images
+const screenshots = [
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+  'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80',
+  'https://images.unsplash.com/photo-1432888622747-4eb9a8f2c293?w=800&q=80',
+];
 ---
 
 <RegionLayout
@@ -10,76 +18,216 @@ const basePath = '/marketing';
   description="Professional website design services for UK small businesses. Template, custom, and ecommerce options available."
   region={region}
 >
-  <section class="py-20 bg-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        Website design services
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-bg-base">
+    <!-- Background with gradient -->
+    <div class="absolute inset-0 bg-gradient-to-br from-bg-base via-bg-elevated to-bg-base"></div>
+    <div class="absolute inset-0 bg-gradient-radial from-accent-primary/5 to-transparent"></div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold font-heading text-text-primary mb-6 leading-tight">
+        Website design <span class="gradient-text">services</span>
       </h1>
-      <p class="text-xl text-gray-600 mb-12">
-        We specialise in building clean, professional websites for UK small businesses. Every site is mobile-friendly, fast-loading, and includes SEO basics.
+      <p class="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+        We specialise in building clean, professional websites for UK small businesses. 
+        Every site is mobile-friendly, fast-loading, and includes SEO basics.
       </p>
-      
-      <div class="prose prose-lg max-w-none">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">What we build</h2>
-        
-        <h3 class="text-xl font-bold text-gray-900 mb-3 mt-8">Template Websites</h3>
-        <p class="text-gray-600 mb-4">
-          Start with a proven design and we'll customise it for your business. Perfect for straightforward service businesses that need a professional online presence quickly.
-        </p>
-        <ul class="list-disc pl-6 text-gray-600 space-y-2 mb-6">
-          <li>Up to 5 pages</li>
-          <li>Mobile responsive design</li>
-          <li>Contact form integration</li>
-          <li>SEO basics included</li>
-          <li>2-week turnaround</li>
-        </ul>
-        
-        <h3 class="text-xl font-bold text-gray-900 mb-3 mt-8">Custom Websites</h3>
-        <p class="text-gray-600 mb-4">
-          Fully bespoke design tailored to your brand. We'll work with you to create something unique that stands out from your competition.
-        </p>
-        <ul class="list-disc pl-6 text-gray-600 space-y-2 mb-6">
-          <li>Up to 5 pages</li>
-          <li>Custom design from scratch</li>
-          <li>Mobile responsive design</li>
-          <li>Contact form integration</li>
-          <li>SEO basics included</li>
-          <li>3-week turnaround</li>
-        </ul>
-        
-        <h3 class="text-xl font-bold text-gray-900 mb-3 mt-8">Small Ecommerce Starter</h3>
-        <p class="text-gray-600 mb-4">
-          Start selling online with a simple, effective ecommerce site. Perfect for businesses with a small product catalogue.
-        </p>
-        <ul class="list-disc pl-6 text-gray-600 space-y-2 mb-6">
-          <li>Up to 5 pages plus shop</li>
-          <li>Up to 20 products</li>
-          <li>Payment integration (Stripe/PayPal)</li>
-          <li>Mobile responsive design</li>
-          <li>SEO basics included</li>
-          <li>4-week turnaround</li>
-        </ul>
-        
-        <h2 class="text-2xl font-bold text-gray-900 mb-4 mt-12">Our process</h2>
-        <p class="text-gray-600 mb-4">
-          We always show you a draft first. This means you can see exactly what you're getting before committing. We'll refine it based on your feedback and only move forward when you're happy.
-        </p>
-        
-        <div class="mt-12">
-          <a
-            href={`${basePath}/${region}/pricing`}
-            class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
-          >
-            View pricing
-          </a>
-          <a
-            href={`${basePath}/${region}/contact`}
-            class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors ml-4"
-          >
-            Get in touch
-          </a>
+    </div>
+  </section>
+
+  <!-- Main Two-Column Section -->
+  <section class="py-20 bg-bg-elevated relative">
+    <!-- Gradient divider -->
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/50 to-transparent"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Left: Content -->
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-6">
+            What we build
+          </h2>
+          
+          <div class="space-y-8">
+            <!-- Template Websites -->
+            <div class="glass rounded-xl p-6 hover:border-accent-primary/30 transition-all">
+              <h3 class="text-2xl font-bold font-heading text-text-primary mb-3">
+                Template Websites
+              </h3>
+              <p class="text-text-secondary mb-4 leading-relaxed">
+                Start with a proven design and we'll customise it for your business. Perfect for straightforward service businesses.
+              </p>
+              <ul class="space-y-2 text-sm text-text-secondary">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Up to 5 pages • 2-week turnaround</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Mobile responsive • SEO optimized</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Custom Websites -->
+            <div class="glass rounded-xl p-6 hover:border-accent-primary/30 transition-all">
+              <h3 class="text-2xl font-bold font-heading text-text-primary mb-3">
+                Custom Websites
+              </h3>
+              <p class="text-text-secondary mb-4 leading-relaxed">
+                Fully bespoke design tailored to your brand. We'll work with you to create something unique.
+              </p>
+              <ul class="space-y-2 text-sm text-text-secondary">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Custom design from scratch • 3-week turnaround</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Your brand, your way • Full flexibility</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- E-commerce -->
+            <div class="glass rounded-xl p-6 hover:border-accent-primary/30 transition-all">
+              <h3 class="text-2xl font-bold font-heading text-text-primary mb-3">
+                Small Ecommerce Starter
+              </h3>
+              <p class="text-text-secondary mb-4 leading-relaxed">
+                Start selling online with a simple, effective ecommerce site. Perfect for small product catalogues.
+              </p>
+              <ul class="space-y-2 text-sm text-text-secondary">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Up to 20 products • Payment integration</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Stripe/PayPal ready • 4-week turnaround</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <Button href={`${basePath}/${region}/pricing`} variant="primary">
+              View pricing
+            </Button>
+            <Button href={`${basePath}/${region}/contact`} variant="secondary">
+              Get in touch
+            </Button>
+          </div>
+        </div>
+
+        <!-- Right: Device Mockup with Screenshots -->
+        <div class="relative">
+          <!-- Desktop mockup frame -->
+          <div class="glass rounded-2xl p-3 shadow-2xl">
+            <div class="bg-bg-base rounded-lg overflow-hidden aspect-video relative">
+              <!-- Screenshot carousel -->
+              <div class="screenshot-container absolute inset-0">
+                {screenshots.map((screenshot, index) => (
+                  <img
+                    src={screenshot}
+                    alt={`Website example ${index + 1}`}
+                    class:list={[
+                      'screenshot absolute inset-0 w-full h-full object-cover transition-opacity duration-1000',
+                      index === 0 ? 'opacity-100' : 'opacity-0'
+                    ]}
+                    data-index={index}
+                  />
+                ))}
+              </div>
+              
+              <!-- Overlay gradient -->
+              <div class="absolute inset-0 bg-gradient-to-t from-bg-base/30 to-transparent pointer-events-none"></div>
+            </div>
+          </div>
+
+          <!-- Floating mobile mockup -->
+          <div class="absolute -bottom-8 -left-8 w-32 md:w-48 glass rounded-2xl p-2 shadow-xl">
+            <div class="bg-bg-base rounded-lg overflow-hidden aspect-[9/16]">
+              <img
+                src={screenshots[0]}
+                alt="Mobile website example"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <!-- Decorative elements -->
+          <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-primary rounded-full blur-3xl opacity-20"></div>
+          <div class="absolute -bottom-4 right-8 w-32 h-32 bg-accent-secondary rounded-full blur-3xl opacity-20"></div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Process Section -->
+  <section class="py-20 bg-bg-base">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-6">
+        Our process
+      </h2>
+      <p class="text-xl text-text-secondary leading-relaxed">
+        We always show you a draft first. This means you can see exactly what you're getting before committing. 
+        We'll refine it based on your feedback and only move forward when you're happy.
+      </p>
+    </div>
+  </section>
 </RegionLayout>
+
+<script>
+  // Screenshot carousel with crossfade
+  let currentIndex = 0;
+  const screenshots = document.querySelectorAll('.screenshot') as NodeListOf<HTMLImageElement>;
+  const totalScreenshots = screenshots.length;
+
+  function rotateScreenshots() {
+    const current = screenshots[currentIndex];
+    if (current) {
+      current.style.opacity = '0';
+    }
+    
+    // Move to next
+    currentIndex = (currentIndex + 1) % totalScreenshots;
+    
+    // Fade in next
+    const next = screenshots[currentIndex];
+    if (next) {
+      next.style.opacity = '1';
+    }
+  }
+
+  // Only animate if user hasn't requested reduced motion
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (!prefersReducedMotion && totalScreenshots > 1) {
+    setInterval(rotateScreenshots, 4000);
+  }
+</script>
+
+<style>
+  .bg-gradient-radial {
+    background: radial-gradient(ellipse at center, var(--tw-gradient-stops));
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .screenshot {
+      transition: none !important;
+    }
+  }
+</style>
