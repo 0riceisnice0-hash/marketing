@@ -108,7 +108,7 @@ const popularIndex = 1;
     button.addEventListener('click', () => {
       const isExpanded = button.getAttribute('aria-expanded') === 'true';
       const extraFeatures = button.nextElementSibling as HTMLElement;
-      const icon = button.querySelector('.pricing-expand-icon');
+      const icon = button.querySelector('.pricing-expand-icon') as HTMLElement;
       const text = button.querySelector('.expand-text');
       
       if (isExpanded) {
