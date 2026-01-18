@@ -44,7 +44,10 @@ const imageURL = ogImage || new URL('/marketing/og-image.jpg', Astro.site);
     <link rel="apple-touch-icon" sizes="180x180" href="/marketing/apple-touch-icon.png" />
     <link rel="manifest" href="/marketing/site.webmanifest" />
     
-    <!-- Preload critical fonts (system fonts, no external loading) -->
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     
     <meta name="generator" content={Astro.generator} />
     
@@ -58,21 +61,52 @@ const imageURL = ogImage || new URL('/marketing/og-image.jpg', Astro.site);
       })} />
     )}
   </head>
-  <body class="min-h-screen bg-white text-gray-900 antialiased">
+  <body class="min-h-screen bg-bg-base text-text-primary antialiased">
     <slot />
     
     <script>
-      // Region switcher persistence
+      // Region auto-detection and persistence
       if (typeof window !== 'undefined') {
         const savedRegion = localStorage.getItem('region');
-        if (savedRegion && (savedRegion === 'uk' || savedRegion === 'us')) {
-          const currentPath = window.location.pathname;
-          const basePath = '/marketing';
-          const pathWithoutBase = currentPath.replace(basePath, '');
-          
-          // If we're on homepage and have a saved region, redirect to that region
-          if (pathWithoutBase === '/' || pathWithoutBase === '') {
+        const currentPath = window.location.pathname;
+        const basePath = '/marketing';
+        const pathWithoutBase = currentPath.replace(basePath, '');
+        
+        // Only auto-redirect on homepage if no saved region
+        if (pathWithoutBase === '/' || pathWithoutBase === '') {
+          if (savedRegion && (savedRegion === 'uk' || savedRegion === 'us')) {
+            // Use saved region preference
             window.location.href = `${basePath}/${savedRegion}`;
+          } else {
+            // Auto-detect region
+            let detectedRegion = 'uk'; // Default to UK
+            
+            try {
+              // Try to detect from timezone
+              const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+              const language = navigator.language;
+              
+              // US timezones
+              if (timezone && (
+                timezone.includes('America/') || 
+                timezone.includes('US/') ||
+                timezone.includes('Pacific/Honolulu')
+              )) {
+                detectedRegion = 'us';
+              }
+              // US language codes
+              else if (language && language.toLowerCase().startsWith('en-us')) {
+                detectedRegion = 'us';
+              }
+              // UK indicators (keeping default)
+              // If ambiguous or detection fails, defaults to 'uk'
+            } catch (e) {
+              // Detection failed, use default (uk)
+              console.log('Region detection failed, using UK default');
+            }
+            
+            // Redirect to detected region
+            window.location.href = `${basePath}/${detectedRegion}`;
           }
         }
       }
