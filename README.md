@@ -32,6 +32,7 @@ Premium dark-themed static marketing site built with Astro, TypeScript, and Tail
 - 🔍 **SEO Optimized** - Meta tags, Open Graph, schemas, sitemap
 - 📝 **Smart Components** - Reusable premium button and card components
 - 🎯 **Type Safe** - Full TypeScript implementation
+- 🔐 **Authentication** - Supabase authentication with Google OAuth support
 
 ### Content Features
 - 💎 **Premium Pricing Cards** - Glassy cards with "Most Popular" badge
@@ -60,12 +61,28 @@ Premium dark-themed static marketing site built with Astro, TypeScript, and Tail
    npm install --legacy-peer-deps
    ```
 
-3. **Start development server**
+3. **Set up environment variables**
+   
+   Copy the `.env.example` file to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Edit `.env` and add your Supabase credentials:
+   ```
+   VITE_SUPABASE_URL=https://ijsxucmpnfdvqgfgyntl.supabase.co
+   VITE_SUPABASE_ANON_KEY=your_actual_anon_key_here
+   VITE_BASE_PATH=
+   ```
+   
+   **Note:** For GitHub Pages deployment with a custom domain (hydronmarketing.com), `VITE_BASE_PATH` can stay empty. If deploying to `username.github.io/marketing`, set it to `/marketing`.
+
+4. **Start development server**
    ```bash
    npm run dev
    ```
 
-4. **Open in browser**
+5. **Open in browser**
    ```
    http://localhost:4321/
    ```
@@ -191,6 +208,51 @@ The contact form uses Formspree. To enable it:
    ```
 
 Alternative: Use Netlify Forms if deploying to Netlify instead of GitHub Pages.
+
+### Authentication Setup
+
+The site includes Supabase authentication with email/password and Google OAuth support.
+
+#### Supabase Configuration
+
+1. **Create a Supabase project** at [supabase.com](https://supabase.com)
+
+2. **Get your credentials**:
+   - Project URL: Found in Settings → API
+   - Anon/Public Key: Found in Settings → API
+
+3. **Configure redirect URLs** in Supabase Dashboard:
+   - Go to Authentication → URL Configuration
+   - Add redirect URLs:
+     - Development: `http://localhost:4321/auth/callback`
+     - Production: `https://hydronmarketing.com/auth/callback`
+   - Site URL: `https://hydronmarketing.com` (or your domain)
+
+4. **Enable Google OAuth** (optional):
+   - Go to Authentication → Providers
+   - Enable Google provider
+   - Add your Google OAuth credentials
+
+5. **Update environment variables**:
+   ```
+   VITE_SUPABASE_URL=your_project_url
+   VITE_SUPABASE_ANON_KEY=your_anon_key
+   ```
+
+#### Authentication Pages
+
+- `/signin` - Sign in with email/password or Google
+- `/signup` - Create account with email/password or Google
+- `/account` - Protected account page (requires authentication)
+- `/auth/callback` - OAuth callback handler
+
+#### Notes for GitHub Pages
+
+When deploying to GitHub Pages:
+- Environment variables must be set in GitHub Secrets
+- The workflow automatically injects them during build
+- For custom domains, ensure redirect URLs match your domain
+- For `username.github.io/repository` URLs, set `VITE_BASE_PATH=/repository`
 
 ## Deployment
 

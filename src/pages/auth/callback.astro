@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Completing Sign In"
+  description="Processing authentication"
+>
+  <div class="min-h-screen flex items-center justify-center bg-bg-base">
+    <div class="text-center">
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent-primary mb-4"></div>
+      <p class="text-text-secondary">Completing sign in...</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { supabase } from '../../lib/supabase';
+  
+  // Handle OAuth callback
+  async function handleCallback() {
+    try {
+      const { data, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        console.error('Error getting session:', error);
+        window.location.href = '/signin?error=auth_failed';
+        return;
+      }
+      
+      if (data.session) {
+        // Successfully authenticated
+        window.location.href = '/account';
+      } else {
+        // No session found
+        window.location.href = '/signin';
+      }
+    } catch (err) {
+      console.error('Callback error:', err);
+      window.location.href = '/signin?error=callback_failed';
+    }
+  }
+  
+  // Run on page load
+  handleCallback();
+</script>
