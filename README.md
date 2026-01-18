@@ -70,12 +70,12 @@ Premium dark-themed static marketing site built with Astro, TypeScript, and Tail
    
    Edit `.env` and add your Supabase credentials:
    ```
-   VITE_SUPABASE_URL=https://ijsxucmpnfdvqgfgyntl.supabase.co
-   VITE_SUPABASE_ANON_KEY=your_actual_anon_key_here
-   VITE_BASE_PATH=
+   PUBLIC_SUPABASE_URL=https://ijsxucmpnfdvqgfgyntl.supabase.co
+   PUBLIC_SUPABASE_ANON_KEY=your_actual_anon_key_here
+   PUBLIC_BASE_PATH=
    ```
    
-   **Note:** For GitHub Pages deployment with a custom domain (hydronmarketing.com), `VITE_BASE_PATH` can stay empty. If deploying to `username.github.io/marketing`, set it to `/marketing`.
+   **Note:** For GitHub Pages deployment with a custom domain (hydronmarketing.com), `PUBLIC_BASE_PATH` can stay empty. If deploying to `username.github.io/marketing`, set it to `/marketing`.
 
 4. **Start development server**
    ```bash
@@ -235,8 +235,8 @@ The site includes Supabase authentication with email/password and Google OAuth s
 
 5. **Update environment variables**:
    ```
-   VITE_SUPABASE_URL=your_project_url
-   VITE_SUPABASE_ANON_KEY=your_anon_key
+   PUBLIC_SUPABASE_URL=your_project_url
+   PUBLIC_SUPABASE_ANON_KEY=your_anon_key
    ```
 
 #### Authentication Pages
@@ -252,7 +252,7 @@ When deploying to GitHub Pages:
 - Environment variables must be set in GitHub Secrets
 - The workflow automatically injects them during build
 - For custom domains, ensure redirect URLs match your domain
-- For `username.github.io/repository` URLs, set `VITE_BASE_PATH=/repository`
+- For `username.github.io/repository` URLs, set `PUBLIC_BASE_PATH=/repository`
 
 ## Deployment
 
