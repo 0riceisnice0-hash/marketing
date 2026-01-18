@@ -46,17 +46,7 @@ import { FAQ_ITEMS } from '../config/site';
       const icon = button.querySelector('.faq-icon');
       const isExpanded = button.getAttribute('aria-expanded') === 'true';
       
-      // Close all other FAQs
-      document.querySelectorAll('.faq-button').forEach((otherButton) => {
-        if (otherButton !== button) {
-          otherButton.setAttribute('aria-expanded', 'false');
-          const otherContent = otherButton.nextElementSibling as HTMLElement;
-          otherContent?.classList.remove('open');
-          otherButton.querySelector('.faq-icon')?.classList.remove('rotated');
-        }
-      });
-      
-      // Toggle current FAQ
+      // Toggle current FAQ (no longer closing others)
       button.setAttribute('aria-expanded', String(!isExpanded));
       content?.classList.toggle('open');
       icon?.classList.toggle('rotated');

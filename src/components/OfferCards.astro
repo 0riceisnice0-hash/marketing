@@ -48,7 +48,7 @@ const popularIndex = 1;
           <p class="text-text-secondary mb-6 leading-relaxed break-words">{tier.description}</p>
           
           <ul class="space-y-3 mb-8">
-            {tier.features.map((feature) => (
+            {tier.features.slice(0, 5).map((feature) => (
               <li class="flex items-start">
                 <svg class="w-5 h-5 text-accent-primary mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -57,6 +57,37 @@ const popularIndex = 1;
               </li>
             ))}
           </ul>
+          
+          {tier.features.length > 5 && (
+            <div class="mb-8">
+              <button
+                type="button"
+                class="pricing-expand-button flex items-center justify-center w-full text-sm text-accent-primary hover:text-accent-primary-hover transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary"
+                aria-expanded="false"
+                data-tier-index={index}
+              >
+                <span class="expand-text">Show more features</span>
+                <svg
+                  class="pricing-expand-icon w-5 h-5 ml-2 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <ul class="pricing-extra-features space-y-3 mt-3" style="max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                {tier.features.slice(5).map((feature) => (
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-accent-primary mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span class="text-text-secondary text-sm">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           
           <Button 
             href={`${basePath}/${region}/contact`}
@@ -70,6 +101,36 @@ const popularIndex = 1;
     </div>
   </div>
 </section>
+
+<script>
+  // Pricing card expand/collapse functionality
+  document.querySelectorAll('.pricing-expand-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      const extraFeatures = button.nextElementSibling as HTMLElement;
+      const icon = button.querySelector('.pricing-expand-icon') as HTMLElement;
+      const text = button.querySelector('.expand-text');
+      
+      if (isExpanded) {
+        // Collapse
+        button.setAttribute('aria-expanded', 'false');
+        if (extraFeatures) extraFeatures.style.maxHeight = '0';
+        if (icon) icon.style.transform = 'rotate(0deg)';
+        if (text) text.textContent = 'Show more features';
+      } else {
+        // Expand
+        button.setAttribute('aria-expanded', 'true');
+        if (extraFeatures) {
+          // Calculate the height needed
+          const height = extraFeatures.scrollHeight;
+          extraFeatures.style.maxHeight = height + 'px';
+        }
+        if (icon) icon.style.transform = 'rotate(180deg)';
+        if (text) text.textContent = 'Show less';
+      }
+    });
+  });
+</script>
 
 <style>
   @media (prefers-reduced-motion: no-preference) {
