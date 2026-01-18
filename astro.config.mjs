@@ -4,8 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://0riceisnice0-hash.github.io',
-  base: '/marketing',
+  site: 'https://hydronmarketing.com',
   integrations: [
     tailwind(),
     sitemap()
