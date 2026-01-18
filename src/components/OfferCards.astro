@@ -1,6 +1,7 @@
 ---
 import type { Region } from '../config/site';
 import { PRICING, REGIONS } from '../config/site';
+import Button from './Button.astro';
 
 interface Props {
   region: Region;
@@ -10,45 +11,72 @@ const { region } = Astro.props;
 const pricing = PRICING[region];
 const { currencySymbol } = REGIONS[region];
 const basePath = '/marketing';
+
+// Mark the middle tier (Custom Website) as most popular
+const popularIndex = 1;
 ---
 
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-bg-base relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-4">
         Simple, transparent pricing
       </h2>
-      <p class="text-xl text-gray-600">
+      <p class="text-xl text-text-secondary">
         Choose the package that fits your business
       </p>
     </div>
     
     <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      {pricing.map((tier) => (
-        <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-xl transition-shadow">
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">{tier.name}</h3>
+      {pricing.map((tier, index) => (
+        <div class:list={[
+          'glass rounded-2xl p-8 transition-all hover:border-accent-primary/50 relative group',
+          index === popularIndex && 'border-accent-primary shadow-glow-primary scale-105'
+        ]}>
+          {index === popularIndex && (
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
+              Most Popular
+            </div>
+          )}
+          
+          <h3 class="text-2xl font-bold font-heading text-text-primary mb-2">{tier.name}</h3>
           <div class="mb-4">
-            <span class="text-4xl font-bold text-primary-600">{currencySymbol}{tier.price}</span>
+            <span class="text-5xl font-bold font-heading gradient-text">{currencySymbol}{tier.price}</span>
           </div>
-          <p class="text-gray-600 mb-6">{tier.description}</p>
+          <p class="text-text-secondary mb-6 leading-relaxed">{tier.description}</p>
+          
           <ul class="space-y-3 mb-8">
             {tier.features.map((feature) => (
               <li class="flex items-start">
-                <svg class="w-5 h-5 text-primary-600 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="w-5 h-5 text-accent-primary mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <span class="text-gray-700 text-sm">{feature}</span>
+                <span class="text-text-secondary text-sm">{feature}</span>
               </li>
             ))}
           </ul>
-          <a
+          
+          <Button 
             href={`${basePath}/${region}/contact`}
-            class="block w-full text-center px-6 py-3 border border-primary-600 text-base font-medium rounded-lg text-primary-600 bg-white hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+            variant={index === popularIndex ? 'primary' : 'secondary'}
+            class="w-full"
           >
             Get started
-          </a>
+          </Button>
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .glass {
+      transition: all 0.3s ease;
+    }
+    
+    .glass:hover {
+      transform: translateY(-4px);
+    }
+  }
+</style>

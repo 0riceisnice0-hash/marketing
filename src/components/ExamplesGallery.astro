@@ -2,35 +2,36 @@
 import { EXAMPLE_PROJECTS } from '../config/site';
 ---
 
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-bg-base">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-4">
         Example projects
       </h2>
-      <p class="text-xl text-gray-600 mb-2">
+      <p class="text-xl text-text-secondary mb-2">
         See what we can build for your business
       </p>
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-text-tertiary">
         All examples shown are demos for demonstration purposes
       </p>
     </div>
     
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {EXAMPLE_PROJECTS.map((project) => (
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
-          <div class="aspect-video bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-            <div class="text-center p-6">
+        <div class="glass rounded-xl overflow-hidden hover:border-accent-primary/50 transition-all group">
+          <div class="aspect-video bg-gradient-surface flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10"></div>
+            <div class="text-center p-6 relative z-10">
               <div class="text-4xl mb-2">🏢</div>
-              <p class="text-sm text-primary-700 font-medium">Demo example</p>
+              <p class="text-sm text-accent-primary font-medium">Demo example</p>
             </div>
           </div>
           <div class="p-6">
             <div class="flex items-center justify-between mb-2">
-              <h3 class="text-xl font-bold text-gray-900">{project.title}</h3>
-              <span class="text-sm text-primary-600 font-medium">{project.industry}</span>
+              <h3 class="text-xl font-bold font-heading text-text-primary">{project.title}</h3>
+              <span class="px-3 py-1 text-xs font-medium rounded-full bg-accent-primary/10 text-accent-primary">{project.industry}</span>
             </div>
-            <p class="text-gray-600 text-sm">{project.description}</p>
+            <p class="text-text-secondary text-sm leading-relaxed">{project.description}</p>
           </div>
         </div>
       ))}

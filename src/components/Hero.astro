@@ -1,5 +1,6 @@
 ---
 import type { Region } from '../config/site';
+import Button from './Button.astro';
 
 interface Props {
   region: Region;
@@ -9,29 +10,73 @@ const { region } = Astro.props;
 const basePath = '/marketing';
 ---
 
-<section class="relative bg-gradient-to-br from-primary-50 to-white py-20 md:py-32">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+  <!-- Background Image with Treatments -->
+  <div class="absolute inset-0 z-0">
+    <!-- Using Unsplash placeholder for now - replace with downloaded image -->
+    <div 
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1920&q=80');"
+    ></div>
+    
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-bg-base/70 via-bg-base/80 to-bg-base"></div>
+    
+    <!-- Vignette Effect -->
+    <div class="absolute inset-0 bg-radial-vignette"></div>
+  </div>
+  
+  <!-- Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
     <div class="text-center max-w-4xl mx-auto">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-        A professional 5‑page website, built fast, at a fair price.
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold font-heading text-text-primary mb-6 leading-tight">
+        A professional <span class="gradient-text">5-page website</span>, built fast, at a fair price.
       </h1>
-      <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
-        We build clean, mobile‑friendly websites for small businesses. We show you first, then you decide.
+      <p class="text-xl md:text-2xl text-text-secondary mb-10 max-w-3xl mx-auto leading-relaxed">
+        We build clean, mobile-friendly websites for small businesses. We show you first, then you decide.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href={`${basePath}/${region}/pricing`}
-          class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
-        >
+        <Button href={`${basePath}/${region}/pricing`} variant="primary" size="lg">
           See pricing
-        </a>
-        <a
-          href={`${basePath}/${region}/examples`}
-          class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
-        >
+        </Button>
+        <Button href={`${basePath}/${region}/examples`} variant="secondary" size="lg">
           View examples
-        </a>
+        </Button>
       </div>
     </div>
   </div>
+  
+  <!-- Decorative Elements -->
+  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-bg-base to-transparent z-10"></div>
 </section>
+
+<style>
+  .bg-radial-vignette {
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 10, 0.5) 100%);
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    h1 {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    p {
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    .flex {
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
