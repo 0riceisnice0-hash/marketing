@@ -1,0 +1,222 @@
+---
+import type { Region } from '../config/site';
+import { REGIONS } from '../config/site';
+
+interface Props {
+  region: Region;
+}
+
+const { region } = Astro.props;
+const { currencySymbol } = REGIONS[region];
+
+// Base monthly prices
+const basePrices = {
+  us: 32.99,
+  uk: 24.99
+};
+
+const basePrice = basePrices[region];
+
+// Calculate discounted prices
+const hostingPlans = [
+  {
+    name: 'Monthly',
+    duration: '1 month',
+    discount: 0,
+    monthlyPrice: basePrice,
+    totalPrice: basePrice,
+    billingText: 'Billed monthly'
+  },
+  {
+    name: '6 Months',
+    duration: '6 months',
+    discount: 10,
+    monthlyPrice: region === 'us' ? 29.69 : 22.49,
+    totalPrice: region === 'us' ? 178.14 : 134.94,
+    billingText: 'Billed every 6 months',
+    popular: false
+  },
+  {
+    name: '12 Months',
+    duration: '12 months',
+    discount: 20,
+    monthlyPrice: region === 'us' ? 26.39 : 19.99,
+    totalPrice: region === 'us' ? 316.68 : 239.88,
+    billingText: 'Billed annually',
+    popular: true
+  }
+];
+---
+
+<section class="py-20 bg-bg-elevated relative">
+  <!-- Gradient divider -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-secondary/50 to-transparent"></div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-4">
+        Hosting Packages
+      </h2>
+      <p class="text-xl text-text-secondary">
+        Reliable hosting for your website
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      {hostingPlans.map((plan, index) => (
+        <div class:list={[
+          'glass rounded-2xl p-8 transition-all hover:border-accent-primary/50 relative group cursor-pointer hosting-card',
+          plan.popular && 'border-accent-primary shadow-glow-primary scale-105'
+        ]}
+        data-plan-index={index}
+        data-plan-name={plan.name}
+        data-monthly-price={plan.monthlyPrice}
+        data-total-price={plan.totalPrice}
+        data-duration={plan.duration}
+        >
+          {plan.popular && (
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
+              Best Value
+            </div>
+          )}
+          
+          <h3 class="text-2xl font-bold font-heading text-text-primary mb-2">{plan.name}</h3>
+          {plan.discount > 0 && (
+            <div class="mb-2">
+              <span class="inline-block bg-accent-primary/20 text-accent-primary px-2 py-1 rounded text-xs font-semibold">
+                Save {plan.discount}%
+              </span>
+            </div>
+          )}
+          <div class="mb-4">
+            <span class="text-5xl font-bold font-heading gradient-text">{currencySymbol}{plan.monthlyPrice.toFixed(2)}</span>
+            <span class="text-text-secondary text-lg">/mo</span>
+          </div>
+          <p class="text-text-secondary text-sm mb-6">{plan.billingText}</p>
+          
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent-primary mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-text-secondary text-sm">99.9% uptime guarantee</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent-primary mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-text-secondary text-sm">SSL certificate included</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent-primary mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-text-secondary text-sm">Daily backups</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent-primary mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-text-secondary text-sm">24/7 support</span>
+            </li>
+          </ul>
+          
+          <button 
+            type="button"
+            class:list={[
+              'hosting-add-to-cart w-full py-3 px-6 rounded-lg font-semibold transition-all',
+              plan.popular 
+                ? 'bg-accent-primary text-white hover:bg-accent-primary-hover shadow-glow-soft' 
+                : 'bg-bg-surface text-text-primary hover:bg-accent-primary hover:text-white border border-border-subtle'
+            ]}
+            data-plan-index={index}
+          >
+            Add to cart
+          </button>
+          
+          {/* Hidden total price info - shown when selected */}
+          <div class="hosting-total-info hidden mt-4 p-4 bg-bg-base rounded-lg border border-accent-primary">
+            <p class="text-text-secondary text-sm">
+              Total for {plan.duration}: <span class="font-bold text-text-primary">{currencySymbol}{plan.totalPrice.toFixed(2)}</span>
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Hosting card selection and add to cart functionality
+  document.querySelectorAll('.hosting-add-to-cart').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = (button as HTMLElement).closest('.hosting-card') as HTMLElement;
+      if (!card) return;
+      
+      const planName = card.dataset.planName;
+      const monthlyPrice = card.dataset.monthlyPrice;
+      const totalPrice = card.dataset.totalPrice;
+      const duration = card.dataset.duration;
+      
+      // Show the total price info
+      const totalInfo = card.querySelector('.hosting-total-info') as HTMLElement;
+      if (totalInfo) {
+        totalInfo.classList.remove('hidden');
+      }
+      
+      // Get existing cart data
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      // Remove any existing hosting item
+      cart = cart.filter((item: any) => item.type !== 'hosting');
+      
+      // Add new hosting item
+      cart.push({
+        type: 'hosting',
+        name: `Hosting - ${planName}`,
+        monthlyPrice: parseFloat(monthlyPrice || '0'),
+        totalPrice: parseFloat(totalPrice || '0'),
+        duration: duration
+      });
+      
+      // Save cart
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Update button text temporarily
+      const originalText = button.textContent;
+      button.textContent = 'Added!';
+      button.classList.add('bg-green-600');
+      
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('bg-green-600');
+      }, 2000);
+      
+      // Trigger cart update event
+      window.dispatchEvent(new Event('cartUpdated'));
+    });
+  });
+  
+  // Show total info on card hover
+  document.querySelectorAll('.hosting-card').forEach((card) => {
+    card.addEventListener('mouseenter', () => {
+      const totalInfo = card.querySelector('.hosting-total-info') as HTMLElement;
+      if (totalInfo && !totalInfo.classList.contains('hidden')) {
+        return; // Already showing
+      }
+    });
+  });
+</script>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .hosting-card {
+      transition: all 0.3s ease;
+    }
+    
+    .hosting-card:hover {
+      transform: translateY(-4px);
+    }
+  }
+</style>

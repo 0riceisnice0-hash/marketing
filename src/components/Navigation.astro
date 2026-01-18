@@ -68,38 +68,39 @@ const currentPath = Astro.url.pathname;
           <!-- Dropdown Menu -->
           <div
             id="cart-dropdown"
-            class="hidden absolute right-0 mt-2 w-72 bg-bg-elevated rounded-xl shadow-xl border border-border-subtle overflow-hidden z-50"
+            class="hidden absolute right-0 mt-2 w-80 bg-bg-elevated rounded-xl shadow-xl border border-border-subtle overflow-hidden z-50"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="cart-button"
           >
-            <div class="py-2">
-              <a
-                href={`${basePath}/${region}/pricing#basic`}
-                class="block px-4 py-3 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-all"
-                role="menuitem"
-                tabindex="-1"
+            <!-- Cart items container -->
+            <div id="cart-items-container" class="max-h-96 overflow-y-auto">
+              <!-- Cart empty state -->
+              <div id="cart-empty" class="py-8 px-4 text-center">
+                <svg class="w-12 h-12 text-text-tertiary mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <p class="text-text-secondary text-sm">Your cart is empty</p>
+              </div>
+              
+              <!-- Cart items (populated by JavaScript) -->
+              <div id="cart-items-list"></div>
+              
+              <!-- Recommendations section -->
+              <div id="cart-recommendations" class="hidden border-t border-border-subtle"></div>
+            </div>
+            
+            <!-- Cart footer with total -->
+            <div id="cart-footer" class="hidden border-t border-border-subtle p-4 bg-bg-surface">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-text-secondary">Total:</span>
+                <span id="cart-total" class="text-xl font-bold text-text-primary"></span>
+              </div>
+              <a 
+                href={`${basePath}/${region}/contact`}
+                class="block w-full py-3 px-6 rounded-lg font-semibold text-center bg-accent-primary text-white hover:bg-accent-primary-hover transition-all"
               >
-                <div class="font-semibold">Basic Website Package</div>
-                <div class="text-xs text-text-tertiary mt-1">Perfect for getting started</div>
-              </a>
-              <a
-                href={`${basePath}/${region}/pricing#professional`}
-                class="block px-4 py-3 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-all"
-                role="menuitem"
-                tabindex="-1"
-              >
-                <div class="font-semibold">Professional Website Package</div>
-                <div class="text-xs text-text-tertiary mt-1">Most popular for growing businesses</div>
-              </a>
-              <a
-                href={`${basePath}/${region}/pricing#enterprise`}
-                class="block px-4 py-3 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-all"
-                role="menuitem"
-                tabindex="-1"
-              >
-                <div class="font-semibold">Enterprise Website Package</div>
-                <div class="text-xs text-text-tertiary mt-1">Advanced features for large businesses</div>
+                Get Started
               </a>
             </div>
           </div>
@@ -548,6 +549,124 @@ const currentPath = Astro.url.pathname;
     };
     
     window.addEventListener('scroll', onScroll, { passive: true });
+  }
+  
+  // Cart management
+  function updateCartDisplay() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const cartEmpty = document.getElementById('cart-empty');
+    const cartItemsList = document.getElementById('cart-items-list');
+    const cartFooter = document.getElementById('cart-footer');
+    const cartTotal = document.getElementById('cart-total');
+    const cartRecommendations = document.getElementById('cart-recommendations');
+    
+    if (!cartItemsList || !cartEmpty || !cartFooter || !cartTotal || !cartRecommendations) return;
+    
+    // Clear existing items
+    cartItemsList.innerHTML = '';
+    cartRecommendations.innerHTML = '';
+    
+    if (cart.length === 0) {
+      cartEmpty.classList.remove('hidden');
+      cartFooter.classList.add('hidden');
+      cartRecommendations.classList.add('hidden');
+      return;
+    }
+    
+    cartEmpty.classList.add('hidden');
+    cartFooter.classList.remove('hidden');
+    
+    // Check what's in cart
+    const hasWebsite = cart.some((item: any) => item.type === 'website');
+    const hasHosting = cart.some((item: any) => item.type === 'hosting');
+    
+    // Render cart items
+    let total = 0;
+    cart.forEach((item: any, index: number) => {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'px-4 py-3 border-b border-border-subtle flex justify-between items-start';
+      
+      const price = item.type === 'hosting' ? item.totalPrice : item.price;
+      total += price || 0;
+      
+      itemDiv.innerHTML = `
+        <div class="flex-1">
+          <div class="font-semibold text-text-primary text-sm">${item.name}</div>
+          ${item.type === 'hosting' ? `
+            <div class="text-xs text-text-tertiary mt-1">
+              ${item.monthlyPrice?.toFixed(2)}/mo × ${item.duration}
+            </div>
+          ` : ''}
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-text-primary font-semibold">${item.currencySymbol || (window.location.pathname.includes('/us') ? '$' : '£')}${(price || 0).toFixed(2)}</span>
+          <button class="cart-remove-item text-text-tertiary hover:text-red-500 transition-colors" data-index="${index}" aria-label="Remove item">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      `;
+      
+      cartItemsList.appendChild(itemDiv);
+    });
+    
+    // Update total
+    const currencySymbol = window.location.pathname.includes('/us') ? '$' : '£';
+    cartTotal.textContent = `${currencySymbol}${total.toFixed(2)}`;
+    
+    // Show recommendations
+    if (!hasWebsite || !hasHosting) {
+      cartRecommendations.classList.remove('hidden');
+      const recommendDiv = document.createElement('div');
+      recommendDiv.className = 'p-4';
+      
+      if (!hasHosting) {
+        recommendDiv.innerHTML = `
+          <div class="text-sm font-semibold text-text-primary mb-2">Add hosting (recommended)</div>
+          <div class="text-xs text-text-secondary mb-3">Keep your website online 24/7</div>
+          <a href="${window.location.pathname}#hosting" class="text-xs text-accent-primary hover:text-accent-primary-hover font-semibold">
+            View hosting options →
+          </a>
+        `;
+      } else if (!hasWebsite) {
+        recommendDiv.innerHTML = `
+          <div class="text-sm font-semibold text-text-primary mb-2">Add a website package</div>
+          <div class="text-xs text-text-secondary mb-3">Complete your online presence</div>
+          <a href="${window.location.pathname}#packages" class="text-xs text-accent-primary hover:text-accent-primary-hover font-semibold">
+            View website packages →
+          </a>
+        `;
+      }
+      
+      cartRecommendations.appendChild(recommendDiv);
+    }
+    
+    // Add remove button listeners
+    document.querySelectorAll('.cart-remove-item').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const index = parseInt((btn as HTMLElement).dataset.index || '0');
+        const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+        currentCart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(currentCart));
+        updateCartDisplay();
+        window.dispatchEvent(new Event('cartUpdated'));
+      });
+    });
+  }
+  
+  // Initialize cart display
+  updateCartDisplay();
+  
+  // Listen for cart updates
+  window.addEventListener('cartUpdated', updateCartDisplay);
+  
+  // Update cart when dropdown opens
+  const cartButton = document.getElementById('cart-button');
+  if (cartButton) {
+    cartButton.addEventListener('click', updateCartDisplay);
+    cartButton.addEventListener('mouseenter', updateCartDisplay);
   }
 </script>
 
