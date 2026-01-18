@@ -157,19 +157,35 @@ const currentPath = Astro.url.pathname;
   const cartDropdown = document.getElementById('cart-dropdown');
   
   if (cartButton && cartDropdown) {
+    // Helper function to close dropdown
+    const closeDropdown = () => {
+      cartButton.setAttribute('aria-expanded', 'false');
+      cartDropdown.classList.add('hidden');
+      updateMenuItemsTabIndex();
+    };
+    
+    // Helper function to update tabindex for menu items
+    const updateMenuItemsTabIndex = () => {
+      const menuItems = cartDropdown.querySelectorAll('[role="menuitem"]');
+      const isHidden = cartDropdown.classList.contains('hidden');
+      menuItems.forEach((item) => {
+        (item as HTMLElement).tabIndex = isHidden ? -1 : 0;
+      });
+    };
+    
     // Toggle dropdown on click
     cartButton.addEventListener('click', (e) => {
       e.stopPropagation();
       const isExpanded = cartButton.getAttribute('aria-expanded') === 'true';
       cartButton.setAttribute('aria-expanded', String(!isExpanded));
       cartDropdown.classList.toggle('hidden');
+      updateMenuItemsTabIndex();
     });
     
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
       if (!cartButton.contains(e.target as Node) && !cartDropdown.contains(e.target as Node)) {
-        cartButton.setAttribute('aria-expanded', 'false');
-        cartDropdown.classList.add('hidden');
+        closeDropdown();
       }
     });
     
@@ -179,31 +195,21 @@ const currentPath = Astro.url.pathname;
         e.preventDefault();
         cartButton.click();
       } else if (e.key === 'Escape') {
-        cartButton.setAttribute('aria-expanded', 'false');
-        cartDropdown.classList.add('hidden');
+        closeDropdown();
         cartButton.focus();
       }
     });
     
-    // Close dropdown on Escape key
+    // Close dropdown on Escape key from within the dropdown
     cartDropdown.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        cartButton.setAttribute('aria-expanded', 'false');
-        cartDropdown.classList.add('hidden');
+        closeDropdown();
         cartButton.focus();
       }
     });
     
-    // Update tabindex for menu items based on dropdown visibility
-    const observer = new MutationObserver(() => {
-      const menuItems = cartDropdown.querySelectorAll('[role="menuitem"]');
-      const isHidden = cartDropdown.classList.contains('hidden');
-      menuItems.forEach((item) => {
-        (item as HTMLElement).tabIndex = isHidden ? -1 : 0;
-      });
-    });
-    
-    observer.observe(cartDropdown, { attributes: true, attributeFilter: ['class'] });
+    // Initialize tabindex for menu items
+    updateMenuItemsTabIndex();
   }
 </script>
 
