@@ -197,16 +197,6 @@ const hostingPlans = [
       window.dispatchEvent(new Event('cartUpdated'));
     });
   });
-  
-  // Show total info on card hover
-  document.querySelectorAll('.hosting-card').forEach((card) => {
-    card.addEventListener('mouseenter', () => {
-      const totalInfo = card.querySelector('.hosting-total-info') as HTMLElement;
-      if (totalInfo && !totalInfo.classList.contains('hidden')) {
-        return; // Already showing
-      }
-    });
-  });
 </script>
 
 <style>
