@@ -47,15 +47,23 @@ const region = 'us';
         
         <!-- Stripe Checkout Button -->
         <div id="payment-checkout-section" class="hidden">
-          <a
-            href="YOUR_STRIPE_CHECKOUT_LINK_HERE"
+          <button
+            id="stripe-payment-button"
+            type="button"
             class="block w-full py-4 px-8 rounded-lg font-semibold text-center text-lg bg-accent-primary text-white hover:bg-accent-primary-hover transition-all shadow-glow-soft"
           >
             Pay with Stripe
-          </a>
+          </button>
           <p class="text-sm text-text-tertiary text-center mt-4">
             Secure payment processing powered by Stripe
           </p>
+          
+          <!-- Error message if hosting is missing -->
+          <div id="hosting-missing-error" class="hidden mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+            <p class="text-red-500 text-sm text-center">
+              Hosting is required to continue to payment. Please add a hosting plan from the pricing page.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -63,6 +71,13 @@ const region = 'us';
 </RegionLayout>
 
 <script>
+  // Hosting Stripe payment links
+  const HOSTING_STRIPE_LINKS = {
+    'monthly': 'https://buy.stripe.com/aFa14gbfkdOY9sId450x206',
+    '6-month': 'https://buy.stripe.com/8x26oAcjo7qAgVa6FH0x208',
+    '12-month': 'https://buy.stripe.com/00wbIUbfkdOY8oEfcd0x207',
+  };
+  
   // Load cart and display items
   function loadCartForPayment() {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -71,6 +86,8 @@ const region = 'us';
     const totalSection = document.getElementById('payment-total-section');
     const totalElement = document.getElementById('payment-total');
     const checkoutSection = document.getElementById('payment-checkout-section');
+    const paymentButton = document.getElementById('stripe-payment-button');
+    const hostingError = document.getElementById('hosting-missing-error');
     
     if (!cartItemsContainer || !emptyState || !totalSection || !totalElement || !checkoutSection) return;
     
@@ -80,6 +97,11 @@ const region = 'us';
       checkoutSection.classList.add('hidden');
       return;
     }
+    
+    // Check cart for both items
+    const hasWebsite = cart.some((item: any) => item.type === 'website');
+    const hasHosting = cart.some((item: any) => item.type === 'hosting');
+    const hostingItem = cart.find((item: any) => item.type === 'hosting');
     
     // Hide empty state, show total and checkout
     emptyState.classList.add('hidden');
@@ -119,6 +141,36 @@ const region = 'us';
     
     // Update total
     totalElement.textContent = `${currencySymbol}${total.toFixed(2)}`;
+    
+    // Set up payment button click handler
+    if (paymentButton && hostingError) {
+      paymentButton.addEventListener('click', () => {
+        if (hasWebsite && hasHosting && hostingItem?.term) {
+          // Get the appropriate Stripe link based on hosting term
+          const stripeLink = HOSTING_STRIPE_LINKS[hostingItem.term as keyof typeof HOSTING_STRIPE_LINKS];
+          if (stripeLink) {
+            // Redirect to Stripe checkout
+            window.location.href = stripeLink;
+          } else {
+            // Fallback to monthly if term not found
+            window.location.href = HOSTING_STRIPE_LINKS['monthly'];
+          }
+        } else {
+          // Show error message if hosting is missing
+          hostingError.classList.remove('hidden');
+          paymentButton.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+      });
+      
+      // Show/hide error based on hosting presence
+      if (!hasHosting) {
+        hostingError.classList.remove('hidden');
+        paymentButton.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+      } else {
+        hostingError.classList.add('hidden');
+        paymentButton.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+      }
+    }
   }
   
   // Load cart on page load

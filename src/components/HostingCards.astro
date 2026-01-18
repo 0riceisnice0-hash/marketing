@@ -21,6 +21,7 @@ const basePrice = basePrices[region];
 const hostingPlans = [
   {
     name: 'Monthly',
+    term: 'monthly',
     duration: '1 month',
     discount: 0,
     monthlyPrice: basePrice,
@@ -29,6 +30,7 @@ const hostingPlans = [
   },
   {
     name: '6 Months',
+    term: '6-month',
     duration: '6 months',
     discount: 10,
     monthlyPrice: region === 'us' ? 29.69 : 22.49,
@@ -38,6 +40,7 @@ const hostingPlans = [
   },
   {
     name: '12 Months',
+    term: '12-month',
     duration: '12 months',
     discount: 20,
     monthlyPrice: region === 'us' ? 26.39 : 19.99,
@@ -70,6 +73,7 @@ const hostingPlans = [
         ]}
         data-plan-index={index}
         data-plan-name={plan.name}
+        data-plan-term={plan.term}
         data-monthly-price={plan.monthlyPrice}
         data-total-price={plan.totalPrice}
         data-duration={plan.duration}
@@ -155,6 +159,7 @@ const hostingPlans = [
       if (!card) return;
       
       const planName = card.dataset.planName;
+      const planTerm = card.dataset.planTerm;
       const monthlyPrice = card.dataset.monthlyPrice;
       const totalPrice = card.dataset.totalPrice;
       const duration = card.dataset.duration;
@@ -171,10 +176,11 @@ const hostingPlans = [
       // Remove any existing hosting item
       cart = cart.filter((item: any) => item.type !== 'hosting');
       
-      // Add new hosting item
+      // Add new hosting item with term
       cart.push({
         type: 'hosting',
         name: `Hosting - ${planName}`,
+        term: planTerm,
         monthlyPrice: parseFloat(monthlyPrice || '0'),
         totalPrice: parseFloat(totalPrice || '0'),
         duration: duration
