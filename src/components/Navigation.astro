@@ -172,19 +172,24 @@ const currentPath = Astro.url.pathname;
       cartDropdown.classList.add('hidden');
       updateMenuItemsTabIndex();
     };
-    
-    // Toggle dropdown on click
-    cartButton.addEventListener('click', (e) => {
-      e.stopPropagation();
+    // Helper function to toggle dropdown
+    const toggleDropdown = () => {
       const isExpanded = cartButton.getAttribute('aria-expanded') === 'true';
       cartButton.setAttribute('aria-expanded', String(!isExpanded));
       cartDropdown.classList.toggle('hidden');
       updateMenuItemsTabIndex();
+    };
+    
+    // Toggle dropdown on click
+    cartButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleDropdown();
     });
     
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
-      if (!cartButton.contains(e.target as Node) && !cartDropdown.contains(e.target as Node)) {
+      const target = e.target;
+      if (target && !cartButton.contains(target as Node) && !cartDropdown.contains(target as Node)) {
         closeDropdown();
       }
     });
@@ -193,7 +198,7 @@ const currentPath = Astro.url.pathname;
     cartButton.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        cartButton.click();
+        toggleDropdown();
       } else if (e.key === 'Escape') {
         closeDropdown();
         cartButton.focus();
