@@ -358,14 +358,9 @@ const currentPath = Astro.url.pathname;
     let accountHoverTimeout: ReturnType<typeof setTimeout> | null = null;
     let isLoggedIn = false;
     
-    // Import Supabase client
+    // Import Supabase client and redirect helper
     const { supabase } = await import('../lib/supabase');
-    
-    // Helper function to build redirect URL for OAuth
-    function buildRedirectTo() {
-      const basePath = import.meta.env.VITE_BASE_PATH || '';
-      return window.location.origin + basePath + '/auth/callback';
-    }
+    const { buildRedirectTo } = await import('../utils/redirectHelper');
     
     // Helper function to update UI based on login state
     const updateAccountUI = () => {
