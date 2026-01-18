@@ -397,6 +397,11 @@ const currentPath = Astro.url.pathname;
     if (cartBtn && cartDrop && !cartBtn.contains(target as Node) && !cartDrop.contains(target as Node)) {
       cartBtn.setAttribute('aria-expanded', 'false');
       cartDrop.classList.add('hidden');
+      // Update tabindex for cart menu items
+      const cartMenuItems = cartDrop.querySelectorAll('[role="menuitem"]');
+      cartMenuItems.forEach((item) => {
+        (item as HTMLElement).tabIndex = -1;
+      });
     }
     
     // Close account dropdown if clicking outside
@@ -405,6 +410,11 @@ const currentPath = Astro.url.pathname;
     if (acctBtn && acctDrop && !acctBtn.contains(target as Node) && !acctDrop.contains(target as Node)) {
       acctBtn.setAttribute('aria-expanded', 'false');
       acctDrop.classList.add('hidden');
+      // Update tabindex for account menu items
+      const acctMenuItems = acctDrop.querySelectorAll('[role="menuitem"]');
+      acctMenuItems.forEach((item) => {
+        (item as HTMLElement).tabIndex = -1;
+      });
     }
   });
 </script>
