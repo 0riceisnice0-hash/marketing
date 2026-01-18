@@ -212,6 +212,12 @@ const currentPath = Astro.url.pathname;
   </div>
 </nav>
 
+<script is:inline define:vars={{ basePath, region }}>
+  // Make basePath and region available to inline scripts
+  window.__BASE_PATH__ = basePath;
+  window.__REGION__ = region;
+</script>
+
 <script>
   // Mobile menu toggle
   const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -622,8 +628,8 @@ const currentPath = Astro.url.pathname;
       recommendDiv.className = 'p-4';
       
       if (!hasHosting) {
-        const currentRegion = window.location.pathname.includes('/us') ? 'us' : 'uk';
-        const basePath = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : '/marketing';
+        const currentRegion = (window as any).__REGION__ || (window.location.pathname.includes('/us') ? 'us' : 'uk');
+        const basePath = (window as any).__BASE_PATH__ || '';
         recommendDiv.innerHTML = `
           <div class="text-sm font-semibold text-text-primary mb-2">Add hosting</div>
           <div class="text-xs text-text-secondary mb-3">Keep your website online 24/7</div>
