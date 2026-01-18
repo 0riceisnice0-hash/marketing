@@ -157,13 +157,6 @@ const currentPath = Astro.url.pathname;
   const cartDropdown = document.getElementById('cart-dropdown');
   
   if (cartButton && cartDropdown) {
-    // Helper function to close dropdown
-    const closeDropdown = () => {
-      cartButton.setAttribute('aria-expanded', 'false');
-      cartDropdown.classList.add('hidden');
-      updateMenuItemsTabIndex();
-    };
-    
     // Helper function to update tabindex for menu items
     const updateMenuItemsTabIndex = () => {
       const menuItems = cartDropdown.querySelectorAll('[role="menuitem"]');
@@ -171,6 +164,13 @@ const currentPath = Astro.url.pathname;
       menuItems.forEach((item) => {
         (item as HTMLElement).tabIndex = isHidden ? -1 : 0;
       });
+    };
+    
+    // Helper function to close dropdown
+    const closeDropdown = () => {
+      cartButton.setAttribute('aria-expanded', 'false');
+      cartDropdown.classList.add('hidden');
+      updateMenuItemsTabIndex();
     };
     
     // Toggle dropdown on click
