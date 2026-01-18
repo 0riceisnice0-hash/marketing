@@ -48,6 +48,62 @@ const currentPath = Astro.url.pathname;
       
       <div class="flex items-center space-x-4">
         <RegionSwitcher currentRegion={region} />
+        
+        <!-- Shopping Cart Dropdown -->
+        <div class="relative">
+          <button
+            id="cart-button"
+            type="button"
+            class="inline-flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-bg-elevated focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary transition-colors"
+            aria-expanded="false"
+            aria-label="Website packages menu"
+            aria-haspopup="true"
+          >
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </button>
+          
+          <!-- Dropdown Menu -->
+          <div
+            id="cart-dropdown"
+            class="hidden absolute right-0 mt-2 w-72 glass rounded-xl shadow-xl border border-border-subtle overflow-hidden z-50"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="cart-button"
+          >
+            <div class="py-2">
+              <a
+                href={`${basePath}/${region}/pricing#basic`}
+                class="block px-4 py-3 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-all"
+                role="menuitem"
+                tabindex="-1"
+              >
+                <div class="font-semibold">Basic Website Package</div>
+                <div class="text-xs text-text-tertiary mt-1">Perfect for getting started</div>
+              </a>
+              <a
+                href={`${basePath}/${region}/pricing#professional`}
+                class="block px-4 py-3 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-all"
+                role="menuitem"
+                tabindex="-1"
+              >
+                <div class="font-semibold">Professional Website Package</div>
+                <div class="text-xs text-text-tertiary mt-1">Most popular for growing businesses</div>
+              </a>
+              <a
+                href={`${basePath}/${region}/pricing#enterprise`}
+                class="block px-4 py-3 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-all"
+                role="menuitem"
+                tabindex="-1"
+              >
+                <div class="font-semibold">Enterprise Website Package</div>
+                <div class="text-xs text-text-tertiary mt-1">Advanced features for large businesses</div>
+              </a>
+            </div>
+          </div>
+        </div>
+        
         <button
           id="mobile-menu-button"
           type="button"
@@ -94,6 +150,60 @@ const currentPath = Astro.url.pathname;
       mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
       mobileMenu.classList.toggle('hidden');
     });
+  }
+  
+  // Shopping cart dropdown toggle
+  const cartButton = document.getElementById('cart-button');
+  const cartDropdown = document.getElementById('cart-dropdown');
+  
+  if (cartButton && cartDropdown) {
+    // Toggle dropdown on click
+    cartButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isExpanded = cartButton.getAttribute('aria-expanded') === 'true';
+      cartButton.setAttribute('aria-expanded', String(!isExpanded));
+      cartDropdown.classList.toggle('hidden');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!cartButton.contains(e.target as Node) && !cartDropdown.contains(e.target as Node)) {
+        cartButton.setAttribute('aria-expanded', 'false');
+        cartDropdown.classList.add('hidden');
+      }
+    });
+    
+    // Keyboard navigation
+    cartButton.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        cartButton.click();
+      } else if (e.key === 'Escape') {
+        cartButton.setAttribute('aria-expanded', 'false');
+        cartDropdown.classList.add('hidden');
+        cartButton.focus();
+      }
+    });
+    
+    // Close dropdown on Escape key
+    cartDropdown.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        cartButton.setAttribute('aria-expanded', 'false');
+        cartDropdown.classList.add('hidden');
+        cartButton.focus();
+      }
+    });
+    
+    // Update tabindex for menu items based on dropdown visibility
+    const observer = new MutationObserver(() => {
+      const menuItems = cartDropdown.querySelectorAll('[role="menuitem"]');
+      const isHidden = cartDropdown.classList.contains('hidden');
+      menuItems.forEach((item) => {
+        (item as HTMLElement).tabIndex = isHidden ? -1 : 0;
+      });
+    });
+    
+    observer.observe(cartDropdown, { attributes: true, attributeFilter: ['class'] });
   }
 </script>
 
