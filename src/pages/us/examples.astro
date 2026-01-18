@@ -1,6 +1,7 @@
 ---
 import RegionLayout from '../../layouts/RegionLayout.astro';
 import ExamplesGallery from '../../components/ExamplesGallery.astro';
+import Button from '../../components/Button.astro';
 
 const region = 'us';
 const basePath = '/marketing';
@@ -11,15 +12,15 @@ const basePath = '/marketing';
   description="View example website projects for US small businesses. See how we can help plumbers, electricians, barbers, cleaners, gyms, and landscapers."
   region={region}
 >
-  <section class="py-20 bg-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        Example projects
+  <section class="py-20 bg-bg-base section-fade-in">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold font-heading text-text-primary mb-6 heading-reveal">
+        Example <span class="gradient-text heading-underline">projects</span>
       </h1>
-      <p class="text-xl text-gray-600 mb-4">
+      <p class="text-xl text-text-secondary mb-4 heading-reveal anim-delay-1">
         Here are some examples of the types of websites we build for small businesses.
       </p>
-      <p class="text-sm text-gray-500 mb-12">
+      <p class="text-sm text-text-tertiary mb-12">
         All examples shown are demos created for demonstration purposes.
       </p>
     </div>
@@ -27,27 +28,23 @@ const basePath = '/marketing';
   
   <ExamplesGallery />
   
-  <section class="py-20 bg-white">
+  <section class="py-20 bg-bg-elevated relative section-fade-in">
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/50 to-transparent"></div>
+    
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+      <h2 class="text-3xl font-bold font-heading text-text-primary mb-4">
         Ready to get your own site?
       </h2>
-      <p class="text-xl text-gray-600 mb-8">
+      <p class="text-xl text-text-secondary mb-8">
         Whether you're a tradesperson, service provider, or local business, we can help.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href={`${basePath}/${region}/pricing`}
-          class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
-        >
+        <Button href={`${basePath}/${region}/pricing`} variant="primary" size="lg">
           View pricing
-        </a>
-        <a
-          href={`${basePath}/${region}/contact`}
-          class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
-        >
+        </Button>
+        <Button href={`${basePath}/${region}/contact`} variant="secondary" size="lg">
           Get in touch
-        </a>
+        </Button>
       </div>
     </div>
   </section>

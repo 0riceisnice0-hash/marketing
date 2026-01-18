@@ -3,3 +3,4 @@
 @tailwind utilities;
 
 @import './theme.css';
+@import './animations.css';
