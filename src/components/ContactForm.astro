@@ -43,9 +43,14 @@ const branchInfo = REGIONS[region];
             </svg>
             <div>
               <p class="font-semibold text-text-primary">Phone</p>
-              <a href={`tel:${branchInfo.phone}`} class="text-accent-primary hover:text-accent-primary-hover transition-colors">
+              <a href={`tel:${branchInfo.phone}`} class="text-accent-primary hover:text-accent-primary-hover transition-colors block">
                 {branchInfo.phone}
               </a>
+              {branchInfo.phoneUK && (
+                <a href={`tel:${branchInfo.phoneUK}`} class="text-accent-primary hover:text-accent-primary-hover transition-colors block mt-1">
+                  UK: {branchInfo.phoneUK}
+                </a>
+              )}
             </div>
           </div>
           
@@ -142,7 +147,7 @@ const branchInfo = REGIONS[region];
               <option value="starter">Starter Websites</option>
               <option value="custom">Custom Website</option>
               <option value="business-plus">Business Website Plus</option>
-              <option value="premium-ai">Premium Website + AI</option>
+              <option value="premium">Premium Website</option>
               <option value="other">Other / Not sure</option>
             </select>
           </div>

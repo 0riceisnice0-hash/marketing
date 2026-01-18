@@ -4,6 +4,7 @@ export interface BranchInfo {
   name: string;
   location: string;
   phone: string;
+  phoneUK?: string;
   email: string;
   whatsapp: string;
   currency: string;
@@ -61,6 +62,7 @@ export const REGIONS: Record<Region, BranchInfo> = {
     name: 'Hydron Marketing USA',
     location: 'Florida',
     phone: '1-248-705-1000',
+    phoneUK: '+44 792 6037 173',
     email: 'marketinghydron@gmail.com',
     whatsapp: '',
     currency: 'USD',
@@ -98,6 +100,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
         'Custom design',
         'Mobile responsive',
         'Contact form',
+        'Basic SEO setup',
         'SEO optimisation',
         'Google Analytics setup',
         'Social media integration',
@@ -113,8 +116,12 @@ export const PRICING: Record<Region, PricingTier[]> = {
         'Up to 8 pages',
         'Premium custom design',
         'Mobile responsive',
-        'Advanced contact forms',
+        'Contact form',
+        'Basic SEO setup',
         'Full SEO optimisation',
+        'Google Analytics setup',
+        'Social media integration',
+        'Advanced contact forms',
         'Performance optimisation',
         'Google Analytics & Search Console',
         'Blog/news section ready',
@@ -122,7 +129,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
       ],
     },
     {
-      name: 'Premium Website + AI',
+      name: 'Premium Website',
       price: 799,
       turnaround: '3 weeks',
       description: 'Top-tier website with AI-powered features for maximum impact.',
@@ -130,12 +137,19 @@ export const PRICING: Record<Region, PricingTier[]> = {
         'Up to 12 pages',
         'Premium custom design',
         'Mobile responsive',
-        'Advanced forms & lead capture',
+        'Contact form',
+        'Basic SEO setup',
         'Full SEO optimisation',
+        'Google Analytics setup',
+        'Social media integration',
+        'Advanced forms & lead capture',
         'Performance optimisation',
+        'Google Analytics & Search Console',
+        'Blog/news section ready',
         'AI chat assistant (optional add-on)',
         'AI FAQ/support widget',
-        'Smart contact routing',
+        'AI lead capture automation',
+        'Smart contact routing & automated replies',
         'Priority support',
         '3-week turnaround',
       ],
@@ -165,6 +179,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
         'Custom design',
         'Mobile responsive',
         'Contact form',
+        'Basic SEO setup',
         'SEO optimization',
         'Google Analytics setup',
         'Social media integration',
@@ -180,8 +195,12 @@ export const PRICING: Record<Region, PricingTier[]> = {
         'Up to 8 pages',
         'Premium custom design',
         'Mobile responsive',
-        'Advanced contact forms',
+        'Contact form',
+        'Basic SEO setup',
         'Full SEO optimization',
+        'Google Analytics setup',
+        'Social media integration',
+        'Advanced contact forms',
         'Performance optimization',
         'Google Analytics & Search Console',
         'Blog/news section ready',
@@ -189,7 +208,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
       ],
     },
     {
-      name: 'Premium Website + AI',
+      name: 'Premium Website',
       price: 999,
       turnaround: '3 weeks',
       description: 'Top-tier website with AI-powered features for maximum impact.',
@@ -197,12 +216,19 @@ export const PRICING: Record<Region, PricingTier[]> = {
         'Up to 12 pages',
         'Premium custom design',
         'Mobile responsive',
-        'Advanced forms & lead capture',
+        'Contact form',
+        'Basic SEO setup',
         'Full SEO optimization',
+        'Google Analytics setup',
+        'Social media integration',
+        'Advanced forms & lead capture',
         'Performance optimization',
+        'Google Analytics & Search Console',
+        'Blog/news section ready',
         'AI chat assistant (optional add-on)',
         'AI FAQ/support widget',
-        'Smart contact routing',
+        'AI lead capture automation',
+        'Smart contact routing & automated replies',
         'Priority support',
         '3-week turnaround',
       ],
@@ -212,36 +238,28 @@ export const PRICING: Record<Region, PricingTier[]> = {
 
 export const EXAMPLE_PROJECTS: ExampleProject[] = [
   {
-    id: 'apple-style',
-    title: 'Product Landing Demo',
-    industry: 'Apple-style',
-    image: '/images/demo-apple.jpg',
-    description: 'Clean, minimalist product showcase inspired by Apple design principles.',
-    demoUrl: 'https://demo.hydronmarketing.com/apple-style'
+    id: 'mobile-hairstyling',
+    title: 'Mobile Hairstyling',
+    industry: 'Beauty & Personal Care',
+    image: '/images/example-hairstyling.jpg',
+    description: 'Professional mobile hairstyling service showcasing portfolio and booking options.',
+    demoUrl: 'https://www.mobile-hairstyling.co.uk/'
   },
   {
-    id: 'tesla-style',
-    title: 'Automotive Landing Demo',
-    industry: 'Tesla-style',
-    image: '/images/demo-tesla.jpg',
-    description: 'Bold, immersive product page with full-screen visuals and smooth scrolling.',
-    demoUrl: 'https://demo.hydronmarketing.com/tesla-style'
+    id: 'ecowise-italy',
+    title: 'EcoWise Italy',
+    industry: 'Eco-Tourism',
+    image: '/images/example-ecowise.jpg',
+    description: 'Sustainable tourism and eco-friendly travel experiences in Italy.',
+    demoUrl: 'https://ecowiseitaly.com/'
   },
   {
-    id: 'stripe-style',
-    title: 'SaaS Landing Demo',
-    industry: 'Stripe-style',
-    image: '/images/demo-stripe.jpg',
-    description: 'Modern SaaS landing page with gradient backgrounds and developer-friendly aesthetics.',
-    demoUrl: 'https://demo.hydronmarketing.com/stripe-style'
-  },
-  {
-    id: 'airbnb-style',
-    title: 'Marketplace Demo',
-    industry: 'Airbnb-style',
-    image: '/images/demo-airbnb.jpg',
-    description: 'Inviting marketplace layout with search-focused design and trust elements.',
-    demoUrl: 'https://demo.hydronmarketing.com/airbnb-style'
+    id: 'fenster-glazing',
+    title: 'Fenster Glazing',
+    industry: 'Construction & Glazing',
+    image: '/images/example-fenster.jpg',
+    description: 'Professional glazing and window installation services with project showcase.',
+    demoUrl: 'https://fensterglazing.com/'
   },
 ];
 
