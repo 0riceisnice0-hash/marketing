@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import StructuredData from '../components/StructuredData.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
 import type { Region } from '../config/site';
 
 export interface Props {
@@ -21,4 +22,5 @@ const { title, description, region } = Astro.props;
     <slot />
   </main>
   <Footer region={region} />
+  <ScrollToTop />
 </BaseLayout>

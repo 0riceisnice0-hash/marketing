@@ -30,11 +30,11 @@ const popularIndex = 1;
     <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
       {pricing.map((tier, index) => (
         <div class:list={[
-          'glass rounded-2xl p-8 transition-all hover:border-accent-primary/50 relative group',
+          'glass rounded-2xl p-8 transition-all hover:border-accent-primary/50 relative group pricing-card card-lift',
           index === popularIndex && 'border-accent-primary shadow-glow-primary scale-105'
         ]}>
           {index === popularIndex && (
-            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-semibold badge-pulse-once">
               Most Popular
             </div>
           )}

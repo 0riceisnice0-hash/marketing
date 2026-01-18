@@ -21,7 +21,7 @@ import { FAQ_ITEMS } from '../config/site';
           >
             <span class="font-semibold font-heading text-text-primary">{item.question}</span>
             <svg
-              class="faq-icon w-5 h-5 text-text-tertiary transition-transform flex-shrink-0 ml-4"
+              class="faq-icon accordion-icon w-5 h-5 text-text-tertiary flex-shrink-0 ml-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -29,8 +29,8 @@ import { FAQ_ITEMS } from '../config/site';
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          <div class="faq-content hidden px-6 pb-4">
-            <p class="text-text-secondary leading-relaxed">{item.answer}</p>
+          <div class="faq-content accordion-content px-6">
+            <p class="text-text-secondary leading-relaxed pb-4">{item.answer}</p>
           </div>
         </div>
       ))}
@@ -39,10 +39,10 @@ import { FAQ_ITEMS } from '../config/site';
 </section>
 
 <script>
-  // FAQ accordion functionality
+  // FAQ accordion functionality with springy animation
   document.querySelectorAll('.faq-button').forEach((button) => {
     button.addEventListener('click', () => {
-      const content = button.nextElementSibling;
+      const content = button.nextElementSibling as HTMLElement;
       const icon = button.querySelector('.faq-icon');
       const isExpanded = button.getAttribute('aria-expanded') === 'true';
       
@@ -50,33 +50,23 @@ import { FAQ_ITEMS } from '../config/site';
       document.querySelectorAll('.faq-button').forEach((otherButton) => {
         if (otherButton !== button) {
           otherButton.setAttribute('aria-expanded', 'false');
-          otherButton.nextElementSibling?.classList.add('hidden');
-          otherButton.querySelector('.faq-icon')?.classList.remove('rotate-180');
+          const otherContent = otherButton.nextElementSibling as HTMLElement;
+          otherContent?.classList.remove('open');
+          otherButton.querySelector('.faq-icon')?.classList.remove('rotated');
         }
       });
       
       // Toggle current FAQ
       button.setAttribute('aria-expanded', String(!isExpanded));
-      content?.classList.toggle('hidden');
-      icon?.classList.toggle('rotate-180');
+      content?.classList.toggle('open');
+      icon?.classList.toggle('rotated');
     });
   });
 </script>
 
 <style>
-  .faq-icon {
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .rotate-180 {
-    transform: rotate(180deg);
-  }
-  
   @media (prefers-reduced-motion: reduce) {
-    .faq-icon {
-      transition: none;
-    }
-    
+    .faq-icon,
     .faq-content {
       transition: none !important;
     }

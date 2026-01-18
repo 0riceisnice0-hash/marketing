@@ -65,6 +65,11 @@ const imageURL = ogImage || new URL('/marketing/og-image.jpg', Astro.site);
     <slot />
     
     <script>
+      import { initSectionAnimations } from '../utils/animations';
+      initSectionAnimations();
+    </script>
+    
+    <script>
       // Region auto-detection and persistence
       if (typeof window !== 'undefined') {
         const savedRegion = localStorage.getItem('region');
@@ -118,6 +123,43 @@ const imageURL = ogImage || new URL('/marketing/og-image.jpg', Astro.site);
       if (mediaQuery.matches) {
         document.documentElement.style.setProperty('scroll-behavior', 'auto');
       }
+    </script>
+    
+    <script>
+      // Smooth scroll with sticky header offset
+      document.addEventListener('DOMContentLoaded', () => {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        // Don't add smooth scrolling if user prefers reduced motion
+        if (prefersReducedMotion) {
+          return;
+        }
+        
+        // Handle anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            
+            e.preventDefault();
+            
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+              // Account for sticky header height (64px)
+              const headerOffset = 80;
+              const elementPosition = targetElement.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.scrollY - headerOffset;
+              
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>

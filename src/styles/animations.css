@@ -1,0 +1,455 @@
+/* 
+ * Unified Animation System for Hydron Marketing
+ * Consistent timing, easing, and animation patterns site-wide
+ */
+
+/* Animation Timing Variables */
+:root {
+  --anim-duration-fast: 200ms;
+  --anim-duration-normal: 350ms;
+  --anim-duration-slow: 500ms;
+  --anim-duration-slower: 700ms;
+  
+  --anim-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --anim-easing-decelerate: cubic-bezier(0.0, 0, 0.2, 1);
+  --anim-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --anim-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  --anim-delay-stagger: 100ms;
+  --anim-delay-short: 150ms;
+  --anim-delay-medium: 300ms;
+}
+
+/* ============================================
+   HEADING ANIMATIONS
+   ============================================ */
+
+/* Reveal animation for headings */
+@keyframes heading-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heading-reveal {
+  animation: heading-reveal var(--anim-duration-slow) var(--anim-easing-decelerate) forwards;
+}
+
+/* Gradient sweep underline effect */
+@keyframes gradient-sweep {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.heading-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.heading-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+  opacity: 0;
+}
+
+.heading-underline.animated::after {
+  animation: gradient-sweep var(--anim-duration-slow) var(--anim-easing-decelerate) forwards;
+  animation-delay: var(--anim-delay-short);
+}
+
+/* ============================================
+   BUTTON ANIMATIONS
+   ============================================ */
+
+/* Enhanced hover glow */
+.btn-glow {
+  transition: all var(--anim-duration-normal) var(--anim-easing-standard);
+  position: relative;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: var(--gradient-primary);
+  border-radius: inherit;
+  opacity: 0;
+  z-index: -1;
+  filter: blur(8px);
+  transition: opacity var(--anim-duration-normal) var(--anim-easing-standard);
+}
+
+.btn-glow:hover::after {
+  opacity: 0.6;
+}
+
+/* Press/click animation */
+@keyframes button-press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-press:active {
+  animation: button-press var(--anim-duration-fast) var(--anim-easing-standard);
+}
+
+/* ============================================
+   CARD ANIMATIONS
+   ============================================ */
+
+/* Lift on hover */
+.card-lift {
+  transition: transform var(--anim-duration-normal) var(--anim-easing-standard),
+              box-shadow var(--anim-duration-normal) var(--anim-easing-standard);
+}
+
+.card-lift:hover {
+  transform: translateY(-8px);
+}
+
+/* Gradient border animation */
+@keyframes gradient-border-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.card-gradient-border {
+  position: relative;
+}
+
+.card-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-primary),
+    var(--color-accent-secondary),
+    var(--color-accent-primary)
+  );
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--anim-duration-normal) var(--anim-easing-standard);
+}
+
+.card-gradient-border:hover::before {
+  opacity: 1;
+  animation: gradient-border-rotate 3s linear infinite;
+}
+
+/* Shadow bloom effect */
+@keyframes shadow-bloom {
+  0%, 100% {
+    box-shadow: var(--glow-soft);
+  }
+  50% {
+    box-shadow: var(--glow-primary);
+  }
+}
+
+.card-shadow-bloom:hover {
+  animation: shadow-bloom 2s var(--anim-easing-standard) infinite;
+}
+
+/* ============================================
+   ICON LIST ANIMATIONS
+   ============================================ */
+
+/* Staggered reveal for list items */
+@keyframes list-item-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.icon-list-item {
+  opacity: 0;
+  animation: list-item-reveal var(--anim-duration-normal) var(--anim-easing-decelerate) forwards;
+}
+
+/* Apply stagger delay via nth-child */
+.icon-list-item:nth-child(1) { animation-delay: calc(var(--anim-delay-stagger) * 0); }
+.icon-list-item:nth-child(2) { animation-delay: calc(var(--anim-delay-stagger) * 1); }
+.icon-list-item:nth-child(3) { animation-delay: calc(var(--anim-delay-stagger) * 2); }
+.icon-list-item:nth-child(4) { animation-delay: calc(var(--anim-delay-stagger) * 3); }
+.icon-list-item:nth-child(5) { animation-delay: calc(var(--anim-delay-stagger) * 4); }
+.icon-list-item:nth-child(6) { animation-delay: calc(var(--anim-delay-stagger) * 5); }
+.icon-list-item:nth-child(7) { animation-delay: calc(var(--anim-delay-stagger) * 6); }
+.icon-list-item:nth-child(8) { animation-delay: calc(var(--anim-delay-stagger) * 7); }
+.icon-list-item:nth-child(9) { animation-delay: calc(var(--anim-delay-stagger) * 8); }
+.icon-list-item:nth-child(10) { animation-delay: calc(var(--anim-delay-stagger) * 9); }
+
+/* ============================================
+   PRICING TIER ANIMATIONS
+   ============================================ */
+
+/* Hover emphasis */
+.pricing-card {
+  transition: all var(--anim-duration-normal) var(--anim-easing-standard);
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--glow-primary);
+}
+
+/* "Most popular" badge pulse */
+@keyframes badge-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+}
+
+.badge-pulse-once {
+  animation: badge-pulse 1.5s var(--anim-easing-standard) 1;
+  animation-delay: 500ms;
+}
+
+/* ============================================
+   FAQ ACCORDION ANIMATIONS
+   ============================================ */
+
+/* Springy but subtle accordion */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--anim-duration-slow) var(--anim-easing-spring),
+              padding var(--anim-duration-slow) var(--anim-easing-spring);
+}
+
+.accordion-content.open {
+  max-height: 500px;
+}
+
+.accordion-icon {
+  transition: transform var(--anim-duration-normal) var(--anim-easing-spring);
+}
+
+.accordion-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* ============================================
+   NAV ITEM ANIMATIONS
+   ============================================ */
+
+/* Active indicator animation */
+@keyframes nav-indicator-slide {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.nav-item {
+  position: relative;
+  transition: color var(--anim-duration-fast) var(--anim-easing-standard);
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--anim-duration-normal) var(--anim-easing-spring);
+  transform-origin: left;
+}
+
+.nav-item.active::before,
+.nav-item:hover::before {
+  transform: scaleX(1);
+}
+
+/* ============================================
+   SECTION ENTER ANIMATIONS
+   ============================================ */
+
+/* Fade in from bottom */
+@keyframes section-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-fade-in {
+  opacity: 0;
+}
+
+.section-fade-in.visible {
+  animation: section-fade-in var(--anim-duration-slower) var(--anim-easing-decelerate) forwards;
+}
+
+/* Scale fade in */
+@keyframes section-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.section-scale-in {
+  opacity: 0;
+}
+
+.section-scale-in.visible {
+  animation: section-scale-in var(--anim-duration-slower) var(--anim-easing-decelerate) forwards;
+}
+
+/* ============================================
+   SCROLL-TO-TOP BUTTON
+   ============================================ */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.scroll-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: var(--z-fixed);
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--anim-duration-normal) var(--anim-easing-standard);
+  box-shadow: var(--glow-soft);
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-top-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glow-primary);
+}
+
+.scroll-top-btn:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Delay utilities */
+.anim-delay-1 { animation-delay: calc(var(--anim-delay-stagger) * 1); }
+.anim-delay-2 { animation-delay: calc(var(--anim-delay-stagger) * 2); }
+.anim-delay-3 { animation-delay: calc(var(--anim-delay-stagger) * 3); }
+.anim-delay-4 { animation-delay: calc(var(--anim-delay-stagger) * 4); }
+.anim-delay-5 { animation-delay: calc(var(--anim-delay-stagger) * 5); }
+
+/* ============================================
+   REDUCED MOTION OVERRIDE
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .card-lift:hover,
+  .pricing-card:hover,
+  .scroll-top-btn:hover {
+    transform: none !important;
+  }
+  
+  .btn-press:active,
+  .scroll-top-btn:active {
+    transform: none !important;
+  }
+}
