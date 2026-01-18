@@ -11,8 +11,7 @@ export interface Props {
 
 const { title, description, region, canonical, ogImage } = Astro.props;
 const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site);
-const base = import.meta.env.BASE_URL;
-const imageURL = ogImage || new URL(`${base}og-image.jpg`, Astro.site);
+const imageURL = ogImage || new URL('/og-image.jpg', Astro.site);
 ---
 
 <!doctype html>
@@ -39,11 +38,11 @@ const imageURL = ogImage || new URL(`${base}og-image.jpg`, Astro.site);
     <meta name="twitter:image" content={imageURL} />
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-    <link rel="icon" type="image/png" sizes="32x32" href={`${base}favicon-32x32.png`} />
-    <link rel="icon" type="image/png" sizes="16x16" href={`${base}favicon-16x16.png`} />
-    <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png`} />
-    <link rel="manifest" href={`${base}site.webmanifest`} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -58,7 +57,7 @@ const imageURL = ogImage || new URL(`${base}og-image.jpg`, Astro.site);
         '@type': 'Organization',
         name: SITE_NAME,
         url: Astro.site,
-        logo: new URL(`${base}logo.png`, Astro.site),
+        logo: new URL('/logo.png', Astro.site),
       })} />
     )}
   </head>
@@ -75,14 +74,12 @@ const imageURL = ogImage || new URL(`${base}og-image.jpg`, Astro.site);
       if (typeof window !== 'undefined') {
         const savedRegion = localStorage.getItem('region');
         const currentPath = window.location.pathname;
-        const basePath = '/marketing';
-        const pathWithoutBase = currentPath.replace(basePath, '');
         
         // Only auto-redirect on homepage if no saved region
-        if (pathWithoutBase === '/' || pathWithoutBase === '') {
+        if (currentPath === '/' || currentPath === '') {
           if (savedRegion && (savedRegion === 'uk' || savedRegion === 'us')) {
             // Use saved region preference
-            window.location.href = `${basePath}/${savedRegion}`;
+            window.location.href = `/${savedRegion}`;
           } else {
             // Auto-detect region
             let detectedRegion = 'uk'; // Default to UK
@@ -112,7 +109,7 @@ const imageURL = ogImage || new URL(`${base}og-image.jpg`, Astro.site);
             }
             
             // Redirect to detected region
-            window.location.href = `${basePath}/${detectedRegion}`;
+            window.location.href = `/${detectedRegion}`;
           }
         }
       }
