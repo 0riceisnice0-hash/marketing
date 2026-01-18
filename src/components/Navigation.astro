@@ -97,10 +97,10 @@ const currentPath = Astro.url.pathname;
                 <span id="cart-total" class="text-xl font-bold text-text-primary"></span>
               </div>
               <a 
-                href={`${basePath}/${region}/contact`}
+                href={`${basePath}/${region}/payment`}
                 class="block w-full py-3 px-6 rounded-lg font-semibold text-center bg-accent-primary text-white hover:bg-accent-primary-hover transition-all"
               >
-                Get Started
+                Payment
               </a>
             </div>
           </div>
@@ -622,10 +622,12 @@ const currentPath = Astro.url.pathname;
       recommendDiv.className = 'p-4';
       
       if (!hasHosting) {
+        const currentRegion = window.location.pathname.includes('/us') ? 'us' : 'uk';
+        const basePath = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : '/marketing';
         recommendDiv.innerHTML = `
-          <div class="text-sm font-semibold text-text-primary mb-2">Add hosting (recommended)</div>
+          <div class="text-sm font-semibold text-text-primary mb-2">Add hosting</div>
           <div class="text-xs text-text-secondary mb-3">Keep your website online 24/7</div>
-          <a href="${window.location.pathname}#hosting" class="text-xs text-accent-primary hover:text-accent-primary-hover font-semibold">
+          <a href="${basePath}/${currentRegion}/pricing#hosting-packages" class="text-xs text-accent-primary hover:text-accent-primary-hover font-semibold">
             View hosting options →
           </a>
         `;

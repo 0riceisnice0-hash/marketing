@@ -1,0 +1,126 @@
+---
+import RegionLayout from '../../layouts/RegionLayout.astro';
+
+const region = 'uk';
+---
+
+<RegionLayout
+  title="Payment"
+  description="Complete your purchase with secure Stripe checkout"
+  region={region}
+>
+  <section class="py-20 bg-bg-base section-fade-in">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl md:text-5xl font-bold font-heading text-text-primary mb-6 text-center heading-reveal">
+        Complete Your <span class="gradient-text">Purchase</span>
+      </h1>
+      <p class="text-xl text-text-secondary leading-relaxed text-center mb-12 heading-reveal anim-delay-1">
+        Review your cart and proceed to secure checkout
+      </p>
+      
+      <div class="max-w-2xl mx-auto">
+        <!-- Cart Summary -->
+        <div class="glass rounded-2xl p-8 mb-8">
+          <h2 class="text-2xl font-bold font-heading text-text-primary mb-6">Order Summary</h2>
+          
+          <!-- Cart items will be populated by JavaScript -->
+          <div id="payment-cart-items" class="space-y-4 mb-6">
+            <div id="payment-empty" class="text-center py-8">
+              <svg class="w-16 h-16 text-text-tertiary mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <p class="text-text-secondary">Your cart is empty</p>
+              <a href="/marketing/uk/pricing" class="inline-block mt-4 text-accent-primary hover:text-accent-primary-hover font-semibold">
+                View pricing →
+              </a>
+            </div>
+          </div>
+          
+          <!-- Total -->
+          <div id="payment-total-section" class="hidden border-t border-border-subtle pt-4">
+            <div class="flex justify-between items-center text-xl font-bold">
+              <span class="text-text-secondary">Total:</span>
+              <span id="payment-total" class="text-text-primary gradient-text"></span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Stripe Checkout Button -->
+        <div id="payment-checkout-section" class="hidden">
+          <a
+            href="YOUR_STRIPE_CHECKOUT_LINK_HERE"
+            class="block w-full py-4 px-8 rounded-lg font-semibold text-center text-lg bg-accent-primary text-white hover:bg-accent-primary-hover transition-all shadow-glow-soft"
+          >
+            Pay with Stripe
+          </a>
+          <p class="text-sm text-text-tertiary text-center mt-4">
+            Secure payment processing powered by Stripe
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</RegionLayout>
+
+<script>
+  // Load cart and display items
+  function loadCartForPayment() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const cartItemsContainer = document.getElementById('payment-cart-items');
+    const emptyState = document.getElementById('payment-empty');
+    const totalSection = document.getElementById('payment-total-section');
+    const totalElement = document.getElementById('payment-total');
+    const checkoutSection = document.getElementById('payment-checkout-section');
+    
+    if (!cartItemsContainer || !emptyState || !totalSection || !totalElement || !checkoutSection) return;
+    
+    if (cart.length === 0) {
+      emptyState.classList.remove('hidden');
+      totalSection.classList.add('hidden');
+      checkoutSection.classList.add('hidden');
+      return;
+    }
+    
+    // Hide empty state, show total and checkout
+    emptyState.classList.add('hidden');
+    totalSection.classList.remove('hidden');
+    checkoutSection.classList.remove('hidden');
+    
+    // Clear existing items
+    cartItemsContainer.innerHTML = '';
+    
+    // Render cart items
+    let total = 0;
+    const currencySymbol = '£';
+    
+    cart.forEach((item: any) => {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'flex justify-between items-start p-4 bg-bg-surface rounded-lg';
+      
+      const price = item.type === 'hosting' ? item.totalPrice : item.price;
+      total += price || 0;
+      
+      itemDiv.innerHTML = `
+        <div class="flex-1">
+          <div class="font-semibold text-text-primary">${item.name}</div>
+          ${item.type === 'hosting' ? `
+            <div class="text-sm text-text-tertiary mt-1">
+              ${currencySymbol}${item.monthlyPrice?.toFixed(2)}/mo × ${item.duration}
+            </div>
+          ` : ''}
+        </div>
+        <div class="text-text-primary font-semibold">
+          ${currencySymbol}${(price || 0).toFixed(2)}
+        </div>
+      `;
+      
+      cartItemsContainer.appendChild(itemDiv);
+    });
+    
+    // Update total
+    totalElement.textContent = `${currencySymbol}${total.toFixed(2)}`;
+  }
+  
+  // Load cart on page load
+  loadCartForPayment();
+</script>
