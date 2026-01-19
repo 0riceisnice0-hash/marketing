@@ -438,7 +438,9 @@ export const FAQ_ITEMS = [
 ];
 
 export const SOCIAL_LINKS = {
-  twitter: 'https://twitter.com/hydronmarketing',
-  linkedin: 'https://linkedin.com/company/hydronmarketing',
-  facebook: 'https://facebook.com/hydronmarketing',
+  twitter: 'https://x.com/HydronMarketing',
+  facebook: {
+    us: 'https://www.facebook.com/profile.php?id=61586848377678',
+    uk: 'https://www.facebook.com/zac.bartley.39',
+  },
 };

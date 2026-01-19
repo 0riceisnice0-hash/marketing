@@ -1,6 +1,6 @@
 ---
 import type { Region } from '../config/site';
-import { SITE_NAME, REGIONS } from '../config/site';
+import { SITE_NAME, REGIONS, SOCIAL_LINKS } from '../config/site';
 
 interface Props {
   region: Region;
@@ -18,9 +18,8 @@ const organizationSchema = {
   url: siteUrl,
   logo: `${siteUrl}logo.png`,
   sameAs: [
-    'https://twitter.com/hydronmarketing',
-    'https://linkedin.com/company/hydronmarketing',
-    'https://facebook.com/hydronmarketing',
+    SOCIAL_LINKS.twitter,
+    SOCIAL_LINKS.facebook[region],
   ],
 };
 
