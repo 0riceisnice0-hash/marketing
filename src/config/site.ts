@@ -413,27 +413,27 @@ export const TESTIMONIALS: Record<Region, Testimonial[]> = {
 export const FAQ_ITEMS = [
   {
     question: 'How fast can you build it?',
-    answer: 'Template websites take around 2 weeks, custom designs 3 weeks, and ecommerce sites about 4 weeks. We show you a draft first so you can review before we finalize anything.',
+    answer: 'Build time depends on the package you choose:\n\n• Starter Website: within 2 days or less\n• Custom Website: within 4 days or less\n• Business Website Plus: within 1 week or less\n• Premium Website: priority turnaround, fast-tracked based on project needs\n\nYou can review progress and request small changes before final delivery.',
   },
   {
     question: "What's included in 5 pages?",
-    answer: 'Typically: Home, About, Services, Gallery/Portfolio, and Contact. You can adjust this to suit your business needs.',
+    answer: 'Pages are flexible based on your business needs. Common examples include:\n\nHome, About, Services, Gallery or Portfolio, and Contact.\n\nYou can swap these for other pages like FAQs, booking info, or custom sections.',
   },
   {
     question: 'Can you connect my domain?',
-    answer: "Yes, we'll help you point your domain to your new site. If you don't have a domain yet, we can guide you through purchasing one.",
+    answer: "Yes. We will connect your domain to your new website for you. If you don't have a domain yet, we can guide you on where to buy one and then handle the setup.",
   },
   {
-    question: 'Can I edit it later?',
-    answer: "We provide clear documentation and can show you how to make basic updates. For bigger changes, we're available for ongoing support.",
+    question: 'Can I edit my site later?',
+    answer: 'Yes. You can make basic content updates yourself. For design changes, new pages, or feature upgrades, we offer ongoing support and updates.',
   },
   {
     question: 'What about hosting?',
-    answer: 'We recommend reliable hosting providers and can help set it up. Hosting typically costs £5-15/month or $10-20/month depending on your needs.',
+    answer: 'Hosting is included for the first 3 months with every website plan. After that, hosting renews monthly:\n\n• US: $32.99 per month\n• UK: £24.99 per month\n\nWe provide the hosting ourselves so your website stays online 24/7 with secure and reliable servers.',
   },
   {
     question: 'What about SEO?',
-    answer: 'All sites include SEO foundations: proper page titles, meta descriptions, mobile optimization, and fast loading. This gives you a solid base to rank in search engines.',
+    answer: 'All websites include SEO basics such as:\n\n• Proper page titles and descriptions\n• Mobile optimization\n• Fast loading structure\n\nThis gives your site a strong foundation for search engines. Advanced SEO services can be added later if needed.',
   },
 ];
 

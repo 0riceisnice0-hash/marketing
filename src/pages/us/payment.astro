@@ -57,13 +57,6 @@ const region = 'us';
           <p class="text-sm text-text-tertiary text-center mt-4">
             Secure payment processing powered by Stripe
           </p>
-          
-          <!-- Error message if hosting is missing -->
-          <div id="hosting-missing-error" class="hidden mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
-            <p class="text-red-500 text-sm text-center">
-              Hosting is required to continue to payment. Please add a hosting plan from the pricing page.
-            </p>
-          </div>
         </div>
       </div>
     </div>
@@ -71,11 +64,12 @@ const region = 'us';
 </RegionLayout>
 
 <script>
-  // Hosting Stripe payment links
-  const HOSTING_STRIPE_LINKS = {
-    'monthly': 'https://buy.stripe.com/aFa14gbfkdOY9sId450x206',
-    '6-month': 'https://buy.stripe.com/8x26oAcjo7qAgVa6FH0x208',
-    '12-month': 'https://buy.stripe.com/00wbIUbfkdOY8oEfcd0x207',
+  // Website Stripe payment links
+  const WEBSITE_STRIPE_LINKS = {
+    'Starter Websites': 'PLACEHOLDER_STARTER_US_STRIPE_LINK',
+    'Custom Website': 'PLACEHOLDER_CUSTOM_US_STRIPE_LINK',
+    'Business Website Plus': 'PLACEHOLDER_BUSINESS_US_STRIPE_LINK', 
+    'Premium Website': 'PLACEHOLDER_PREMIUM_US_STRIPE_LINK',
   };
   
   // Load cart and display items
@@ -86,8 +80,6 @@ const region = 'us';
     const totalSection = document.getElementById('payment-total-section');
     const totalElement = document.getElementById('payment-total');
     const checkoutSection = document.getElementById('payment-checkout-section');
-    const paymentButton = document.getElementById('stripe-payment-button');
-    const hostingError = document.getElementById('hosting-missing-error');
     
     if (!cartItemsContainer || !emptyState || !totalSection || !totalElement || !checkoutSection) return;
     
@@ -97,9 +89,6 @@ const region = 'us';
       checkoutSection.classList.add('hidden');
       return;
     }
-    
-    // Check cart for hosting
-    const hasHosting = cart.some((item: any) => item.type === 'hosting');
     
     // Hide empty state, show total and checkout
     emptyState.classList.add('hidden');
@@ -139,17 +128,6 @@ const region = 'us';
     
     // Update total
     totalElement.textContent = `${currencySymbol}${total.toFixed(2)}`;
-    
-    // Show/hide error based on hosting presence
-    if (paymentButton && hostingError) {
-      if (!hasHosting) {
-        hostingError.classList.remove('hidden');
-        paymentButton.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
-      } else {
-        hostingError.classList.add('hidden');
-        paymentButton.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
-      }
-    }
   }
   
   // Set up payment button click handler (only once)
@@ -157,25 +135,13 @@ const region = 'us';
   if (paymentButton) {
     paymentButton.addEventListener('click', () => {
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const hasWebsite = cart.some((item: any) => item.type === 'website');
-      const hasHosting = cart.some((item: any) => item.type === 'hosting');
-      const hostingItem = cart.find((item: any) => item.type === 'hosting');
-      const hostingError = document.getElementById('hosting-missing-error');
+      const websiteItem = cart.find((item: any) => item.type === 'website');
       
-      if (hasWebsite && hasHosting && hostingItem?.term) {
-        // Get the appropriate Stripe link based on hosting term
-        const stripeLink = HOSTING_STRIPE_LINKS[hostingItem.term as keyof typeof HOSTING_STRIPE_LINKS];
+      if (websiteItem) {
+        const stripeLink = WEBSITE_STRIPE_LINKS[websiteItem.name as keyof typeof WEBSITE_STRIPE_LINKS];
         if (stripeLink) {
-          // Redirect to Stripe checkout
           window.location.href = stripeLink;
-        } else {
-          // Fallback to monthly if term not found
-          window.location.href = HOSTING_STRIPE_LINKS['monthly'];
         }
-      } else if (hostingError) {
-        // Show error message if hosting is missing
-        hostingError.classList.remove('hidden');
-        paymentButton.classList.add('opacity-50', 'cursor-not-allowed');
       }
     });
   }
