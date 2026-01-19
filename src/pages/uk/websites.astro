@@ -6,13 +6,6 @@ import { getBasePath } from '../../utils/basePath';
 
 const region = 'uk';
 const basePath = getBasePath();
-
-// Placeholder screenshot URLs - will be replaced with local images
-const screenshots = [
-  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
-  'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80',
-  'https://images.unsplash.com/photo-1432888622747-4eb9a8f2c293?w=800&q=80',
-];
 ---
 
 <RegionLayout
@@ -21,30 +14,27 @@ const screenshots = [
   region={region}
 >
   <!-- Hero Section -->
-  <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-bg-base section-fade-in">
-    <!-- Background with gradient -->
-    <div class="absolute inset-0 bg-gradient-to-br from-bg-base via-bg-elevated to-bg-base"></div>
-    <div class="absolute inset-0 bg-gradient-radial from-accent-primary/5 to-transparent"></div>
+  <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden section-fade-in">
+    <!-- Background Image -->
+    <div 
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80');"
+    ></div>
+    
+    <!-- Dark Overlay for Text Readability -->
+    <div class="absolute inset-0 bg-gradient-to-b from-bg-base/80 via-bg-base/70 to-bg-base/90"></div>
+    
+    <!-- Vignette Effect -->
+    <div class="absolute inset-0 bg-radial-vignette"></div>
     
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-      <h1 class="text-5xl md:text-6xl font-bold font-heading text-text-primary mb-6 leading-tight">
-        Website design <span class="gradient-text">services</span>
+      <h1 class="text-5xl md:text-6xl font-bold font-heading text-white mb-6 leading-tight hero-heading">
+        Website design <span class="gradient-text-light">services</span>
       </h1>
-      <p class="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+      <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed hero-subtext">
         We specialise in building clean, professional websites for UK small businesses. 
         Every site is mobile-friendly, fast-loading, and includes SEO basics.
       </p>
-      
-      <!-- Hero Image -->
-      <div class="mt-12 max-w-5xl mx-auto">
-        <div class="glass rounded-2xl overflow-hidden shadow-2xl">
-          <img 
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80" 
-            alt="Modern professional workspace"
-            class="w-full h-64 md:h-80 lg:h-96 object-cover"
-          />
-        </div>
-      </div>
     </div>
   </section>
 
@@ -54,8 +44,8 @@ const screenshots = [
     <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/50 to-transparent"></div>
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <!-- Left: Content -->
+      <div class="max-w-4xl mx-auto">
+        <!-- Content -->
         <div>
           <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-6">
             What we build
@@ -196,47 +186,6 @@ const screenshots = [
             </Button>
           </div>
         </div>
-
-        <!-- Right: Device Mockup with Screenshots -->
-        <div class="relative">
-          <!-- Desktop mockup frame -->
-          <div class="glass rounded-2xl p-3 shadow-2xl">
-            <div class="bg-bg-base rounded-lg overflow-hidden aspect-video relative">
-              <!-- Screenshot carousel -->
-              <div class="screenshot-container absolute inset-0">
-                {screenshots.map((screenshot, index) => (
-                  <img
-                    src={screenshot}
-                    alt={`Website example ${index + 1}`}
-                    class:list={[
-                      'screenshot absolute inset-0 w-full h-full object-cover transition-opacity duration-1000',
-                      index === 0 ? 'opacity-100' : 'opacity-0'
-                    ]}
-                    data-index={index}
-                  />
-                ))}
-              </div>
-              
-              <!-- Overlay gradient -->
-              <div class="absolute inset-0 bg-gradient-to-t from-bg-base/30 to-transparent pointer-events-none"></div>
-            </div>
-          </div>
-
-          <!-- Floating mobile mockup -->
-          <div class="absolute -bottom-8 -left-8 w-32 md:w-48 glass rounded-2xl p-2 shadow-xl">
-            <div class="bg-bg-base rounded-lg overflow-hidden aspect-[9/16]">
-              <img
-                src={screenshots[0]}
-                alt="Mobile website example"
-                class="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-
-          <!-- Decorative elements -->
-          <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-primary rounded-full blur-3xl opacity-20"></div>
-          <div class="absolute -bottom-4 right-8 w-32 h-32 bg-accent-secondary rounded-full blur-3xl opacity-20"></div>
-        </div>
       </div>
     </div>
   </section>
@@ -255,44 +204,36 @@ const screenshots = [
   </section>
 </RegionLayout>
 
-<script>
-  // Screenshot carousel with crossfade
-  let currentIndex = 0;
-  const screenshots = document.querySelectorAll('.screenshot') as NodeListOf<HTMLImageElement>;
-  const totalScreenshots = screenshots.length;
-
-  function rotateScreenshots() {
-    const current = screenshots[currentIndex];
-    if (current) {
-      current.style.opacity = '0';
-    }
-    
-    // Move to next
-    currentIndex = (currentIndex + 1) % totalScreenshots;
-    
-    // Fade in next
-    const next = screenshots[currentIndex];
-    if (next) {
-      next.style.opacity = '1';
-    }
-  }
-
-  // Only animate if user hasn't requested reduced motion
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  if (!prefersReducedMotion && totalScreenshots > 1) {
-    setInterval(rotateScreenshots, 4000);
-  }
-</script>
-
 <style>
-  .bg-gradient-radial {
-    background: radial-gradient(ellipse at center, var(--tw-gradient-stops));
+  .bg-radial-vignette {
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 10, 0.5) 100%);
   }
   
-  @media (prefers-reduced-motion: reduce) {
-    .screenshot {
-      transition: none !important;
+  .gradient-text-light {
+    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-heading {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .hero-subtext {
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 </style>

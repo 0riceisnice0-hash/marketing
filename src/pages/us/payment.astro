@@ -54,12 +54,13 @@ const region = 'us';
             </svg>
             <p class="text-text-primary font-semibold mb-2">Please log in to continue to checkout</p>
             <p class="text-text-secondary text-sm mb-4">You need to be logged in to complete your purchase</p>
-            <a 
-              href="/marketing/us" 
+            <button 
+              id="checkout-login-button"
+              type="button"
               class="inline-block py-2 px-6 rounded-lg font-semibold bg-accent-primary text-white hover:bg-accent-primary-hover transition-all"
             >
               Log In
-            </a>
+            </button>
           </div>
           
           <button
@@ -84,7 +85,7 @@ const region = 'us';
   
   // Website Stripe payment links
   const WEBSITE_STRIPE_LINKS = {
-    'Starter Websites': 'PLACEHOLDER_STARTER_US_STRIPE_LINK',
+    'Starter Website': 'PLACEHOLDER_STARTER_US_STRIPE_LINK',
     'Custom Website': 'PLACEHOLDER_CUSTOM_US_STRIPE_LINK',
     'Business Website Plus': 'PLACEHOLDER_BUSINESS_US_STRIPE_LINK', 
     'Premium Website': 'PLACEHOLDER_PREMIUM_US_STRIPE_LINK',
@@ -228,4 +229,27 @@ const region = 'us';
   
   // Load cart on page load
   loadCartForPayment();
+  
+  // Set up login button click handler
+  const loginButton = document.getElementById('checkout-login-button');
+  if (loginButton) {
+    loginButton.addEventListener('click', async () => {
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.href
+          }
+        });
+        
+        if (error) {
+          console.error('Error signing in with Google:', error);
+          alert('Failed to sign in with Google. Please try again.');
+        }
+      } catch (err) {
+        console.error('Failed to initiate Google sign-in:', err);
+        alert('Failed to sign in with Google. Please try again.');
+      }
+    });
+  }
 </script>

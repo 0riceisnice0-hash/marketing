@@ -78,10 +78,10 @@ export const REGIONS: Record<Region, BranchInfo> = {
 export const PRICING: Record<Region, PricingTier[]> = {
   uk: [
     {
-      name: 'Starter Websites',
+      name: 'Starter Website',
       price: 149,
       turnaround: 'Within 2 days or less',
-      description: 'Quick and professional starter website for small businesses.',
+      description: 'A quick and professional starter website designed for small businesses and solo entrepreneurs. Perfect for those who need to establish an online presence fast without compromising on quality. Includes essential pages, mobile responsiveness, and basic SEO to help customers find you. Ideal for service providers, freelancers, and local businesses just getting started.',
       features: [
         'Up to 3 pages',
         'Mobile responsive',
@@ -94,7 +94,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
       name: 'Custom Website',
       price: 299,
       turnaround: 'Within 4 days or less',
-      description: 'Fully custom design tailored to your brand and business goals.',
+      description: 'A fully custom website designed around your unique brand, goals, and target audience. We work closely with you to create a tailored layout and design that sets you apart from competitors. Includes advanced SEO optimisation, social media integration, and Google Analytics setup. Perfect for established businesses ready to make a strong impression online.',
       features: [
         'Up to 5 pages',
         'Custom design',
@@ -111,7 +111,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
       name: 'Business Website Plus',
       price: 599,
       turnaround: 'Within 1 week or less',
-      description: 'Enhanced website with advanced features for growing businesses.',
+      description: 'An enhanced website package built for growing businesses that need more functionality and polish. Includes premium custom design, advanced contact forms, and full performance optimisation for speed. Features blog-ready setup, Google Analytics, and Search Console integration to track your success. Ideal for businesses scaling up and looking to convert more visitors into customers.',
       features: [
         'Up to 8 pages',
         'Premium custom design',
@@ -132,7 +132,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
       name: 'Premium Website',
       price: 799,
       turnaround: 'Priority turnaround (fast-tracked based on project needs)',
-      description: 'Top-tier website with AI-powered features for maximum impact.',
+      description: 'Our top-tier website package featuring AI-powered tools for maximum business impact and automation. Includes AI chat assistants, smart lead capture, FAQ widgets, and automated contact routing. Built with priority turnaround and premium support for businesses that demand the best. Perfect for companies ready to leverage cutting-edge technology to stay ahead of the competition.',
       features: [
         'Up to 12 pages',
         'Premium custom design',
@@ -157,10 +157,10 @@ export const PRICING: Record<Region, PricingTier[]> = {
   ],
   us: [
     {
-      name: 'Starter Websites',
+      name: 'Starter Website',
       price: 199,
       turnaround: 'Within 2 days or less',
-      description: 'Quick and professional starter website for small businesses.',
+      description: 'A quick and professional starter website designed for small businesses and solo entrepreneurs. Perfect for those who need to establish an online presence fast without compromising on quality. Includes essential pages, mobile responsiveness, and basic SEO to help customers find you. Ideal for service providers, freelancers, and local businesses just getting started.',
       features: [
         'Up to 3 pages',
         'Mobile responsive',
@@ -173,7 +173,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
       name: 'Custom Website',
       price: 399,
       turnaround: 'Within 4 days or less',
-      description: 'Fully custom design tailored to your brand and business goals.',
+      description: 'A fully custom website designed around your unique brand, goals, and target audience. We work closely with you to create a tailored layout and design that sets you apart from competitors. Includes advanced SEO optimization, social media integration, and Google Analytics setup. Perfect for established businesses ready to make a strong impression online.',
       features: [
         'Up to 5 pages',
         'Custom design',
@@ -190,7 +190,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
       name: 'Business Website Plus',
       price: 799,
       turnaround: 'Within 1 week or less',
-      description: 'Enhanced website with advanced features for growing businesses.',
+      description: 'An enhanced website package built for growing businesses that need more functionality and polish. Includes premium custom design, advanced contact forms, and full performance optimization for speed. Features blog-ready setup, Google Analytics, and Search Console integration to track your success. Ideal for businesses scaling up and looking to convert more visitors into customers.',
       features: [
         'Up to 8 pages',
         'Premium custom design',
@@ -211,7 +211,7 @@ export const PRICING: Record<Region, PricingTier[]> = {
       name: 'Premium Website',
       price: 999,
       turnaround: 'Priority turnaround (fast-tracked based on project needs)',
-      description: 'Top-tier website with AI-powered features for maximum impact.',
+      description: 'Our top-tier website package featuring AI-powered tools for maximum business impact and automation. Includes AI chat assistants, smart lead capture, FAQ widgets, and automated contact routing. Built with priority turnaround and premium support for businesses that demand the best. Perfect for companies ready to leverage cutting-edge technology to stay ahead of the competition.',
       features: [
         'Up to 12 pages',
         'Premium custom design',
