@@ -10,6 +10,17 @@ export const SignInForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
+  // Check for error in URL params
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorParam = urlParams.get('error');
+    if (errorParam) {
+      setError(decodeURIComponent(errorParam));
+      // Clean URL
+      window.history.replaceState({}, '', '/signin');
+    }
+  }, []);
+
   // Redirect if already signed in
   useEffect(() => {
     if (user) {

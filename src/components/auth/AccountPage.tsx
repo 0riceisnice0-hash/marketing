@@ -1,12 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from './AuthProvider';
 
 export const AccountPage: React.FC = () => {
   const { user, loading, signOut } = useAuth();
+  const [error, setError] = useState<string>('');
+
+  // Safety timeout: if still loading after 10 seconds, show error
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (loading) {
+        console.error('[AccountPage] Loading timeout - session fetch took too long');
+        setError('Authentication timed out. Please try signing in again.');
+      }
+    }, 10000);
+    
+    return () => clearTimeout(timeout);
+  }, [loading]);
 
   // Redirect to sign in if not authenticated
   useEffect(() => {
     if (!loading && !user) {
+      console.log('[AccountPage] No user, redirecting to signin');
       window.location.href = '/signin';
     }
   }, [user, loading]);
@@ -15,6 +29,24 @@ export const AccountPage: React.FC = () => {
     await signOut();
     window.location.href = '/signin';
   };
+
+  if (error) {
+    return (
+      <div className="w-full max-w-md mx-auto">
+        <div className="bg-bg-elevated border border-border backdrop-blur-xl rounded-2xl shadow-2xl p-8">
+          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6">
+            <p className="text-red-400 text-sm">{error}</p>
+          </div>
+          <a
+            href="/signin"
+            className="w-full inline-block text-center bg-gradient-to-r from-accent-primary to-accent-secondary text-white font-semibold py-3 px-6 rounded-lg"
+          >
+            Back to Sign In
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
