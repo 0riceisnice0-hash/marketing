@@ -32,11 +32,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         return;
       }
       
-      // SECOND: Check for OAuth errors
+      // Parse URL parameters once for reuse
       const urlParams = new URLSearchParams(window.location.search);
       const errorParam = urlParams.get('error');
       const errorDescription = urlParams.get('error_description');
+      const code = urlParams.get('code');
       
+      // SECOND: Check for OAuth errors
       if (errorParam) {
         console.error('[OAuth Callback] OAuth error:', errorParam, errorDescription);
         const errorMsg = errorDescription || errorParam;
@@ -45,12 +47,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       }
       
       // THIRD: Check for authorization code
-      const code = urlParams.get('code');
-      
       if (!code) {
         console.log('[OAuth Callback] No code in URL, redirecting to signin (silent)');
-        // Don't show error - just redirect silently
-        // This happens when user navigates to callback without OAuth flow
+        // Silent redirect (no error) to avoid exposing OAuth callback behavior
+        // This happens when user navigates directly to callback URL without OAuth flow
         window.location.replace('/signin');
         return;
       }

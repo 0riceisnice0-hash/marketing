@@ -20,12 +20,10 @@ export const SignInForm: React.FC = () => {
 
   // PRIORITY 2: Check for error in URL params (after redirect check)
   useEffect(() => {
-    if (user) return; // Don't process errors if already signed in
-    
     const urlParams = new URLSearchParams(window.location.search);
     const errorParam = urlParams.get('error');
     
-    if (errorParam) {
+    if (errorParam && !user) {
       // Make error messages user-friendly
       const friendlyErrors: Record<string, string> = {
         'no_code': 'Sign-in was cancelled or the link expired. Please try again.',
@@ -41,7 +39,7 @@ export const SignInForm: React.FC = () => {
       // Clean URL without page reload
       window.history.replaceState({}, '', '/signin');
     }
-  }, [user]);
+  }, []); // Run once on mount
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
