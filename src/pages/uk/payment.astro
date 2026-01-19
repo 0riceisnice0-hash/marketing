@@ -193,7 +193,12 @@ const region = 'uk';
       await checkAuth();
       
       if (!isLoggedIn) {
-        alert('Please log in to continue to checkout');
+        // Show login required message if it's hidden
+        const loginRequired = document.getElementById('login-required');
+        if (loginRequired) {
+          loginRequired.classList.remove('hidden');
+          loginRequired.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         return;
       }
       
