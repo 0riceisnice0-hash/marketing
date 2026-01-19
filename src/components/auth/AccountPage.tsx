@@ -21,13 +21,13 @@ export const AccountPage: React.FC = () => {
   useEffect(() => {
     if (!loading && !user) {
       console.log('[AccountPage] No user, redirecting to signin');
-      window.location.href = '/signin';
+      window.location.replace('/signin');
     }
   }, [user, loading]);
 
   const handleSignOut = async () => {
     await signOut();
-    window.location.href = '/signin';
+    window.location.replace('/signin');
   };
 
   // Error state

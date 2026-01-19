@@ -17,59 +17,66 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <script>
   import { supabase } from '../../lib/supabase';
   
-  // Handle OAuth callback
   async function handleCallback() {
     console.log('[OAuth Callback] Started');
     
     try {
-      // Check for error in URL params (OAuth error from provider)
+      // FIRST: Check if already authenticated (session exists)
+      console.log('[OAuth Callback] Checking for existing session...');
+      const { data: { session: existingSession } } = await supabase.auth.getSession();
+      
+      if (existingSession) {
+        console.log('[OAuth Callback] ✓ Already signed in:', existingSession.user.email);
+        console.log('[OAuth Callback] Redirecting to account...');
+        window.location.replace('/account');
+        return;
+      }
+      
+      // SECOND: Check for OAuth errors
       const urlParams = new URLSearchParams(window.location.search);
       const errorParam = urlParams.get('error');
       const errorDescription = urlParams.get('error_description');
-      const code = urlParams.get('code');
-      
-      console.log('[OAuth Callback] URL params:', { 
-        hasError: !!errorParam, 
-        hasCode: !!code 
-      });
       
       if (errorParam) {
-        console.error('[OAuth Callback] Provider error:', errorParam, errorDescription);
-        window.location.href = `/signin?error=${encodeURIComponent(errorDescription || errorParam)}`;
+        console.error('[OAuth Callback] OAuth error:', errorParam, errorDescription);
+        const errorMsg = errorDescription || errorParam;
+        window.location.replace(`/signin?error=${encodeURIComponent(errorMsg)}`);
         return;
       }
+      
+      // THIRD: Check for authorization code
+      const code = urlParams.get('code');
       
       if (!code) {
-        console.error('[OAuth Callback] No authorization code in URL');
-        window.location.href = '/signin?error=no_code';
+        console.log('[OAuth Callback] No code in URL, redirecting to signin (silent)');
+        // Don't show error - just redirect silently
+        // This happens when user navigates to callback without OAuth flow
+        window.location.replace('/signin');
         return;
       }
       
-      // CRITICAL: Exchange the code for a session
+      // FOURTH: Exchange code for session
       console.log('[OAuth Callback] Exchanging code for session...');
       const { data, error } = await supabase.auth.exchangeCodeForSession(code);
       
       if (error) {
         console.error('[OAuth Callback] Exchange failed:', error);
-        window.location.href = `/signin?error=${encodeURIComponent(error.message)}`;
+        window.location.replace(`/signin?error=${encodeURIComponent(error.message)}`);
         return;
       }
       
       if (data.session) {
-        console.log('[OAuth Callback] ✓ Session created, user:', data.session.user?.email || data.session.user?.id);
-        
-        // Success - redirect to account
-        window.location.href = '/account';
+        console.log('[OAuth Callback] ✓ Session created:', data.session.user.email);
+        window.location.replace('/account');
       } else {
         console.error('[OAuth Callback] No session after exchange');
-        window.location.href = '/signin?error=no_session';
+        window.location.replace('/signin?error=no_session');
       }
     } catch (err: any) {
       console.error('[OAuth Callback] Unexpected error:', err);
-      window.location.href = `/signin?error=${encodeURIComponent(err.message || 'callback_failed')}`;
+      window.location.replace(`/signin?error=${encodeURIComponent(err.message || 'callback_failed')}`);
     }
   }
   
-  // Run on page load
   handleCallback();
 </script>
