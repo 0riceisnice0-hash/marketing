@@ -47,10 +47,25 @@ const region = 'uk';
         
         <!-- Stripe Checkout Button -->
         <div id="payment-checkout-section" class="hidden">
+          <!-- Login Required Message -->
+          <div id="login-required" class="hidden mb-6 p-4 bg-bg-surface border border-border-emphasis rounded-lg text-center">
+            <svg class="w-12 h-12 text-accent-primary mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <p class="text-text-primary font-semibold mb-2">Please log in to continue to checkout</p>
+            <p class="text-text-secondary text-sm mb-4">You need to be logged in to complete your purchase</p>
+            <a 
+              href="/marketing/uk" 
+              class="inline-block py-2 px-6 rounded-lg font-semibold bg-accent-primary text-white hover:bg-accent-primary-hover transition-all"
+            >
+              Log In
+            </a>
+          </div>
+          
           <button
             id="stripe-payment-button"
             type="button"
-            class="block w-full py-4 px-8 rounded-lg font-semibold text-center text-lg bg-accent-primary text-white hover:bg-accent-primary-hover transition-all shadow-glow-soft"
+            class="block w-full py-4 px-8 rounded-lg font-semibold text-center text-lg bg-accent-primary text-white hover:bg-accent-primary-hover transition-all shadow-glow-soft disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Pay with Stripe
           </button>
@@ -64,6 +79,9 @@ const region = 'uk';
 </RegionLayout>
 
 <script>
+  // Import Supabase client
+  import { supabase } from '../../lib/supabase';
+  
   // Website Stripe payment links
   const WEBSITE_STRIPE_LINKS = {
     'Starter Websites': 'PLACEHOLDER_STARTER_UK_STRIPE_LINK',
@@ -72,14 +90,38 @@ const region = 'uk';
     'Premium Website': 'PLACEHOLDER_PREMIUM_UK_STRIPE_LINK',
   };
   
+  // Check authentication status
+  let isLoggedIn = false;
+  let userEmail = '';
+  let userName = '';
+  
+  async function checkAuth() {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      isLoggedIn = !!session;
+      if (session?.user) {
+        userEmail = session.user.email || '';
+        userName = session.user.user_metadata?.name || session.user.email?.split('@')[0] || '';
+      }
+    } catch (err) {
+      console.error('Failed to check auth:', err);
+      isLoggedIn = false;
+    }
+  }
+  
   // Load cart and display items
-  function loadCartForPayment() {
+  async function loadCartForPayment() {
+    // Check authentication first
+    await checkAuth();
+    
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const cartItemsContainer = document.getElementById('payment-cart-items');
     const emptyState = document.getElementById('payment-empty');
     const totalSection = document.getElementById('payment-total-section');
     const totalElement = document.getElementById('payment-total');
     const checkoutSection = document.getElementById('payment-checkout-section');
+    const loginRequired = document.getElementById('login-required');
+    const paymentButton = document.getElementById('stripe-payment-button') as HTMLButtonElement;
     
     if (!cartItemsContainer || !emptyState || !totalSection || !totalElement || !checkoutSection) return;
     
@@ -94,6 +136,19 @@ const region = 'uk';
     emptyState.classList.add('hidden');
     totalSection.classList.remove('hidden');
     checkoutSection.classList.remove('hidden');
+    
+    // Show/hide login required message and disable/enable button based on auth status
+    if (!isLoggedIn) {
+      loginRequired?.classList.remove('hidden');
+      if (paymentButton) {
+        paymentButton.disabled = true;
+      }
+    } else {
+      loginRequired?.classList.add('hidden');
+      if (paymentButton) {
+        paymentButton.disabled = false;
+      }
+    }
     
     // Clear existing items
     cartItemsContainer.innerHTML = '';
@@ -133,13 +188,33 @@ const region = 'uk';
   // Set up payment button click handler (only once)
   const paymentButton = document.getElementById('stripe-payment-button');
   if (paymentButton) {
-    paymentButton.addEventListener('click', () => {
+    paymentButton.addEventListener('click', async () => {
+      // Double-check auth before proceeding
+      await checkAuth();
+      
+      if (!isLoggedIn) {
+        alert('Please log in to continue to checkout');
+        return;
+      }
+      
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
       const websiteItem = cart.find((item: any) => item.type === 'website');
       
       if (websiteItem) {
         const stripeLink = WEBSITE_STRIPE_LINKS[websiteItem.name as keyof typeof WEBSITE_STRIPE_LINKS];
         if (stripeLink) {
+          // Store order data for success page
+          const orderData = {
+            packageName: websiteItem.name,
+            price: websiteItem.price,
+            currencySymbol: '£',
+            userEmail: userEmail,
+            userName: userName,
+            timestamp: Date.now()
+          };
+          localStorage.setItem('pendingOrder', JSON.stringify(orderData));
+          
+          // Redirect to Stripe
           window.location.href = stripeLink;
         }
       }

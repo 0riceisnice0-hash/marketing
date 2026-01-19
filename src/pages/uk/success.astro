@@ -1,0 +1,198 @@
+---
+import RegionLayout from '../../layouts/RegionLayout.astro';
+
+const region = 'uk';
+---
+
+<RegionLayout
+  title="Order Confirmation"
+  description="Thank you for your purchase"
+  region={region}
+>
+  <section class="py-20 bg-bg-base section-fade-in">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Success Icon -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-green-600 mb-6">
+          <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold font-heading text-text-primary mb-4">
+          Thank You for Your <span class="gradient-text">Purchase</span>!
+        </h1>
+        <p class="text-xl text-text-secondary">
+          We're excited to start working on your website.
+        </p>
+      </div>
+      
+      <!-- Order Details -->
+      <div class="glass rounded-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-6">Order Confirmation</h2>
+        
+        <div id="order-details" class="space-y-4">
+          <!-- Will be populated by JavaScript -->
+          <div id="loading" class="text-center py-8">
+            <div class="animate-spin inline-block w-8 h-8 border-4 border-accent-primary border-t-transparent rounded-full"></div>
+            <p class="text-text-secondary mt-4">Processing your order...</p>
+          </div>
+        </div>
+        
+        <div id="order-info" class="hidden">
+          <div class="space-y-4 mb-6">
+            <div class="flex justify-between items-center p-4 bg-bg-surface rounded-lg">
+              <span class="text-text-secondary">Package:</span>
+              <span id="package-name" class="text-text-primary font-semibold"></span>
+            </div>
+            <div class="flex justify-between items-center p-4 bg-bg-surface rounded-lg">
+              <span class="text-text-secondary">Price Paid:</span>
+              <span id="package-price" class="text-text-primary font-semibold"></span>
+            </div>
+            <div class="flex justify-between items-center p-4 bg-bg-surface rounded-lg">
+              <span class="text-text-secondary">Customer:</span>
+              <span id="customer-email" class="text-text-primary font-semibold"></span>
+            </div>
+          </div>
+          
+          <!-- Hosting Details -->
+          <div class="border-t border-border-subtle pt-6">
+            <h3 class="text-lg font-bold text-text-primary mb-4">Hosting Details</h3>
+            <div class="space-y-3 text-text-secondary">
+              <p class="flex items-start">
+                <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span><strong>3 months of hosting included</strong> in your package price</span>
+              </p>
+              <p class="flex items-start">
+                <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>After 3 months, hosting will automatically renew monthly at <strong>£12/month</strong></span>
+              </p>
+              <p class="flex items-start">
+                <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>You can cancel anytime before the renewal date</span>
+              </p>
+            </div>
+          </div>
+          
+          <!-- Email Confirmation -->
+          <div class="border-t border-border-subtle pt-6 mt-6">
+            <div class="flex items-center text-text-secondary">
+              <svg class="w-5 h-5 text-accent-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>A detailed confirmation email has been sent to your email address.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Next Steps -->
+      <div class="glass rounded-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4">What Happens Next?</h2>
+        <div class="space-y-4 text-text-secondary">
+          <p class="flex items-start">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-accent-primary text-white text-sm font-bold mr-3 flex-shrink-0">1</span>
+            <span>We'll send you a draft of your website within the timeframe specified for your package</span>
+          </p>
+          <p class="flex items-start">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-accent-primary text-white text-sm font-bold mr-3 flex-shrink-0">2</span>
+            <span>Review the draft and provide feedback on any changes you'd like</span>
+          </p>
+          <p class="flex items-start">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-accent-primary text-white text-sm font-bold mr-3 flex-shrink-0">3</span>
+            <span>We'll refine the website based on your feedback</span>
+          </p>
+          <p class="flex items-start">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-accent-primary text-white text-sm font-bold mr-3 flex-shrink-0">4</span>
+            <span>Once you're happy, we'll launch your website!</span>
+          </p>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <a 
+          href="/marketing/uk" 
+          class="inline-block py-3 px-8 rounded-lg font-semibold bg-accent-primary text-white hover:bg-accent-primary-hover transition-all"
+        >
+          Return to Home
+        </a>
+      </div>
+    </div>
+  </section>
+</RegionLayout>
+
+<script>
+  // Import Supabase client
+  import { supabase } from '../../lib/supabase';
+  
+  async function processOrder() {
+    const loading = document.getElementById('loading');
+    const orderInfo = document.getElementById('order-info');
+    
+    // Get order data from localStorage
+    const orderDataStr = localStorage.getItem('pendingOrder');
+    if (!orderDataStr) {
+      if (loading) loading.innerHTML = '<p class="text-red-500">No order data found. If you just completed a purchase, please contact support.</p>';
+      return;
+    }
+    
+    const orderData = JSON.parse(orderDataStr);
+    
+    // Display order info
+    const packageName = document.getElementById('package-name');
+    const packagePrice = document.getElementById('package-price');
+    const customerEmail = document.getElementById('customer-email');
+    
+    if (packageName) packageName.textContent = orderData.packageName;
+    if (packagePrice) packagePrice.textContent = `${orderData.currencySymbol}${orderData.price.toFixed(2)}`;
+    if (customerEmail) customerEmail.textContent = orderData.userEmail;
+    
+    // Show order info
+    if (loading) loading.classList.add('hidden');
+    if (orderInfo) orderInfo.classList.remove('hidden');
+    
+    // Send confirmation emails
+    try {
+      const emailData = {
+        customerName: orderData.userName,
+        customerEmail: orderData.userEmail,
+        packageName: orderData.packageName,
+        price: orderData.price,
+        currencySymbol: orderData.currencySymbol,
+        region: 'UK',
+        hostingMonthlyPrice: 12,
+        hostingIncludedMonths: 3
+      };
+      
+      // Call Supabase Edge Function to send emails
+      const { error } = await supabase.functions.invoke('send-order-confirmation', {
+        body: emailData
+      });
+      
+      if (error) {
+        console.error('Error sending confirmation email:', error);
+        // Don't show error to user - email is secondary
+      } else {
+        console.log('Confirmation emails sent successfully');
+      }
+    } catch (err) {
+      console.error('Failed to send confirmation emails:', err);
+      // Don't show error to user - email is secondary
+    }
+    
+    // Clear pending order and cart
+    localStorage.removeItem('pendingOrder');
+    localStorage.removeItem('cart');
+    
+    // Dispatch cart updated event
+    window.dispatchEvent(new Event('cartUpdated'));
+  }
+  
+  // Process order on page load
+  processOrder();
+</script>
