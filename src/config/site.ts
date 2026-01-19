@@ -61,7 +61,7 @@ export const REGIONS: Record<Region, BranchInfo> = {
   us: {
     name: 'Hydron Marketing USA',
     location: 'Florida',
-    phone: '1-248-705-1000',
+    phone: '(813) 922-5294',
     phoneUK: '+44 792 6037 173',
     email: 'marketinghydron@gmail.com',
     whatsapp: '',
