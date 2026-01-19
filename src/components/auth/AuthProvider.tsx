@@ -46,7 +46,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           return;
         }
         
-        console.log('[AuthProvider] Session:', session ? `✓ ${session.user.email}` : '✗ none');
+        console.log('[AuthProvider] Session:', session ? `✓ ${session.user?.email || session.user?.id}` : '✗ none');
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -64,7 +64,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('[AuthProvider] Auth state changed:', event, session ? session.user.email : 'none');
+      console.log('[AuthProvider] Auth state changed:', event, session ? (session.user?.email || session.user?.id) : 'none');
       if (mounted) {
         setSession(session);
         setUser(session?.user ?? null);
