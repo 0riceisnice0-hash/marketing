@@ -90,7 +90,11 @@ export const AccountPage: React.FC = () => {
               <h2 className="text-2xl font-heading font-bold text-text-primary">
                 Your Websites
               </h2>
-              <button className="bg-gradient-to-r from-accent-primary to-accent-secondary hover:from-accent-primary-hover hover:to-accent-secondary-hover text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 text-sm">
+              <button 
+                disabled 
+                className="bg-gradient-to-r from-accent-primary to-accent-secondary opacity-50 cursor-not-allowed text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 text-sm"
+                title="Coming soon"
+              >
                 + New Website
               </button>
             </div>
@@ -182,7 +186,7 @@ export const AccountPage: React.FC = () => {
             <div className="space-y-3">
               <div>
                 <label className="text-sm text-text-tertiary">Email</label>
-                <p className="text-text-primary font-medium break-all">{user.email}</p>
+                <p className="text-text-primary font-medium break-words">{user.email}</p>
               </div>
               
               {user.user_metadata?.full_name && (
