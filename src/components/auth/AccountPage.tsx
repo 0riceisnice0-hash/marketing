@@ -199,7 +199,7 @@ export const AccountPage: React.FC = () => {
               <div>
                 <label className="text-sm text-text-tertiary">Member Since</label>
                 <p className="text-text-secondary text-sm">
-                  {new Date(user.created_at).toLocaleDateString('en-US', {
+                  {new Date(user.created_at).toLocaleDateString(undefined, {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
@@ -209,7 +209,7 @@ export const AccountPage: React.FC = () => {
 
               <div className="pt-2">
                 <label className="text-sm text-text-tertiary">User ID</label>
-                <p className="text-text-secondary font-mono text-xs break-all">{user.id}</p>
+                <p className="text-text-secondary font-mono text-xs break-words">{user.id}</p>
               </div>
             </div>
           </div>
