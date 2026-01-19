@@ -29,50 +29,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     let mounted = true;
-    
-    // Get initial session with error handling
-    const initSession = async () => {
-      console.log('[AuthProvider] Fetching initial session...');
-      
+
+    console.log('[AuthProvider] Initializing auth listener...');
+
+    // Listen for auth changes (includes initial session)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log('[AuthProvider] Auth event:', event, session ? `✓ ${session.user?.email || session.user?.id}` : '✗ none');
         
         if (!mounted) return;
         
-        if (error) {
-          console.error('[AuthProvider] Error getting session:', error);
-          // Still set loading to false so UI can render
-          setLoading(false);
-          return;
-        }
-        
-        console.log('[AuthProvider] Session:', session ? `✓ ${session.user?.email || session.user?.id}` : '✗ none');
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
       } catch (err) {
-        console.error('[AuthProvider] Unexpected error:', err);
+        console.error('[AuthProvider] Error in auth state change:', err);
         if (mounted) {
           setLoading(false);
         }
       }
-    };
-    
-    initSession();
-
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('[AuthProvider] Auth state changed:', event, session ? (session.user?.email || session.user?.id) : 'none');
-      if (mounted) {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
-      }
     });
 
     return () => {
+      console.log('[AuthProvider] Cleaning up auth listener');
       mounted = false;
       subscription.unsubscribe();
     };

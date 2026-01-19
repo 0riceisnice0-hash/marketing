@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { AuthProvider } from '../components/auth/AuthProvider';
-import { AccountPage } from '../components/auth/AccountPage';
+import { AccountIsland } from '../components/auth/AccountIsland';
 ---
 
 <BaseLayout
@@ -9,8 +8,6 @@ import { AccountPage } from '../components/auth/AccountPage';
   description="Manage your Hydron Marketing account"
 >
   <div class="min-h-screen flex items-center justify-center bg-bg-base py-12 px-4 sm:px-6 lg:px-8">
-    <AuthProvider client:only="react">
-      <AccountPage client:only="react" />
-    </AuthProvider>
+    <AccountIsland client:only="react" />
   </div>
 </BaseLayout>

@@ -39,7 +39,7 @@ export const SignInForm: React.FC = () => {
       // Clean URL without page reload
       window.history.replaceState({}, '', '/signin');
     }
-  }, []); // Run once on mount
+  }, [user]); // Re-run when user changes
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
