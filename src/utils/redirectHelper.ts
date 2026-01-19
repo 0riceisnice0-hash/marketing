@@ -3,11 +3,16 @@ export function buildRedirectTo(): string {
     return '';
   }
   
+  // Use PUBLIC_ prefix for Astro
   const basePath = import.meta.env.PUBLIC_BASE_PATH || '';
-  // Normalize basePath: remove trailing slash, ensure leading slash if non-empty
   const normalizedBasePath = basePath 
     ? (basePath.startsWith('/') ? basePath : '/' + basePath).replace(/\/$/, '')
     : '';
   
-  return window.location.origin + normalizedBasePath + '/auth/callback';
+  const redirectUrl = window.location.origin + normalizedBasePath + '/auth/callback';
+  
+  // Log for verification (remove after confirming fix)
+  console.log('[Redirect Helper] Built redirectTo:', redirectUrl);
+  
+  return redirectUrl;
 }
