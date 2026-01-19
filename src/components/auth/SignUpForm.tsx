@@ -11,10 +11,11 @@ export const SignUpForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
-  // Redirect if already signed in
+  // PRIORITY 1: Redirect if already signed in
   useEffect(() => {
     if (user) {
-      window.location.href = '/account';
+      console.log('[SignUpForm] User already signed in, redirecting to account');
+      window.location.replace('/account');
     }
   }, [user]);
 
@@ -37,7 +38,7 @@ export const SignUpForm: React.FC = () => {
       } else if (data?.user && !data.session) {
         setMessage('Please check your email to confirm your account before signing in.');
       } else {
-        window.location.href = '/account';
+        window.location.replace('/account');
       }
     } catch (err: any) {
       setError(err.message || 'An error occurred during sign up');
@@ -66,10 +67,12 @@ export const SignUpForm: React.FC = () => {
     }
   };
 
+  // Show redirecting message if user exists
   if (user) {
     return (
       <div className="text-center">
-        <p className="text-text-secondary">Redirecting to account...</p>
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-accent-primary mb-2"></div>
+        <p className="text-text-secondary">Already signed in! Redirecting...</p>
       </div>
     );
   }

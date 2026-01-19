@@ -10,23 +10,36 @@ export const SignInForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
-  // Check for error in URL params
+  // PRIORITY 1: Redirect if already signed in (before anything else)
+  useEffect(() => {
+    if (user) {
+      console.log('[SignInForm] User already signed in, redirecting to account');
+      window.location.replace('/account');
+    }
+  }, [user]);
+
+  // PRIORITY 2: Check for error in URL params (after redirect check)
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const errorParam = urlParams.get('error');
-    if (errorParam) {
-      setError(decodeURIComponent(errorParam));
-      // Clean URL
+    
+    if (errorParam && !user) {
+      // Make error messages user-friendly
+      const friendlyErrors: Record<string, string> = {
+        'no_code': 'Sign-in was cancelled or the link expired. Please try again.',
+        'no_session': 'Failed to create session. Please try again.',
+        'callback_failed': 'Sign-in failed. Please try again.',
+        'auth_failed': 'Authentication failed. Please try again.',
+        'oauth_failed': 'Google sign-in failed. Please try again.',
+      };
+      
+      const friendlyError = friendlyErrors[errorParam] || decodeURIComponent(errorParam);
+      setError(friendlyError);
+      
+      // Clean URL without page reload
       window.history.replaceState({}, '', '/signin');
     }
-  }, []);
-
-  // Redirect if already signed in
-  useEffect(() => {
-    if (user) {
-      window.location.href = '/account';
-    }
-  }, [user]);
+  }, []); // Run once on mount
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +53,7 @@ export const SignInForm: React.FC = () => {
       });
 
       if (error) throw error;
-      window.location.href = '/account';
+      window.location.replace('/account');
     } catch (err: any) {
       setError(err.message || 'An error occurred during sign in');
     } finally {
@@ -67,10 +80,12 @@ export const SignInForm: React.FC = () => {
     }
   };
 
+  // If user exists, show redirecting message while redirect happens
   if (user) {
     return (
       <div className="text-center">
-        <p className="text-text-secondary">Redirecting to account...</p>
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-accent-primary mb-2"></div>
+        <p className="text-text-secondary">Already signed in! Redirecting...</p>
       </div>
     );
   }
