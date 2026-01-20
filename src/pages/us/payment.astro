@@ -85,10 +85,10 @@ const region = 'us';
   
   // Website Stripe payment links
   const WEBSITE_STRIPE_LINKS = {
-    'Starter Website': 'PLACEHOLDER_STARTER_US_STRIPE_LINK',
-    'Custom Website': 'PLACEHOLDER_CUSTOM_US_STRIPE_LINK',
-    'Business Website Plus': 'PLACEHOLDER_BUSINESS_US_STRIPE_LINK', 
-    'Premium Website': 'PLACEHOLDER_PREMIUM_US_STRIPE_LINK',
+    'Starter Website': 'https://buy.stripe.com/aFa9AM6Z426gawM7JL0x202',
+    'Custom Website': 'https://buy.stripe.com/4gMeV6838cKU8oEaVX0x203',
+    'Business Website Plus': 'https://buy.stripe.com/5kQeV61EK5is6gw3tv0x204', 
+    'Premium Website': 'https://buy.stripe.com/28E7sE5V0dOYfR6ggh0x205',
   };
   
   // Check authentication status
@@ -220,8 +220,13 @@ const region = 'us';
           };
           localStorage.setItem('pendingOrder', JSON.stringify(orderData));
           
+          // Build Stripe URL with success and cancel redirects
+          const successUrl = encodeURIComponent(`${window.location.origin}/marketing/us/success`);
+          const cancelUrl = encodeURIComponent(`${window.location.origin}/marketing/us/pricing`);
+          const stripeLinkWithParams = `${stripeLink}?success_url=${successUrl}&cancel_url=${cancelUrl}`;
+          
           // Redirect to Stripe
-          window.location.href = stripeLink;
+          window.location.href = stripeLinkWithParams;
         }
       }
     });
