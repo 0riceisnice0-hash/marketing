@@ -27,5 +27,10 @@ Fix this by:
   throw new Error('Missing required Supabase configuration. Check console for details.');
 }
 
-// Create client - will throw if env vars are missing
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create client with session persistence - will throw if env vars are missing
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+  }
+});
