@@ -1,0 +1,153 @@
+---
+import type { Region } from '../config/site';
+import RegionSwitcher from './RegionSwitcher.astro';
+
+import { getBasePath } from '../utils/basePath';
+
+interface Props {
+  region: Region;
+}
+
+const { region } = Astro.props;
+const basePath = getBasePath();
+
+// UK navigation - no pricing link
+const navLinks = [
+  { href: `${basePath}/${region}`, label: 'Home' },
+  { href: `${basePath}/${region}/websites`, label: 'Websites' },
+  { href: `${basePath}/${region}/examples`, label: 'Examples' },
+  { href: `${basePath}/${region}/how-it-works`, label: 'How It Works' },
+  { href: `${basePath}/${region}/contact`, label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav id="main-nav" class="sticky top-0 z-50 glass border-b border-border-subtle transition-transform duration-300 ease-in-out">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <a href={`${basePath}/${region}`} class="text-xl font-bold font-heading gradient-text hover:opacity-80 transition-opacity">
+          Hydron Marketing
+        </a>
+      </div>
+      
+      <div class="hidden md:flex items-center space-x-1">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'px-3 py-2 rounded-lg text-sm font-medium transition-all font-body',
+              currentPath === link.href || currentPath === `${link.href}/`
+                ? 'bg-accent-primary text-white shadow-glow-soft'
+                : 'text-text-secondary hover:bg-bg-elevated hover:text-text-primary'
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+      
+      <div class="flex items-center space-x-2 sm:space-x-4">
+        <RegionSwitcher currentRegion={region} />
+        
+        <button
+          id="mobile-menu-button"
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-bg-elevated focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary transition-colors"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle bg-bg-elevated">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'block px-3 py-2 rounded-md text-base font-medium transition-all font-body',
+            currentPath === link.href || currentPath === `${link.href}/`
+              ? 'bg-accent-primary text-white shadow-glow-soft'
+              : 'text-text-secondary hover:bg-bg-surface hover:text-text-primary'
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script is:inline define:vars={{ basePath, region }}>
+  // Make basePath and region available to inline scripts
+  window.__BASE_PATH__ = basePath;
+  window.__REGION__ = region;
+</script>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+      mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+  
+  // Auto-hide/show header on scroll
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    const updateNavVisibility = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Don't hide if we're at the very top
+      if (currentScrollY <= 0) {
+        nav.style.transform = 'translateY(0)';
+      }
+      // Hide when scrolling down
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        nav.style.transform = 'translateY(-100%)';
+      }
+      // Show when scrolling up
+      else if (currentScrollY < lastScrollY) {
+        nav.style.transform = 'translateY(0)';
+      }
+      
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+    
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavVisibility);
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

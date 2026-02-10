@@ -1,0 +1,95 @@
+---
+// FAQAccordionUK.astro - UK specific FAQ aligned with fully managed service model
+
+const FAQ_ITEMS_UK = [
+  {
+    question: 'How fast can you build my website?',
+    answer: 'We work quickly, but the timeline depends on feedback.\n\nMost sites are live within around a week, but the site is finished when you\'re happy with it. We\'ll go back and forth as needed and refine it until it\'s right.',
+  },
+  {
+    question: "What's included in a typical website?",
+    answer: 'A complete, lead-focused site built for local service businesses, typically including:\n\n• Home page\n• Services pages\n• Reviews or testimonials\n• Gallery or recent work\n• Contact page with a full enquiry form designed to drive leads\n\nThis structure is based on what actually converts for UK trades and service businesses.',
+  },
+  {
+    question: 'Can you connect my domain?',
+    answer: 'Yes.\n\nIf you already have a domain, we\'ll connect and configure it for you.\n\nIf you don\'t have one yet, we can source it, manage it, and handle the full setup.',
+  },
+  {
+    question: 'Can I edit my site later?',
+    answer: 'Yes. Unlimited changes are included.\n\nYou don\'t need to worry about breaking layouts, design, or features.\n\nIf you want text changed, new pages added, sections redesigned, or features updated, we handle it all for you.',
+  },
+  {
+    question: 'What about hosting?',
+    answer: 'Hosting is fully handled by us and is a core part of the service.\n\nThe monthly fee covers:\n• Hosting\n• Ongoing management\n• Unlimited changes and updates\n• Keeping the site running smoothly\n\nYou don\'t need to deal with hosting providers, servers, or technical setup.',
+  },
+  {
+    question: 'What about SEO?',
+    answer: 'We don\'t offer "basic SEO".\n\nWe build and optimise sites specifically to generate enquiries. This includes high-level SEO focused on local search and real lead generation, not just ticking boxes.\n\nOur goal is consistent inbound leads, not vanity rankings.\n\nResults vary by area and competition, but this is a core part of the service, not an add-on.',
+  },
+  {
+    question: 'How do I get started?',
+    answer: 'Tell us about your business using the contact form.\n\nWe\'ll review what you do, your area, and your goals, then explain exactly how we\'d approach your site before anything goes live.',
+  },
+];
+---
+
+<section class="py-20 bg-bg-base section-fade-in">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-4">
+        Frequently asked questions
+      </h2>
+    </div>
+    
+    <div class="space-y-4">
+      {FAQ_ITEMS_UK.map((item, index) => (
+        <div class="glass rounded-xl overflow-hidden hover:border-accent-primary/30 transition-all">
+          <button
+            type="button"
+            class="faq-button w-full px-6 py-4 text-left flex justify-between items-center hover:bg-bg-elevated focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary transition-colors"
+            aria-expanded="false"
+            data-index={index}
+          >
+            <span class="font-semibold font-heading text-text-primary">{item.question}</span>
+            <svg
+              class="faq-icon accordion-icon w-5 h-5 text-text-tertiary flex-shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content accordion-content px-6">
+            <p class="text-text-secondary leading-relaxed pb-4 whitespace-pre-line">{item.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // FAQ accordion functionality with springy animation
+  document.querySelectorAll('.faq-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const content = button.nextElementSibling as HTMLElement;
+      const icon = button.querySelector('.faq-icon');
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      
+      // Toggle current FAQ (no longer closing others)
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      content?.classList.toggle('open');
+      icon?.classList.toggle('rotated');
+    });
+  });
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    .faq-icon,
+    .faq-content {
+      transition: none !important;
+    }
+  }
+</style>
