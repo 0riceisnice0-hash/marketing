@@ -1,0 +1,26 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import NavigationUK from '../components/NavigationUK.astro';
+import FooterUK from '../components/FooterUK.astro';
+import StructuredData from '../components/StructuredData.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
+import type { Region } from '../config/site';
+
+export interface Props {
+  title: string;
+  description: string;
+  region: Region;
+}
+
+const { title, description, region } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} region={region}>
+  <StructuredData region={region} />
+  <NavigationUK region={region} />
+  <main>
+    <slot />
+  </main>
+  <FooterUK region={region} />
+  <ScrollToTop />
+</BaseLayout>

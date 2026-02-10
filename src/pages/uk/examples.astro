@@ -1,6 +1,6 @@
 ---
-import RegionLayout from '../../layouts/RegionLayout.astro';
-import ExamplesGallery from '../../components/ExamplesGallery.astro';
+import RegionLayoutUK from '../../layouts/RegionLayoutUK.astro';
+import ExamplesGalleryUK from '../../components/ExamplesGalleryUK.astro';
 import Button from '../../components/Button.astro';
 
 import { getBasePath } from '../../utils/basePath';
@@ -9,26 +9,23 @@ const region = 'uk';
 const basePath = getBasePath();
 ---
 
-<RegionLayout
+<RegionLayoutUK
   title="Example Projects"
-  description="View example website projects for UK small businesses. See how we can help plumbers, electricians, barbers, cleaners, gyms, and landscapers."
+  description="View example website projects built for UK service businesses. Real websites for tradespeople, local services, and small businesses."
   region={region}
 >
   <section class="py-20 bg-bg-base section-fade-in">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h1 class="text-4xl md:text-5xl font-bold font-heading text-text-primary mb-6 heading-reveal">
-        Example <span class="gradient-text heading-underline">projects</span>
+        Real UK <span class="gradient-text heading-underline">service business</span> websites
       </h1>
       <p class="text-xl text-text-secondary mb-4 heading-reveal anim-delay-1">
-        Here are some examples of the types of websites we build for small businesses.
-      </p>
-      <p class="text-sm text-text-tertiary mb-12">
-        All examples shown are demos created for demonstration purposes.
+        Built and managed as part of the same offering. These are real businesses we've helped get online.
       </p>
     </div>
   </section>
   
-  <ExamplesGallery />
+  <ExamplesGalleryUK />
   
   <section class="py-20 bg-bg-elevated relative section-fade-in">
     <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/50 to-transparent"></div>
@@ -41,13 +38,13 @@ const basePath = getBasePath();
         Whether you're a tradesperson, service provider, or local business, we can help.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button href={`${basePath}/${region}/pricing`} variant="primary" size="lg">
-          View pricing
+        <Button href={`${basePath}/${region}/contact`} variant="primary" size="lg">
+          Tell us about your business
         </Button>
-        <Button href={`${basePath}/${region}/contact`} variant="secondary" size="lg">
-          Get in touch
+        <Button href={`${basePath}/${region}/how-it-works`} variant="secondary" size="lg">
+          See how it works
         </Button>
       </div>
     </div>
   </section>
-</RegionLayout>
+</RegionLayoutUK>

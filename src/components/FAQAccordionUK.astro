@@ -1,0 +1,95 @@
+---
+// FAQAccordionUK.astro - UK specific FAQ without pricing references
+
+const FAQ_ITEMS_UK = [
+  {
+    question: 'How fast can you build it?',
+    answer: 'Build time depends on the scope and complexity of your project. We work quickly but focus on getting things right. Once we understand your needs, we can give you a realistic timeframe. You can review progress and request small changes before final delivery.',
+  },
+  {
+    question: "What's included in a typical website?",
+    answer: 'Pages are flexible based on your business needs. Common examples include:\n\nHome, About, Services, Gallery or Portfolio, and Contact.\n\nYou can swap these for other pages like FAQs, booking info, or custom sections. We\'ll discuss exactly what you need after we learn more about your business.',
+  },
+  {
+    question: 'Can you connect my domain?',
+    answer: "Yes. We will connect your domain to your new website for you. If you don't have a domain yet, we can guide you on where to buy one and then handle the setup.",
+  },
+  {
+    question: 'Can I edit my site later?',
+    answer: 'Yes. You can make basic content updates yourself. For design changes, new pages, or feature upgrades, we offer ongoing support and updates.',
+  },
+  {
+    question: 'What about hosting?',
+    answer: 'Hosting options will be discussed after we understand your needs. We can recommend reliable providers or handle hosting ourselves. Either way, we make sure your website stays online 24/7 with secure and reliable servers.',
+  },
+  {
+    question: 'What about SEO?',
+    answer: 'All websites include SEO basics such as:\n\n• Proper page titles and descriptions\n• Mobile optimisation\n• Fast loading structure\n\nThis gives your site a strong foundation for search engines. Advanced SEO services can be discussed if needed.',
+  },
+  {
+    question: 'How do I get started?',
+    answer: 'Simply fill out our contact form to tell us about your business. We\'ll get back to you within one working day to have a friendly chat about your needs. There\'s no commitment at this stage - it\'s just a conversation to see if we can help.',
+  },
+];
+---
+
+<section class="py-20 bg-bg-base section-fade-in">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-4">
+        Frequently asked questions
+      </h2>
+    </div>
+    
+    <div class="space-y-4">
+      {FAQ_ITEMS_UK.map((item, index) => (
+        <div class="glass rounded-xl overflow-hidden hover:border-accent-primary/30 transition-all">
+          <button
+            type="button"
+            class="faq-button w-full px-6 py-4 text-left flex justify-between items-center hover:bg-bg-elevated focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary transition-colors"
+            aria-expanded="false"
+            data-index={index}
+          >
+            <span class="font-semibold font-heading text-text-primary">{item.question}</span>
+            <svg
+              class="faq-icon accordion-icon w-5 h-5 text-text-tertiary flex-shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content accordion-content px-6">
+            <p class="text-text-secondary leading-relaxed pb-4 whitespace-pre-line">{item.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // FAQ accordion functionality with springy animation
+  document.querySelectorAll('.faq-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const content = button.nextElementSibling as HTMLElement;
+      const icon = button.querySelector('.faq-icon');
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      
+      // Toggle current FAQ (no longer closing others)
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      content?.classList.toggle('open');
+      icon?.classList.toggle('rotated');
+    });
+  });
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    .faq-icon,
+    .faq-content {
+      transition: none !important;
+    }
+  }
+</style>

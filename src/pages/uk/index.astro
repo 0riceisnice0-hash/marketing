@@ -1,26 +1,34 @@
 ---
-import RegionLayout from '../../layouts/RegionLayout.astro';
-import Hero from '../../components/Hero.astro';
+import RegionLayoutUK from '../../layouts/RegionLayoutUK.astro';
+import HeroUK from '../../components/HeroUK.astro';
 import TrustRow from '../../components/TrustRow.astro';
-import OfferCards from '../../components/OfferCards.astro';
+import WhoThisIsFor from '../../components/WhoThisIsFor.astro';
+import WhyThisWorks from '../../components/WhyThisWorks.astro';
+import ExamplesGalleryUK from '../../components/ExamplesGalleryUK.astro';
+import TypicalResults from '../../components/TypicalResults.astro';
+import GoogleBusinessProfile from '../../components/GoogleBusinessProfile.astro';
 import HowItWorksSection from '../../components/HowItWorks.astro';
-import ExamplesGallery from '../../components/ExamplesGallery.astro';
 import Testimonials from '../../components/Testimonials.astro';
-import FAQAccordion from '../../components/FAQAccordion.astro';
+import FAQAccordionUK from '../../components/FAQAccordionUK.astro';
+import ContactFormUK from '../../components/ContactFormUK.astro';
 
 const region = 'uk';
 ---
 
-<RegionLayout
-  title="Professional Websites for Small Businesses"
-  description="Fast, affordable websites for UK small businesses. Clean, mobile-friendly designs built by our UK-based team. Get a professional 5-page website from £199."
+<RegionLayoutUK
+  title="Professional Websites for UK Service Businesses"
+  description="Bespoke websites for UK tradespeople and local service businesses. Built to generate enquiries. Start a conversation with our UK-based team."
   region={region}
 >
-  <Hero region={region} />
+  <HeroUK region={region} />
   <TrustRow />
-  <OfferCards region={region} />
+  <WhoThisIsFor />
+  <WhyThisWorks />
+  <ExamplesGalleryUK />
+  <TypicalResults />
+  <GoogleBusinessProfile />
   <HowItWorksSection />
-  <ExamplesGallery />
   <Testimonials region={region} />
-  <FAQAccordion />
-</RegionLayout>
+  <FAQAccordionUK />
+  <ContactFormUK region={region} />
+</RegionLayoutUK>

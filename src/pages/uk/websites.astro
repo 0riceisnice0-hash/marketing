@@ -1,5 +1,5 @@
 ---
-import RegionLayout from '../../layouts/RegionLayout.astro';
+import RegionLayoutUK from '../../layouts/RegionLayoutUK.astro';
 import Button from '../../components/Button.astro';
 
 import { getBasePath } from '../../utils/basePath';
@@ -8,9 +8,9 @@ const region = 'uk';
 const basePath = getBasePath();
 ---
 
-<RegionLayout
+<RegionLayoutUK
   title="Website Design Services"
-  description="Professional website design services for UK small businesses. Template, custom, and ecommerce options available."
+  description="Professional website design services for UK service businesses. Bespoke websites built to generate enquiries for tradespeople and local businesses."
   region={region}
 >
   <!-- Hero Section -->
@@ -32,8 +32,8 @@ const basePath = getBasePath();
         Website design <span class="gradient-text-light">services</span>
       </h1>
       <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed hero-subtext">
-        We specialise in building clean, professional websites for UK small businesses. 
-        Every site is mobile-friendly, fast-loading, and includes SEO basics.
+        We specialise in building clean, professional websites for UK service businesses. 
+        Every site is mobile-friendly, fast-loading, and designed to generate enquiries.
       </p>
     </div>
   </section>
@@ -71,7 +71,7 @@ const basePath = getBasePath();
                   <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Up to 3 pages • Within 2 days or less</span>
+                  <span>Up to 3 pages • Quick turnaround</span>
                 </li>
                 <li class="flex items-start">
                   <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -105,7 +105,7 @@ const basePath = getBasePath();
                   <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Up to 5 pages • Within 4 days or less</span>
+                  <span>Up to 5 pages • Tailored design</span>
                 </li>
                 <li class="flex items-start">
                   <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -135,7 +135,7 @@ const basePath = getBasePath();
                   <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Up to 8 pages • Within 1 week or less</span>
+                  <span>Up to 8 pages • Comprehensive solution</span>
                 </li>
                 <li class="flex items-start">
                   <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,7 +165,7 @@ const basePath = getBasePath();
                   <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Up to 12 pages • Priority turnaround</span>
+                  <span>Up to 12 pages • Priority service</span>
                 </li>
                 <li class="flex items-start">
                   <svg class="w-5 h-5 text-accent-primary mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -178,11 +178,11 @@ const basePath = getBasePath();
           </div>
 
           <div class="mt-8 flex flex-wrap gap-4">
-            <Button href={`${basePath}/${region}/pricing`} variant="primary">
-              View pricing
+            <Button href={`${basePath}/${region}/contact`} variant="primary">
+              Tell us about your business
             </Button>
-            <Button href={`${basePath}/${region}/contact`} variant="secondary">
-              Get in touch
+            <Button href={`${basePath}/${region}/examples`} variant="secondary">
+              View examples
             </Button>
           </div>
         </div>
@@ -202,7 +202,7 @@ const basePath = getBasePath();
       </p>
     </div>
   </section>
-</RegionLayout>
+</RegionLayoutUK>
 
 <style>
   .bg-radial-vignette {
